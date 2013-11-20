@@ -1,4 +1,4 @@
-package com.fjbg.thebeercode;
+package com.fjbg.thebeercode.model;
 
 public interface CRUD {
   public void create()throws Exception;
