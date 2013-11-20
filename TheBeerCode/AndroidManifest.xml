@@ -26,6 +26,10 @@
             android:name="com.fjbg.thebeercode.Inscription"
             android:label="@string/title_activity_inscription" >
         </activity>
+        <activity
+            android:name="com.fjbg.thebeercode.ActivityTest"
+            android:label="@string/title_activity_activity_test" >
+        </activity>
     </application>
 
 </manifest>
