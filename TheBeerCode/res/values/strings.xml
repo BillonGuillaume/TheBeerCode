@@ -21,5 +21,10 @@
     <string name="SignIn">Sign in</string>
     <string name="Cancel">Cancel</string>
     <string name="NotRegistered">Not Registered Yet ?</string>
+    <string name="ConfPassword">Confirm password</string>
+    <string name="Mail">Mail</string>
+    <string name="Country">Country</string>
+    <string name="ConfSignUp">Join now !</string>
+    
 
 </resources>
