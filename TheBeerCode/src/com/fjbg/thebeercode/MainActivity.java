@@ -1,6 +1,8 @@
 package com.fjbg.thebeercode;
 
 import java.sql.Connection;
+
+import com.fjbg.thebeercode.model.ConnexionDB;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.myconnections.DBConnection;
 
@@ -36,10 +38,11 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_principal_noco);
-		DBConnection dbc = new DBConnection();
+		ConnexionDB connec = new ConnexionDB();
+		//DBConnection dbc = new DBConnection();
 		try {
-			connect = dbc.getConnection();
-			PersonneDB.setDbConnect(connect);  // Comment gérer la connection au wifi en pleine application ?
+			//connect = dbc.getConnection();
+			//PersonneDB.setDbConnect(connect);  // Comment gérer la connection au wifi en pleine application ?
 		} catch (Exception e) {
 			
 		}		

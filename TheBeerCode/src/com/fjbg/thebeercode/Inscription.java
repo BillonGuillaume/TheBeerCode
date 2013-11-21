@@ -20,8 +20,8 @@ public class Inscription extends Activity {
 	private EditText edmail;
 	private EditText edpays;
 	
-	private  Button valider = null;
-	private  Button annuler = null;
+	private Button valider = null;
+	private Button annuler = null;
 	private PersonneDB personne;
 	
 	@Override
