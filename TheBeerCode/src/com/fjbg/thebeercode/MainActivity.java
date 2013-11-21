@@ -1,5 +1,7 @@
 package com.fjbg.thebeercode;
 
+import com.fjbg.thebeercode.model.PersonneDB;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	public final static int LOGIN_REQUEST = 0;
 	public final static int CONNECTION_FAILED = -2;
+	public final static String PERSONNE = "personne";
 	
 	Button bConnection = null;
 	Button bInscription = null;
@@ -64,7 +67,9 @@ public class MainActivity extends Activity {
 	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if  (requestCode == LOGIN_REQUEST) {
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+				Intent result = getIntent();
+				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
 				// TO DO
 				// Changer le layout en mode connecté
 			}

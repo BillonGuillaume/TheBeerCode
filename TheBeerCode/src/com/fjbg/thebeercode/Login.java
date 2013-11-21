@@ -1,5 +1,7 @@
 package com.fjbg.thebeercode;
 
+import com.fjbg.thebeercode.model.PersonneDB;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends Activity {
 	
@@ -43,13 +46,20 @@ public class Login extends Activity {
 		public void onClick(View v) {
 			String login = eTLogin.getText().toString();
 			String mdp = eTPwd.getText().toString();
-			Intent result = new  Intent();
-			// TO DO
-			// Vérifier si le compte est OK et renvoyer la Personne
-			//result.putExtra();
-			setResult(RESULT_OK, result);
-			setResult(MainActivity.CONNECTION_FAILED);
-			finish();
+			PersonneDB p = new PersonneDB();
+			p.setLogin(login);
+			p.setMdp(mdp);
+			try {
+				p.connection();
+				Intent result = new Intent();
+				result.putExtra(MainActivity.PERSONNE, p);
+				setResult(RESULT_OK, result);
+				finish();
+			} catch (Exception e) {
+				Toast.makeText(Login.this, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+				eTLogin.setText("");
+				eTPwd.setText("");
+			}
 		}
 	};
 	
