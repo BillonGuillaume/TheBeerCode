@@ -16,5 +16,10 @@
     <string name="NameHere">Name Here</string>
     <string name="Profile">My Profile</string>
     <string name="title_activity_login">Login</string>
+    <string name="Login">Login :</string>
+    <string name="Password">Password :</string>
+    <string name="SignUp">Sign up</string>
+    <string name="Cancel">Cancel</string>
+    <string name="NotRegistered">Not Registered Yet ?</string>
 
 </resources>

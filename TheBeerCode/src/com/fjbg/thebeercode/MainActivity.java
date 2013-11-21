@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent loginActivity = new  Intent(MainActivity.this,Login.class);
 			startActivityForResult(loginActivity,LOGIN_REQUEST);
+			// Changer le layout en mode connecté
 			}
 	};
 	
