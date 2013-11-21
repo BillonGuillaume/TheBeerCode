@@ -6,5 +6,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_inscription">Inscription</string>
     <string name="title_activity_activity_test">ActivityTest</string>
+    <string name="Connection">Connection</string>
+    <string name="Inscription">Inscription</string>
+    <string name="Beers">Beers</string>
+    <string name="Additions">Additions</string>
+    <string name="MyVotes">My Votes</string>
+    <string name="Disconnection">Disconnection</string>
+    <string name="Welcome">Welcome, </string>
+    <string name="NameHere">Name Here</string>
+    <string name="Profile">My Profile</string>
 
 </resources>
