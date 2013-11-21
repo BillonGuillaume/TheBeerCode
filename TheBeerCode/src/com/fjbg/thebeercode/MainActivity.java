@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 		
 		if (requestCode == INSCRIPTION_REQUEST){
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(MainActivity.this, "Inscription réussie", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show();
 				Intent result = getIntent();
 				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
 			}

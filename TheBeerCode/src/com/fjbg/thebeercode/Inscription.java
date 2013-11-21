@@ -1,6 +1,7 @@
 package com.fjbg.thebeercode;
 
 import com.fjbg.thebeercode.model.PersonneDB;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,8 +30,11 @@ public class Inscription extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inscription);
 		
-		Intent i = getIntent();
-		PersonneDB personne = i.getParcelableExtra(MainActivity.PERSONNE);
+		edlogin = (EditText)findViewById(R.id.edlogin);
+		edpassword = (EditText)findViewById(R.id.edpassword);
+		edconfPassword = (EditText)findViewById(R.id.edconfPassword);
+		edmail = (EditText)findViewById(R.id.edmail);
+		edpays = (EditText)findViewById(R.id.edpays);
 		
 		valider = (Button) findViewById(R.id.validerInscription);
 		valider.setOnClickListener(validerListener);
