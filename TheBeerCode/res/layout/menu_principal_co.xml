@@ -25,7 +25,7 @@
     </LinearLayout>
     
     <Button
-        android:id="@+id/bBiere"
+        android:id="@+id/bBeers"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/Beers" />
