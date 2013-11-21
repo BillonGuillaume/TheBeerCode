@@ -1,6 +1,9 @@
 package com.fjbg.thebeercode;
 
+import java.sql.Connection;
+
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.myconnections.DBConnection;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,6 +19,7 @@ public class MainActivity extends Activity {
 	public final static int LOGIN_REQUEST = 0;
 	public final static int CONNECTION_FAILED = -2;
 	public final static String PERSONNE = "personne";
+	static Connection connect;
 	
 	Button bConnection = null;
 	Button bInscription = null;
@@ -32,6 +36,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_principal_noco);
+		DBConnection dbc = new DBConnection();
+		try {
+			connect = dbc.getConnection();
+		} catch (Exception e) {
+			
+		}
+		PersonneDB.setDbConnect(connect);
 		bConnection = (Button)findViewById(R.id.bConnection);
 		bInscription = (Button)findViewById(R.id.bInscription);
 		bBeers = (Button)findViewById(R.id.bBeers);

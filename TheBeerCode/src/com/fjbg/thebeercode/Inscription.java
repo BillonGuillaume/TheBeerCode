@@ -30,7 +30,7 @@ public class Inscription extends Activity {
 		setContentView(R.layout.activity_inscription);
 		
 		Intent i = getIntent();
-		PersonneDB personne = i.getParcelableExtra(MainActivity.personne);
+		PersonneDB personne = i.getParcelableExtra(MainActivity.PERSONNE);
 		
 		
 		valider = (Button) findViewById(R.id.validerInscription);
@@ -62,7 +62,7 @@ public class Inscription extends Activity {
 				personne.create();
 				
 			    Intent i= new Intent();
-				i.putExtra(MainActivity.IDPERSONNE, personne);
+				i.putExtra(MainActivity.PERSONNE, personne);
 				setResult(RESULT_OK, i);
 				finish();
 			}
