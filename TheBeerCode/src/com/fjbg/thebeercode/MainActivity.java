@@ -1,7 +1,6 @@
 package com.fjbg.thebeercode;
 
 import java.sql.Connection;
-
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.myconnections.DBConnection;
 
