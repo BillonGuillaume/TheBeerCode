@@ -112,4 +112,35 @@ public class PersonneDB extends Personne implements CRUD{
         }
     }
     
+    public Boolean connection() throws Exception {  // TO DO créer fonction SQL
+    	String req = "{?=SELECT idPersonne, login, mdp, mail, pays FROM Personne WHERE login = ? AND mdp = ?}";
+
+    	CallableStatement cstmt = null;
+    	try {
+    		cstmt = dbConnect.prepareCall(req);
+    		cstmt.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
+    		cstmt.setString(2, login);
+    		cstmt.setString(3,  mdp);
+    		cstmt.executeQuery();
+    		ResultSet rs = (ResultSet) cstmt.getObject(1);
+    		if (rs.next()) {
+    			this.idPersonne = rs.getInt("IDPERSONNE");
+    			this.login = rs.getString("LOGIN");
+    			this.mdp = rs.getString("MDP");
+    			this.mail = rs.getString("MAIL");
+    			this.pays = rs.getString("PAYS");
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	} catch (Exception e) {
+    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} finally {
+    		try {
+    			cstmt.close();
+    		} catch (Exception e) {
+    		}
+    	}
+    }
+
 }
