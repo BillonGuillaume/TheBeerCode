@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public final static int LOGIN_REQUEST = 0;
+	public final static int INSCRIPTION_REQUEST = 2;
 	public final static int CONNECTION_FAILED = -2;
 	public final static String PERSONNE = "personne";
 	static Connection connect;
@@ -62,7 +63,8 @@ public class MainActivity extends Activity {
 	private OnClickListener bInscriptionListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
+			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
+			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
 		}
 	};
 	
@@ -88,6 +90,17 @@ public class MainActivity extends Activity {
 			}
 			if(resultCode == CONNECTION_FAILED) {
 				Toast.makeText(this, "Connexion echouée", Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+		if (requestCode == INSCRIPTION_REQUEST){
+			if  (resultCode == RESULT_OK) {
+				Toast.makeText(MainActivity.this, "Inscription réussie", Toast.LENGTH_SHORT).show();
+				Intent result = getIntent();
+				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
+			}
+			if(resultCode == RESULT_CANCELED) {
+				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
