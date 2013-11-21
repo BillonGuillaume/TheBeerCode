@@ -39,10 +39,10 @@ public class MainActivity extends Activity {
 		DBConnection dbc = new DBConnection();
 		try {
 			connect = dbc.getConnection();
+			PersonneDB.setDbConnect(connect);  // Comment gérer la connection au wifi en pleine application ?
 		} catch (Exception e) {
 			
-		}
-		PersonneDB.setDbConnect(connect);
+		}		
 		bConnection = (Button)findViewById(R.id.bConnection);
 		bInscription = (Button)findViewById(R.id.bInscription);
 		bBeers = (Button)findViewById(R.id.bBeers);
