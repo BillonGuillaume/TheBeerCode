@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public final static int LOGIN_REQUEST = 0;
+	public final static int CONNECTION_FAILED = -2;
 	
 	Button bConnection = null;
 	Button bInscription = null;
@@ -42,7 +43,6 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent loginActivity = new  Intent(MainActivity.this,Login.class);
 			startActivityForResult(loginActivity,LOGIN_REQUEST);
-			// Changer le layout en mode connecté
 			}
 	};
 	
@@ -64,7 +64,15 @@ public class MainActivity extends Activity {
 	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if  (requestCode == LOGIN_REQUEST) {
 			if  (resultCode == RESULT_OK) {
-			Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+				// TO DO
+				// Changer le layout en mode connecté
+			}
+			if(resultCode == RESULT_CANCELED) {
+				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show();
+			}
+			if(resultCode == CONNECTION_FAILED) {
+				Toast.makeText(this, "Connexion echouée", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

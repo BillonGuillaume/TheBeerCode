@@ -36,10 +36,10 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/bSignUp"
+            android:id="@+id/bSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/SignUp" />
+            android:text="@string/SignIn" />
 
         <Button
             android:id="@+id/bCancel"
