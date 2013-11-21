@@ -2,13 +2,17 @@ package com.fjbg.thebeercode;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	public final static int LOGIN_REQUEST = 0;
+	
 	Button bConnection = null;
 	Button bInscription = null;
 	Button bBeers = null;
@@ -36,8 +40,9 @@ public class MainActivity extends Activity {
 	private OnClickListener bConnectionListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
-		}
+			Intent loginActivity = new  Intent(MainActivity.this,Login.class);
+			startActivityForResult(loginActivity,LOGIN_REQUEST);
+			}
 	};
 	
 	private OnClickListener bInscriptionListener = new OnClickListener() {
@@ -53,6 +58,15 @@ public class MainActivity extends Activity {
 			
 		}
 	};
+	
+	@Override
+	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if  (requestCode == LOGIN_REQUEST) {
+			if  (resultCode == RESULT_OK) {
+			Toast.makeText(this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

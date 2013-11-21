@@ -15,5 +15,6 @@
     <string name="Welcome">Welcome, </string>
     <string name="NameHere">Name Here</string>
     <string name="Profile">My Profile</string>
+    <string name="title_activity_login">Login</string>
 
 </resources>
