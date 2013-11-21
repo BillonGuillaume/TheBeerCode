@@ -2,8 +2,8 @@ package com.fjbg.thebeercode;
 
 import java.sql.Connection;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.model.ConnexionDB;
 import com.fjbg.thebeercode.myconnections.DBConnection;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -36,12 +36,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_principal_noco);
-		DBConnection dbc = new DBConnection();
+		ConnexionDB connec = new ConnexionDB();
+		//DBConnection dbc = new DBConnection();
 		try {
-			connect = dbc.getConnection();
-			PersonneDB.setDbConnect(connect);  // Comment gérer la connection au wifi en pleine application ?
+			//connect = dbc.getConnection();
+			//PersonneDB.setDbConnect(connect);  // Comment gérer la connection au wifi en pleine application ?
 		} catch (Exception e) {
-			
+			Toast.makeText(this, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
 		}		
 		bConnection = (Button)findViewById(R.id.bConnection);
 		bInscription = (Button)findViewById(R.id.bInscription);
@@ -82,8 +83,7 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
 				Intent result = getIntent();
 				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
-				// TO DO
-				// Changer le layout en mode connecté
+				// TODO Changer le layout en mode connecté
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show();
