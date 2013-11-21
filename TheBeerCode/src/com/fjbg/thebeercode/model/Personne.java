@@ -84,7 +84,7 @@ public class Personne implements Parcelable{
 		login = in.readString();
 		mdp = in.readString();
 		mail = in.readString();
-		pays=in.readString();
+		pays = in.readString();
 	}
 
 }

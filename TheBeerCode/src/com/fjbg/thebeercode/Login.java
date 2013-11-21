@@ -41,6 +41,8 @@ public class Login extends Activity {
 	private OnClickListener bSignInListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			String login = eTLogin.getText().toString();
+			String mdp = eTPwd.getText().toString();
 			Intent result = new  Intent();
 			// TO DO
 			// Vérifier si le compte est OK et renvoyer la Personne
