@@ -82,8 +82,7 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
 				Intent result = getIntent();
 				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
-				// TO DO
-				// Changer le layout en mode connecté
+				// TODO Changer le layout en mode connecté
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show();
