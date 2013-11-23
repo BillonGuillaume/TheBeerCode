@@ -9,6 +9,7 @@ import com.fjbg.thebeercode.myconnections.DBConnection;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,7 @@ public class MainActivity extends Activity {
 	public final static int CONNECTION_FAILED = -2;
 	public final static String PERSONNE = "personne";
 	static Connection connect;
+	static ConnexionDB connec;
 	
 	Button bConnection = null;
 	Button bInscription = null;
@@ -37,29 +39,35 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menu_principal_noco);
-		ConnexionDB connec = new ConnexionDB();
-		//DBConnection dbc = new DBConnection();
-		try {
-			//connect = dbc.getConnection();
-			//PersonneDB.setDbConnect(connect);  // Comment gérer la connection au wifi en pleine application ?
-		} catch (Exception e) {
-			
-		}		
+		setContentView(R.layout.menu_principal_noco);		
+				
 		bConnection = (Button)findViewById(R.id.bConnection);
 		bInscription = (Button)findViewById(R.id.bInscription);
 		bBeers = (Button)findViewById(R.id.bBeers);
 		
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
-		bBeers.setOnClickListener(bBeersListener);	
+		bBeers.setOnClickListener(bBeersListener);
+		
+		try {
+			connec = new ConnexionDB();
+			connec.execute();
+		} catch (Exception e) {
+			Toast.makeText(MainActivity.this, "Exception  : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+		}	
 	}
 	
 	private OnClickListener bConnectionListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent loginActivity = new  Intent(MainActivity.this,Login.class);
-			startActivityForResult(loginActivity,LOGIN_REQUEST);
+			PersonneDB p = new PersonneDB(1, "Login", "mdp", "email", "pays");
+			try {
+			p.create();
+			}catch (Exception e) {
+				Log.d("MainActivity", "Exception create : " + e.getMessage());
+			}
+//			Intent loginActivity = new  Intent(MainActivity.this,Login.class);
+//			startActivityForResult(loginActivity,LOGIN_REQUEST);
 			}
 	};
 	

@@ -2,7 +2,14 @@ package com.fjbg.thebeercode.myconnections;
 
 import java.sql.*;
 import java.util.*;
+
+import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.CoordonneesDB;
+import com.fjbg.thebeercode.model.FavoriDB;
+import com.fjbg.thebeercode.model.HistoriqueDB;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.model.PrixDB;
+import com.fjbg.thebeercode.model.VoteDB;
 
 public class DBConnection {
 
@@ -20,8 +27,7 @@ public class DBConnection {
 		dbName =properties.getString("cours.DB.database");
 		username=properties.getString("cours.DB.login");
 		password=properties.getString("cours.DB.password");
-		dbPort=properties.getString("cours.DB.port");    
-
+		dbPort=properties.getString("cours.DB.port");
 	}
 
 
@@ -40,6 +46,12 @@ public class DBConnection {
 	public void init(Connection connect)throws Exception{
 		if(connect==null)throw new Exception("Connexion impossible");
 		PersonneDB.setDbConnect(connect);
+		FavoriDB.setDbConnect(connect);
+		HistoriqueDB.setDbConnect(connect);
+		VoteDB.setDbConnect(connect);
+		BiereDB.setConnection(connect);
+		CoordonneesDB.setConnection(connect);
+		PrixDB.setConnection(connect);
 	}
 
 

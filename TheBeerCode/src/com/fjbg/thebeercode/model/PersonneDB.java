@@ -29,7 +29,11 @@ public class PersonneDB extends Personne implements CRUD{
             cstmt.setString(3, mdp);
             cstmt.setString(4, mail);
             cstmt.setString(5, pays);
+            try {
             cstmt.executeUpdate();
+            } catch (Exception e) {
+            	
+            }
             this.idPersonne = cstmt.getInt(1);
         } catch (Exception e) {
             throw new Exception("Erreur de création " + e.getMessage());
