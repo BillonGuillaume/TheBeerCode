@@ -22,14 +22,13 @@ public class DBConnection {
 
 	public DBConnection(){
 		PropertyResourceBundle properties = (PropertyResourceBundle)
-				PropertyResourceBundle.getBundle("resources.application");
+				PropertyResourceBundle.getBundle("com.fjbg.thebeercode.resources.application");
 		serverName=properties.getString("cours.DB.server");
 		dbName =properties.getString("cours.DB.database");
 		username=properties.getString("cours.DB.login");
 		password=properties.getString("cours.DB.password");
 		dbPort=properties.getString("cours.DB.port");
 	}
-
 
 	public DBConnection(String username,String password){
 		this();
@@ -53,8 +52,6 @@ public class DBConnection {
 		CoordonneesDB.setConnection(connect);
 		PrixDB.setConnection(connect);
 	}
-
-
 
 	public Connection getConnection() throws Exception{
 		try {

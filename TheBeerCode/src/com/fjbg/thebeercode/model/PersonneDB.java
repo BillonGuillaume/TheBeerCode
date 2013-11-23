@@ -1,6 +1,8 @@
 package com.fjbg.thebeercode.model;
 import java.sql.*;
 
+import android.util.Log;
+
 
 
 public class PersonneDB extends Personne implements CRUD{
@@ -22,6 +24,7 @@ public class PersonneDB extends Personne implements CRUD{
     public void create() throws Exception {
         CallableStatement cstmt = null;
         try {
+        	Log.d("PersonneDB", "debut create");
             String req = "call createPersonne(?,?,?,?,?)";
             cstmt = dbConnect.prepareCall(req);
             cstmt.registerOutParameter(1, java.sql.Types.INTEGER); 
@@ -32,7 +35,7 @@ public class PersonneDB extends Personne implements CRUD{
             try {
             cstmt.executeUpdate();
             } catch (Exception e) {
-            	
+            	Log.d("PersonneDB", "executeUpdate exception : " + e.getMessage());
             }
             this.idPersonne = cstmt.getInt(1);
         } catch (Exception e) {
