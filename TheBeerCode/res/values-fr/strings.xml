@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ConfSignUp">Inscrivez vous !</string>
+    <string name="Country">Pays :</string>
+    <string name="ConfPassword">Confirmer mot de passe :</string>
+    <string name="NotRegistered">Pas encore inscrit ?</string>
+    <string name="Cancel">Annuler</string>
+    <string name="SignIn">Connexion</string>
+    <string name="Password">Mot de passe :</string>
+    <string name="Login">Nom utilisateur :</string>
+    <string name="title_activity_login">Connexion</string>
+    <string name="Profile">Mon profil</string>
+    <string name="Welcome">Bienvenue,</string>
+    <string name="Disconnection">Deconnexion</string>
+    <string name="MyVotes">Mes votes</string>
+    <string name="Additions">Mes ajouts</string>
+    <string name="Beers">Bères</string>
+    <string name="Connection">Connexion</string>
+    
+</resources>
