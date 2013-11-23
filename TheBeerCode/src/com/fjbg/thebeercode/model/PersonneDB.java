@@ -3,8 +3,6 @@ import java.sql.*;
 
 import android.util.Log;
 
-
-
 public class PersonneDB extends Personne implements CRUD{
     
     public static Connection dbConnect = null;
@@ -119,32 +117,38 @@ public class PersonneDB extends Personne implements CRUD{
         }
     }
     
-    public Boolean connection() throws Exception {  // TO DO créer fonction SQL
-    	String req = "{?=SELECT idPersonne, login, mdp, mail, pays FROM Personne WHERE login = ? AND mdp = ?}";
+    public void connection() throws Exception {  // TODO créer fonction SQL
+    	String req = "SELECT idPersonne, login, mdp, mail, pays FROM Personne WHERE login = ? AND mdp = ?";
 
-    	CallableStatement cstmt = null;
+    	PreparedStatement pstmt = null;
+    	Log.d("PersonneDB", "avant try");
     	try {
-    		cstmt = dbConnect.prepareCall(req);
-    		cstmt.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
-    		cstmt.setString(2, login);
-    		cstmt.setString(3,  mdp);
-    		cstmt.executeQuery();
-    		ResultSet rs = (ResultSet) cstmt.getObject(1);
+    		pstmt = dbConnect.prepareCall(req);
+    		Log.d("PersonneDB", "prepareCall passé");
+    		pstmt.setString(1, login);
+    		pstmt.setString(2,  mdp);
+    		ResultSet rs = null;
+    		try {
+    		rs = (ResultSet) pstmt.executeQuery();
+    		} catch (Exception ex) {
+    			Log.d("PersonneDB", "Exception executeQuery : " + ex.getMessage());
+    		}
+    		Log.d("PersonneDB", "executeQuery passé");
     		if (rs.next()) {
+    			Log.d("PersonneDB", "dans rs.next");
     			this.idPersonne = rs.getInt("IDPERSONNE");
     			this.login = rs.getString("LOGIN");
     			this.mdp = rs.getString("MDP");
     			this.mail = rs.getString("MAIL");
     			this.pays = rs.getString("PAYS");
-    			return true;
     		} else {
-    			return false;
+    			throw new Exception("Login et/ou mot de passe incorrect(s)");
     		}
     	} catch (Exception e) {
     		throw new Exception("Erreur de lecture " + e.getMessage());
     	} finally {
     		try {
-    			cstmt.close();
+    			pstmt.close();
     		} catch (Exception e) {
     		}
     	}

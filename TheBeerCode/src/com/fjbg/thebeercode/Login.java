@@ -1,9 +1,11 @@
 package com.fjbg.thebeercode;
 
 import com.fjbg.thebeercode.model.PersonneDB;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,12 +55,13 @@ public class Login extends Activity {
 				Intent result = new Intent();
 				result.putExtra(MainActivity.PERSONNE, p);
 				setResult(RESULT_OK, result);
-				finish();
-			} catch (Exception e) {
-				Toast.makeText(Login.this, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+				finish();				
+			} catch (Exception e) {				
 				eTLogin.setText("");
 				eTPwd.setText("");
-			}
+				Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+				Log.d("Login", "Exception : " + e.getMessage());
+			}			
 		}
 	};
 	

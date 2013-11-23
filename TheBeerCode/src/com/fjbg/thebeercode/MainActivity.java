@@ -4,12 +4,10 @@ import java.sql.Connection;
 
 import com.fjbg.thebeercode.model.ConnexionDB;
 import com.fjbg.thebeercode.model.PersonneDB;
-import com.fjbg.thebeercode.myconnections.DBConnection;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,10 +34,12 @@ public class MainActivity extends Activity {
 	TextView tVWelcome = null;
 	TextView tVNameMenu = null;
 	
+	PersonneDB user;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menu_principal_noco);		
+		setContentView(R.layout.menu_principal_noco);
 				
 		bConnection = (Button)findViewById(R.id.bConnection);
 		bInscription = (Button)findViewById(R.id.bInscription);
@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
 				Intent result = getIntent();
-				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
+				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
 				// TODO Changer le layout en mode connecté
 			}
 			if(resultCode == RESULT_CANCELED) {
@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show();
 				Intent result = getIntent();
-				PersonneDB p=(PersonneDB)result.getParcelableExtra(PERSONNE);
+				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show();
