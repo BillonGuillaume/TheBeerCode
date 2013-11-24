@@ -39,7 +39,7 @@
         android:id="@+id/eTdegre"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:inputType="number" />
     
     <TextView
         android:id="@+id/tVimage"
@@ -66,10 +66,10 @@
             android:text="@string/Add" />
 
         <Button
-            android:id="@+id/bCancel"
+            android:id="@+id/bBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Cancel" />
+            android:text="@string/Back" />
     </LinearLayout>
        
 </LinearLayout>
