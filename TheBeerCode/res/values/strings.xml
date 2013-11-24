@@ -32,5 +32,6 @@
     <string name="BeerPicture">Beer picture :</string>
     <string name="ABV">Alcohol by volume :</string>
     <string name="Add">Add</string>
+    <string name="title_activity_mon_profil">MonProfil</string>
 
 </resources>

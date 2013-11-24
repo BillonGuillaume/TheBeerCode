@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 	public final static int LOGIN_REQUEST = 4;
 	public final static int INSCRIPTION_REQUEST = 2;
 	public final static int CONNECTION_FAILED = -2;
+	public final static int PROFILE_REQUEST = 5;
 	public final static String PERSONNE = "personne";
 	static Connection connect;
 	static ConnexionDB connec;
@@ -83,8 +84,11 @@ public class MainActivity extends Activity {
 	private OnClickListener bBeersListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class);
-			startActivity(BeersActivity);
+			if(user!=null){
+				Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class);
+				startActivity(BeersActivity);
+			}
+			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();
 		}
 	};
 	
@@ -127,6 +131,9 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 //			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
 //			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
+			Intent ProfileActivity = new  Intent(MainActivity.this,MonProfil.class);
+			ProfileActivity.putExtra(PERSONNE, user);
+			startActivityForResult(ProfileActivity,PROFILE_REQUEST);
 		}
 	};
 	
@@ -171,6 +178,14 @@ public class MainActivity extends Activity {
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show();
+			}
+		}
+		
+		if (requestCode == PROFILE_REQUEST){
+			if  (resultCode == RESULT_OK) {
+				Toast.makeText(this, "Profil modifié", Toast.LENGTH_SHORT).show();
+				Intent result = getIntent();
+				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
 			}
 		}
 	}
