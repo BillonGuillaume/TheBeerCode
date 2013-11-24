@@ -105,8 +105,18 @@ public class MainActivity extends Activity {
 	private OnClickListener bDisconnectionListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-//			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
-//			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
+			setContentView(R.layout.menu_principal_noco);
+
+			bConnection = (Button)findViewById(R.id.bConnection);
+			bInscription = (Button)findViewById(R.id.bInscription);
+			bBeers = (Button)findViewById(R.id.bBeers);
+
+			bConnection.setOnClickListener(bConnectionListener);
+			bInscription.setOnClickListener(bInscriptionListener);
+			bBeers.setOnClickListener(bBeersListener);
+			
+			user = null;
+			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show();
 		}
 	};
 	
