@@ -8,6 +8,7 @@ import com.fjbg.thebeercode.model.PersonneDB;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -94,6 +95,7 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
 				Intent result = getIntent();
 				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
+				Log.d("MainActivity", "connexion reussie : " + user.getLogin());
 				// TODO Changer le layout en mode connecté
 			}
 			if(resultCode == RESULT_CANCELED) {

@@ -51,18 +51,25 @@ public class Login extends Activity {
 			PersonneDB p = new PersonneDB();
 			p.setLogin(login);
 			p.setMdp(mdp);
-			try {
-				p.connection();
-				Intent result = new Intent();
-				result.putExtra(MainActivity.PERSONNE, p);
-				setResult(RESULT_OK, result);
-				finish();				
-			} catch (Exception e) {				
-				eTLogin.setText("");
-				eTPwd.setText("");
-				ExceptionError er = new ExceptionError(e.getMessage());
-				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
-			}			
+//			try {
+//				p.connection();
+//				Log.d("Login", "connection passée");
+//				Intent result = new Intent();
+//				result.putExtra(MainActivity.PERSONNE, p);
+//				setResult(RESULT_OK, result);
+//				finish();				
+//			} catch (Exception e) {				
+//				eTLogin.setText("");
+//				eTPwd.setText("");
+//				ExceptionError er = new ExceptionError(e.getMessage());
+//				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
+//			}
+			Intent result = new Intent();  // Code court-circuité pour authentification
+			result.putExtra(MainActivity.PERSONNE, p);
+			Log.d("Login", "putExtra");
+			setResult(RESULT_OK, result);
+			Log.d("Login", "setResult");
+			finish();	
 		}
 	};
 	
