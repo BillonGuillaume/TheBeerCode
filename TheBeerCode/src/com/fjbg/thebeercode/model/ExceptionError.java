@@ -11,6 +11,7 @@ public class ExceptionError {
 		Log.d("ExceptionError", "Creation exception");
 		String[] result;
 		result = exception.split("/");
+		Log.d("ExceptionError", "size : " + result.length);
 		text = result[0];
 		Log.d("ExceptionError", "text ok");
 		code = Integer.parseInt(result[1]);

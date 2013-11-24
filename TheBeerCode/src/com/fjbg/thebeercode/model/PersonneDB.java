@@ -147,7 +147,7 @@ public class PersonneDB extends Personne implements CRUD{
     			throw new Exception("Login et/ou mot de passe incorrect(s)");
     		}
     	} catch (Exception e) { // Exception internationalisée
-    		throw new Exception("Erreur de lecture/" + e.getMessage() + "/" + R.string.unknown);
+    		throw new Exception("Erreur de lecture/" + R.string.unknown + "/" + e.getMessage());
     	} finally {
     		try {
     			pstmt.close();
