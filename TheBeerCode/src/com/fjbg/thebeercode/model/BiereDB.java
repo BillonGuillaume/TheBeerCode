@@ -2,6 +2,8 @@ package com.fjbg.thebeercode.model;
 import java.sql.*;
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class BiereDB extends Biere implements CRUD{
 	protected static Connection dbConnect=null;
 
@@ -45,7 +47,11 @@ public class BiereDB extends Biere implements CRUD{
          cstmt.setString(3,cheminImage);
          cstmt.setString(4,paysBiere);
          cstmt.setFloat(5,degreBiere);
-	     cstmt.executeUpdate();
+         try {
+             cstmt.executeUpdate();
+             } catch (Exception e) {
+             	Log.d("BiereDB", "executeUpdate exception : " + e.getMessage());
+             }
          this.idBiere=cstmt.getInt(1);
        }
        catch(Exception e ){
