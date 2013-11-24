@@ -82,7 +82,8 @@ public class MainActivity extends Activity {
 	private OnClickListener bBeersListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
+			Intent mesAjouts = new  Intent(MainActivity.this,MesAjouts.class);
+			startActivity(mesAjouts);
 		}
 	};
 	

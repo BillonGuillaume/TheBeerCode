@@ -9,7 +9,7 @@
     <string name="Connection">Connection</string>
     <string name="Inscription">Inscription</string>
     <string name="Beers">Beers</string>
-    <string name="Additions">Additions</string>
+    <string name="Additions">My Additions</string>
     <string name="MyVotes">My Votes</string>
     <string name="Disconnection">Disconnection</string>
     <string name="Welcome">Welcome, </string>
@@ -25,6 +25,7 @@
     <string name="Mail">Mail :</string>
     <string name="Country">Country :</string>
     <string name="ConfSignUp">Join now !</string>
-    
+    <string name="title_activity_mes_ajouts">MesAjouts</string>
+    <string name="Back">Back</string>
 
 </resources>

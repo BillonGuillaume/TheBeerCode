@@ -7,7 +7,8 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -34,6 +35,10 @@
         <activity
             android:name="com.fjbg.thebeercode.Login"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name="com.fjbg.thebeercode.MesAjouts"
+            android:label="@string/title_activity_mes_ajouts" >
         </activity>
     </application>
 
