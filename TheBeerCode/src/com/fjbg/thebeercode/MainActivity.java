@@ -83,8 +83,48 @@ public class MainActivity extends Activity {
 	private OnClickListener bBeersListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent mesAjouts = new  Intent(MainActivity.this,MesAjouts.class);
-			startActivity(mesAjouts);
+		}
+	};
+	
+	private OnClickListener bAdditionsListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent AdditionsActivity = new  Intent(MainActivity.this,MesAjouts.class);
+			startActivity(AdditionsActivity);
+		}
+	};
+	
+	private OnClickListener bMyVotesListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+//			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
+//			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
+		}
+	};
+	
+	private OnClickListener bDisconnectionListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			setContentView(R.layout.menu_principal_noco);
+
+			bConnection = (Button)findViewById(R.id.bConnection);
+			bInscription = (Button)findViewById(R.id.bInscription);
+			bBeers = (Button)findViewById(R.id.bBeers);
+
+			bConnection.setOnClickListener(bConnectionListener);
+			bInscription.setOnClickListener(bInscriptionListener);
+			bBeers.setOnClickListener(bBeersListener);
+			
+			user = null;
+			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show();
+		}
+	};
+	
+	private OnClickListener bProfileListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+//			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
+//			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
 		}
 	};
 	
@@ -95,6 +135,23 @@ public class MainActivity extends Activity {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 				// TODO Changer le layout en mode connecté
+				setContentView(R.layout.menu_principal_co);
+				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
+				tVNameMenu = (TextView)findViewById(R.id.tVNameMenu);
+				bBeers = (Button)findViewById(R.id.bBeers);
+				bAdditions = (Button)findViewById(R.id.bAdditions);
+				bMyVotes = (Button)findViewById(R.id.bMyVotes);
+				bDisconnection = (Button)findViewById(R.id.bDisconnection);
+				bProfile = (Button)findViewById(R.id.bProfile);
+				
+				bBeers.setOnClickListener(bBeersListener);
+				bAdditions.setOnClickListener(bAdditionsListener);
+				bMyVotes.setOnClickListener(bMyVotesListener);
+				bDisconnection.setOnClickListener(bDisconnectionListener);
+				bProfile.setOnClickListener(bProfileListener);
+				
+				tVNameMenu.setText(" " + user.getLogin());
+						
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show();
