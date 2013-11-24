@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	public final static int LOGIN_REQUEST = 0;
+	public final static int LOGIN_REQUEST = 4;
 	public final static int INSCRIPTION_REQUEST = 2;
 	public final static int CONNECTION_FAILED = -2;
 	public final static String PERSONNE = "personne";
@@ -93,9 +93,7 @@ public class MainActivity extends Activity {
 		if  (requestCode == LOGIN_REQUEST) {
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
-				Intent result = getIntent();
-				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
-				Log.d("MainActivity", "connexion reussie : " + user.getLogin());
+				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 				// TODO Changer le layout en mode connecté
 			}
 			if(resultCode == RESULT_CANCELED) {

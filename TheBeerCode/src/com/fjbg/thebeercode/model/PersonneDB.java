@@ -3,9 +3,11 @@ import java.sql.*;
 
 import com.fjbg.thebeercode.R;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class PersonneDB extends Personne implements CRUD{
+public class PersonneDB extends Personne implements CRUD, Parcelable{
     
     public static Connection dbConnect = null;
     
@@ -155,5 +157,37 @@ public class PersonneDB extends Personne implements CRUD{
     		}
     	}
     }
+    
+    @Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(idPersonne);
+		dest.writeString(login);
+		dest.writeString(mdp);
+		dest.writeString(mail);
+		dest.writeString(pays);
+	}
+
+	public static final Parcelable.Creator<PersonneDB> CREATOR = new Parcelable.Creator<PersonneDB>() {
+		@Override
+		public PersonneDB createFromParcel(Parcel source) {
+			return new PersonneDB(source);
+		}
+		@Override
+		public PersonneDB[] newArray(int size) {
+			return new PersonneDB[size];
+		}
+	};
+	public PersonneDB(Parcel in) {
+		idPersonne = in.readInt();
+		login = in.readString();
+		mdp = in.readString();
+		mail = in.readString();
+		pays = in.readString();
+	}
 
 }

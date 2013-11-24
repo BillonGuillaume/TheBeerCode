@@ -66,9 +66,7 @@ public class Login extends Activity {
 //			}
 			Intent result = new Intent();  // Code court-circuité pour authentification
 			result.putExtra(MainActivity.PERSONNE, p);
-			Log.d("Login", "putExtra");
 			setResult(RESULT_OK, result);
-			Log.d("Login", "setResult");
 			finish();	
 		}
 	};
