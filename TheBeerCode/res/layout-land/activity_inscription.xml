@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/lblogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/Login" />
+
+    <EditText
+        android:id="@+id/edlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lblogin"
+        android:layout_below="@+id/lblogin"
+        android:inputType="text"
+        android:ems="10" >
+	</EditText>
+    
+    <TextView
+        android:id="@+id/lbpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edlogin"
+        android:layout_below="@+id/edlogin"
+        android:text="@string/Password" />
+    
+    <EditText
+        android:id="@+id/edpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lbpassword"
+        android:layout_below="@+id/lbpassword"
+        android:inputType="textPassword"
+        android:ems="10" >
+	</EditText>
+
+    <EditText
+        android:id="@+id/edconfPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lbconfPassword"
+        android:layout_below="@+id/lbconfPassword"
+        android:inputType="textPassword"
+        android:ems="10" >
+	</EditText>
+
+    <EditText
+        android:id="@+id/edmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lbpassword"
+        android:layout_alignLeft="@+id/lbmail"
+        android:inputType="textEmailAddress"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/edpays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lbpays"
+        android:layout_below="@+id/lbpays"
+        android:inputType="text"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/lbmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lblogin"
+        android:layout_alignBottom="@+id/lblogin"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Mail" />
+
+    <TextView
+        android:id="@+id/lbconfPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edpassword"
+        android:layout_alignLeft="@+id/edmail"
+        android:text="@string/ConfPassword" />
+
+    <TextView
+        android:id="@+id/lbpays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edpassword"
+        android:layout_below="@+id/edpassword"
+        android:text="@string/Country" />
+
+    <Button
+        android:id="@+id/annulerInscription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/validerInscription"
+        android:layout_alignBottom="@+id/validerInscription"
+        android:layout_toRightOf="@+id/validerInscription"
+        android:text="@string/Cancel" />
+
+    <Button
+        android:id="@+id/validerInscription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edconfPassword"
+        android:layout_below="@+id/lbpays"
+        android:text="@string/ConfSignUp" />
+
+</RelativeLayout>
