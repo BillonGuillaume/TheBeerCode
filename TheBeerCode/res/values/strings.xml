@@ -27,5 +27,10 @@
     <string name="ConfSignUp">Join now !</string>
     <string name="title_activity_mes_ajouts">My Additions</string>
     <string name="Back">Back</string>
+    <string name="title_activity_ajout_biere">AjoutBiere</string>
+    <string name="BeerName">Beer name :</string>
+    <string name="BeerPicture">Beer picture :</string>
+    <string name="ABV">Alcohol by volume :</string>
+    <string name="Add">Add</string>
 
 </resources>

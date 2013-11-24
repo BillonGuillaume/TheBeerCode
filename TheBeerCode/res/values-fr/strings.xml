@@ -17,5 +17,9 @@
     <string name="Beers">Bères</string>
     <string name="Connection">Connexion</string>
     <string name="Back">Retour</string>
+    <string name="BeerName">Nom bière :</string>
+    <string name="BeerPicture">Image Bière :</string>
+    <string name="ABV">Degré alcool :</string>
+    <string name="Add">Ajouter</string>
     
 </resources>

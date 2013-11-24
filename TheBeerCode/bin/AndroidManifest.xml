@@ -40,6 +40,10 @@
             android:name="com.fjbg.thebeercode.MesAjouts"
             android:label="@string/title_activity_mes_ajouts" >
         </activity>
+        <activity
+            android:name="com.fjbg.thebeercode.AjoutBiere"
+            android:label="@string/title_activity_ajout_biere" >
+        </activity>
     </application>
 
 </manifest>

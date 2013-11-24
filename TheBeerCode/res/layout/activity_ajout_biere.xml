@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AjoutBiere" >
+
+    <TextView
+        android:id="@+id/tVnom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/BeerName" />
+
+    <EditText
+        android:id="@+id/eTnom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/tVpays"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Country" />
+
+    <EditText
+        android:id="@+id/eTpays"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/tVdegre"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ABV" />
+
+    <EditText
+        android:id="@+id/eTdegre"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/tVimage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/BeerPicture" />
+
+    <EditText
+        android:id="@+id/eTimage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bAjBiere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Add" />
+
+        <Button
+            android:id="@+id/bCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Cancel" />
+    </LinearLayout>
+       
+</LinearLayout>
