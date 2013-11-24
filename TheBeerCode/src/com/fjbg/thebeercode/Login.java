@@ -61,9 +61,7 @@ public class Login extends Activity {
 				eTLogin.setText("");
 				eTPwd.setText("");
 				ExceptionError er = new ExceptionError(e.getMessage());
-				Log.d("Login", "ExceptionError créée");
 				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
-				Log.d("Login", "Exception : " + e.getMessage());
 			}			
 		}
 	};
