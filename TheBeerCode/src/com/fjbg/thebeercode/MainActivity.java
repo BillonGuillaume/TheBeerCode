@@ -83,6 +83,8 @@ public class MainActivity extends Activity {
 	private OnClickListener bBeersListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class);
+			startActivity(BeersActivity);
 		}
 	};
 	

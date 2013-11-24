@@ -54,6 +54,7 @@ public class AjoutBiere extends Activity {
 			
 			try{
 				float degreBiere= Float.parseFloat(eTdegre.getText().toString());
+				biere.setDegreBiere(degreBiere);
 			}
 			catch(Exception e){
 				Toast.makeText(AjoutBiere.this, "Le degre doit être un nombre !", Toast.LENGTH_SHORT ).show();
