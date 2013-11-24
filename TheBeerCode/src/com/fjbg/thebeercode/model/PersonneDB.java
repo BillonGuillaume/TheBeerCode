@@ -1,6 +1,8 @@
 package com.fjbg.thebeercode.model;
 import java.sql.*;
 
+import com.fjbg.thebeercode.R;
+
 import android.util.Log;
 
 public class PersonneDB extends Personne implements CRUD{
@@ -144,8 +146,8 @@ public class PersonneDB extends Personne implements CRUD{
     		} else {
     			throw new Exception("Login et/ou mot de passe incorrect(s)");
     		}
-    	} catch (Exception e) {
-    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} catch (Exception e) { // Exception internationalisée
+    		throw new Exception("Erreur de lecture/" + e.getMessage() + "/" + R.string.unknown);
     	} finally {
     		try {
     			pstmt.close();

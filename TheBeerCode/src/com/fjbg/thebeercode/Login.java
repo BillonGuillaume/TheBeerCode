@@ -1,5 +1,6 @@
 package com.fjbg.thebeercode;
 
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.Bundle;
@@ -59,7 +60,9 @@ public class Login extends Activity {
 			} catch (Exception e) {				
 				eTLogin.setText("");
 				eTPwd.setText("");
-				Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+				ExceptionError er = new ExceptionError(e.getMessage());
+				Log.d("Login", "ExceptionError créée");
+				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
 				Log.d("Login", "Exception : " + e.getMessage());
 			}			
 		}
