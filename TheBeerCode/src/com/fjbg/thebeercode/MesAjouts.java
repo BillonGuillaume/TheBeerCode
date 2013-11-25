@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
 public class MesAjouts extends Activity {
@@ -47,6 +49,14 @@ public class MesAjouts extends Activity {
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
 				loadMore(totalItemsCount);
+			}
+		});
+		
+		lvItems.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				String selectedItem=(String)arg0.getItemAtPosition(arg2);
 			}
 		});
 	}
