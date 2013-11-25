@@ -124,7 +124,10 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     
     public void connection() throws Exception {  // TODO créer fonction SQL
     	String req = "SELECT idPersonne, login, mdp, mail, pays FROM Personne WHERE login = ? AND mdp = ?";
-
+    	if(dbConnect == null) {
+    		Log.d("PersonneDB", "connexion null");
+    	}else Log.d("PersonneDB", "connexion non null");
+    	
     	PreparedStatement pstmt = null;
     	Log.d("PersonneDB", "avant try");
     	try {
