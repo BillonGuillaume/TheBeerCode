@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 	private OnClickListener bConnectionListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-//			PersonneDB p = new PersonneDB(1, "Login", "mdp", "email", "pays");
+			PersonneDB p = new PersonneDB(1, "Login", "mdp", "email", "pays");
 //			try {
 //			p.create();
 //			}catch (Exception e) {

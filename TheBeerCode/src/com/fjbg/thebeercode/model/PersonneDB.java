@@ -34,10 +34,11 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
             cstmt.setString(3, mdp);
             cstmt.setString(4, mail);
             cstmt.setString(5, pays);
+            int nl = -1;
             try {
-            cstmt.executeUpdate();
+            nl = cstmt.executeUpdate();
             } catch (Exception e) {
-            	Log.d("PersonneDB", "executeUpdate exception : " + e.getMessage());
+            	Log.d("PersonneDB", "executeUpdate exception : " + e.getMessage() + " nbre lignes : " + nl);
             }
             this.idPersonne = cstmt.getInt(1);
         } catch (Exception e) {
@@ -127,7 +128,7 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     	PreparedStatement pstmt = null;
     	Log.d("PersonneDB", "avant try");
     	try {
-    		pstmt = dbConnect.prepareCall(req);
+    		pstmt = dbConnect.prepareStatement(req);
     		Log.d("PersonneDB", "prepareCall passé");
     		pstmt.setString(1, login);
     		pstmt.setString(2,  mdp);
