@@ -26,7 +26,6 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     public void create() throws Exception {
         CallableStatement cstmt = null;
         try {
-        	Log.d("PersonneDB", "debut create");
             String req = "call createPersonne(?,?,?,?,?)";
             cstmt = dbConnect.prepareCall(req);
             cstmt.registerOutParameter(1, java.sql.Types.INTEGER); 
@@ -34,12 +33,7 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
             cstmt.setString(3, mdp);
             cstmt.setString(4, mail);
             cstmt.setString(5, pays);
-            int nl = -1;
-            try {
-            nl = cstmt.executeUpdate();
-            } catch (Exception e) {
-            	Log.d("PersonneDB", "executeUpdate exception : " + e.getMessage() + " nbre lignes : " + nl);
-            }
+            cstmt.executeUpdate();
             this.idPersonne = cstmt.getInt(1);
         } catch (Exception e) {
             throw new Exception("Erreur de création " + e.getMessage());
@@ -124,26 +118,15 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     
     public void connection() throws Exception {  // TODO créer fonction SQL
     	String req = "SELECT idPersonne, login, mdp, mail, pays FROM Personne WHERE login = ? AND mdp = ?";
-    	if(dbConnect == null) {
-    		Log.d("PersonneDB", "connexion null");
-    	}else Log.d("PersonneDB", "connexion non null");
     	
     	PreparedStatement pstmt = null;
-    	Log.d("PersonneDB", "avant try");
     	try {
     		pstmt = dbConnect.prepareStatement(req);
-    		Log.d("PersonneDB", "prepareCall passé");
     		pstmt.setString(1, login);
     		pstmt.setString(2,  mdp);
     		ResultSet rs = null;
-    		try {
     		rs = (ResultSet) pstmt.executeQuery();
-    		} catch (Exception ex) {
-    			Log.d("PersonneDB", "Exception executeQuery : " + ex.getMessage());
-    		}
-    		Log.d("PersonneDB", "executeQuery passé");
     		if (rs.next()) {
-    			Log.d("PersonneDB", "dans rs.next");
     			this.idPersonne = rs.getInt("IDPERSONNE");
     			this.login = rs.getString("LOGIN");
     			this.mdp = rs.getString("MDP");

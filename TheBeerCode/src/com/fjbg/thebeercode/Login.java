@@ -3,6 +3,7 @@ package com.fjbg.thebeercode;
 import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -46,28 +47,8 @@ public class Login extends Activity {
 	private OnClickListener bSignInListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			String login = eTLogin.getText().toString();
-			String mdp = eTPwd.getText().toString();
-			PersonneDB p = new PersonneDB();
-			p.setLogin(login);
-			p.setMdp(mdp);
-			try {
-				p.connection();
-				Log.d("Login", "connection passée");
-				Intent result = new Intent();
-				result.putExtra(MainActivity.PERSONNE, p);
-				setResult(RESULT_OK, result);
-				finish();				
-			} catch (Exception e) {				
-				eTLogin.setText("");
-				eTPwd.setText("");
-				ExceptionError er = new ExceptionError(e.getMessage());
-				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
-			}
-//			Intent result = new Intent();  // Code court-circuité pour authentification
-//			result.putExtra(MainActivity.PERSONNE, p);
-//			setResult(RESULT_OK, result);
-//			finish();	
+			Connexion co = new Connexion();
+			co.execute();
 		}
 	};
 	
@@ -84,6 +65,38 @@ public class Login extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
+	}
+	
+	public class Connexion extends AsyncTask<String, Integer, Boolean>{		
+		public Connexion() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			String login = eTLogin.getText().toString();
+			String mdp = eTPwd.getText().toString();
+			PersonneDB p = new PersonneDB();
+			p.setLogin(login);
+			p.setMdp(mdp);
+			try {
+				p.connection();
+				Intent result = new Intent();
+				result.putExtra(MainActivity.PERSONNE, p);
+				setResult(RESULT_OK, result);
+				finish();
+			} catch (Exception e) {		// TODO Déplacer la remise à zéro des edittext dans le postprocess		
+				eTLogin.setText("");
+				eTPwd.setText("");
+				ExceptionError er = new ExceptionError(e.getMessage());
+				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
+			}
+			Intent result = new Intent();
+			result.putExtra(MainActivity.PERSONNE, p);
+			setResult(RESULT_OK, result);
+			finish();
+			return true;
+		}
 	}
 
 }

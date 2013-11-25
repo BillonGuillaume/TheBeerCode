@@ -17,7 +17,6 @@ public class BiereDB extends Biere implements CRUD{
     
     public BiereDB(int idBiere) {
 		super(idBiere);
-		// TODO Auto-generated constructor stub
 	}
 
 	public BiereDB(String nomBiere, float coteBiere, int nbreVotes,
@@ -47,11 +46,7 @@ public class BiereDB extends Biere implements CRUD{
          cstmt.setString(3,cheminImage);
          cstmt.setString(4,paysBiere);
          cstmt.setFloat(5,degreBiere);
-         try {
-             cstmt.executeUpdate();
-             } catch (Exception e) {
-             	Log.d("BiereDB", "executeUpdate exception : " + e.getMessage());
-             }
+         cstmt.executeUpdate();
          this.idBiere=cstmt.getInt(1);
        }
        catch(Exception e ){

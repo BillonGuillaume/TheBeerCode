@@ -8,7 +8,6 @@ import com.fjbg.thebeercode.model.PersonneDB;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,11 +62,6 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			PersonneDB p = new PersonneDB(1, "Login", "mdp", "email", "pays");
-//			try {
-//			p.create();
-//			}catch (Exception e) {
-//				Log.d("MainActivity", "Exception create : " + e.getMessage());
-//			}
 			Intent loginActivity = new  Intent(MainActivity.this,Login.class);
 			startActivityForResult(loginActivity,LOGIN_REQUEST);
 			}
@@ -103,8 +97,6 @@ public class MainActivity extends Activity {
 	private OnClickListener bMyVotesListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-//			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
-//			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
 		}
 	};
 	
@@ -129,8 +121,6 @@ public class MainActivity extends Activity {
 	private OnClickListener bProfileListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-//			Intent SignUpActivity = new  Intent(MainActivity.this,Inscription.class);
-//			startActivityForResult(SignUpActivity,INSCRIPTION_REQUEST);
 			Intent ProfileActivity = new  Intent(MainActivity.this,MonProfil.class);
 			ProfileActivity.putExtra(PERSONNE, user);
 			startActivityForResult(ProfileActivity,PROFILE_REQUEST);
@@ -143,7 +133,6 @@ public class MainActivity extends Activity {
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
-				// TODO Changer le layout en mode connecté
 				setContentView(R.layout.menu_principal_co);
 				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
 				tVNameMenu = (TextView)findViewById(R.id.tVNameMenu);
