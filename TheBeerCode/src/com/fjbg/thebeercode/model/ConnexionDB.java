@@ -1,13 +1,11 @@
 package com.fjbg.thebeercode.model;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.fjbg.thebeercode.myconnections.DBConnection;
 
 public class ConnexionDB extends AsyncTask<String, Integer, Boolean>{
 	private DBConnection dbconnect = null;
-	private Exception e = null;
 	
 	public ConnexionDB() {
 
@@ -20,7 +18,6 @@ public class ConnexionDB extends AsyncTask<String, Integer, Boolean>{
 			dbconnect.init(dbconnect.getConnection());
 		}
 		catch(Exception e){
-			this.e = e;
 		}
 		return true;
 	}

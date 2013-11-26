@@ -72,7 +72,7 @@ public class MesAjouts extends Activity {
 		return true;
 	}
 	
-	public void loadMore(int offset) { // TODO en faire une asynctask
+	public void loadMore(int offset) {
 		GetMoarBeers getMore = new GetMoarBeers();
 		getMore.execute();
 	}
