@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.VoteDB;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;

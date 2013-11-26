@@ -90,7 +90,7 @@ public class MesVotes extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				ArrayList<VoteDB> liste = new ArrayList();
+				ArrayList<VoteDB> liste = new ArrayList<VoteDB>();
 				liste = VoteDB.readCommentairesPersonne(1);
 				for(VoteDB vote : liste) {
 					addItems(vote);
