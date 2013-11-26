@@ -2,9 +2,10 @@ package com.fjbg.thebeercode.model;
 import java.sql.*;
 import java.util.ArrayList;
 
-import android.util.Log;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class BiereDB extends Biere implements CRUD{
+public class BiereDB extends Biere implements CRUD, Parcelable{
 	protected static Connection dbConnect=null;
 
     public BiereDB() {
@@ -220,6 +221,41 @@ public class BiereDB extends Biere implements CRUD{
     	            catch (Exception e){}
     	        }
     }
-   
+     
+     @Override
+ 	public int describeContents() {
+ 		return 0;
+ 	}
 
+ 	@Override
+ 	public void writeToParcel(Parcel dest, int flags) {
+ 		dest.writeInt(idBiere); 		
+ 		dest.writeString(nomBiere);
+ 		dest.writeFloat(coteBiere);
+ 		dest.writeInt(nbreVotes);
+ 		dest.writeString(cheminImage);
+ 		dest.writeString(paysBiere);
+ 		dest.writeFloat(degreBiere);
+ 	}
+
+ 	public static final Parcelable.Creator<BiereDB> CREATOR = new Parcelable.Creator<BiereDB>() {
+ 		@Override
+ 		public BiereDB createFromParcel(Parcel source) {
+ 			return new BiereDB(source);
+ 		}
+ 		@Override
+ 		public BiereDB[] newArray(int size) {
+ 			return new BiereDB[size];
+ 		}
+ 	};
+ 	
+ 	public BiereDB(Parcel in) {
+ 		idBiere = in.readInt();
+ 		nomBiere = in.readString();
+ 		coteBiere = in.readFloat();
+ 		nbreVotes = in.readInt();
+ 		cheminImage = in.readString();
+ 		paysBiere = in.readString();
+ 		degreBiere = in.readFloat();
+ 	}
 }
