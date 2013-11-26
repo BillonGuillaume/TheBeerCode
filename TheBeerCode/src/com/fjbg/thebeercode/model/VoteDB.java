@@ -1,4 +1,5 @@
 package com.fjbg.thebeercode.model;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public static Connection dbConnect = null;
     }
     
     public static void setDbConnect(Connection dbConnect) {
-        PersonneDB.dbConnect = dbConnect;
+        VoteDB.dbConnect = dbConnect;
     }
 
     @Override
@@ -92,7 +93,7 @@ public static Connection dbConnect = null;
                 this.idVote = rs.getInt("IDVOTE");
                 this.votant = rs.getInt("VOTANT");
                 this.notee = rs.getInt("NOTEE");
-                this.vote = rs.getFloat("VOTEE");
+                this.vote = rs.getFloat("VOTE");
                 this.commentaire = rs.getString("COMMENTAIRE");
             } else {
                 throw new Exception("vote inconnu");
@@ -107,7 +108,7 @@ public static Connection dbConnect = null;
         }
     }
     
-    public ArrayList<VoteDB> readCommentairesBiere() throws Exception {
+    public static ArrayList<VoteDB> readCommentairesBiere(int notee) throws Exception {
     	String req = "{?=call readCommentaire(?)}";
     	ArrayList <VoteDB> listCom = new ArrayList<VoteDB>();
     	VoteDB obj;
@@ -116,15 +117,14 @@ public static Connection dbConnect = null;
             cstmt = dbConnect.prepareCall(req);
             cstmt.registerOutParameter(1, oracle.jdbc.OracleTypes.CURSOR);
             cstmt.setInt(2, notee);
-            cstmt.executeQuery();
             ResultSet rs = (ResultSet) cstmt.getObject(1);
             while (rs.next()) {
             	obj = new VoteDB();
-                this.idVote = rs.getInt("IDVOTE");
-                this.votant = rs.getInt("VOTANT");
-                this.notee = rs.getInt("NOTEE");
-                this.vote = rs.getFloat("VOTEE");
-                this.commentaire = rs.getString("COMMENTAIRE");
+                obj.idVote = rs.getInt("IDVOTE");
+                obj.votant = rs.getInt("VOTANT");
+                obj.notee = rs.getInt("NOTEE");
+                obj.vote = rs.getFloat("VOTE");
+                obj.commentaire = rs.getString("COMMENTAIRE");
                 listCom.add(obj);
             }
             return listCom;
@@ -138,33 +138,34 @@ public static Connection dbConnect = null;
         }
     }
     
-    public ArrayList<VoteDB> readCommentairesPersonne() throws Exception {
-    	String req = "SELECT idVote, votant, notee, vote, commentaire FROM Biere WHERE votant = ?";
+    public static ArrayList<VoteDB> readCommentairesPersonne(int votant) throws Exception {
+    	String req = "SELECT idVote, votant, notee, vote, commentaire FROM Vote WHERE votant = ?";
     	ArrayList <VoteDB> listVotes = new ArrayList<VoteDB>();
     	VoteDB obj;
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = dbConnect.prepareCall(req);
-            pstmt.setInt(2, votant);
-            pstmt.executeQuery();
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-            	obj = new VoteDB();
-                this.idVote = rs.getInt("IDVOTE");
-                this.votant = rs.getInt("VOTANT");
-                this.notee = rs.getInt("NOTEE");
-                this.vote = rs.getFloat("VOTEE");
-                this.commentaire = rs.getString("COMMENTAIRE");
-                listVotes.add(obj);
-            }
-            return listVotes;
-        } catch (Exception e) {
-            throw new Exception("Erreur de lecture " + e.getMessage());
-        } finally {
-            try {
-                pstmt.close();
-            } catch (Exception e) {
-            }
+    	PreparedStatement pstmt = null;
+    	try {
+    		pstmt = dbConnect.prepareStatement(req);
+    		pstmt.setInt(1, votant);
+    		ResultSet rs = null;
+    		rs = pstmt.executeQuery();
+    		while (rs.next()) {
+    			obj = new VoteDB();
+    			obj.idVote = rs.getInt("IDVOTE");
+    			obj.votant = rs.getInt("VOTANT");
+    			obj.notee = rs.getInt("NOTEE");
+    			obj.vote = rs.getFloat("VOTE");
+    			obj.commentaire = rs.getString("COMMENTAIRE");
+    			listVotes.add(obj);
+    		}
+    		if (listVotes.size() == 0) throw new Exception("Vous n'avez laissé aucun commentaire.");
+    		return listVotes;
+    	} catch (Exception e) {
+    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} finally {
+    		try {
+    			pstmt.close();
+    		} catch (Exception e) {
+    		}
         }
     }
     

@@ -96,6 +96,8 @@ public class MainActivity extends Activity {
 	private OnClickListener bMyVotesListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			Intent MyVotesActivity = new  Intent(MainActivity.this,MesVotes.class);
+			startActivity(MyVotesActivity);
 		}
 	};
 	
