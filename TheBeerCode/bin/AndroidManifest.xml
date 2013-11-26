@@ -9,7 +9,9 @@
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" /> 
+
+    <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -49,6 +51,10 @@
         <activity
             android:name="com.fjbg.thebeercode.MonProfil"
             android:label="@string/title_activity_mon_profil" >
+        </activity>
+        <activity
+            android:name="com.fjbg.thebeercode.MesVotes"
+            android:label="@string/title_activity_mes_votes" >
         </activity>
     </application>
 

@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class VoteDB extends Vote implements CRUD{
+
+public class VoteDB extends Vote implements CRUD, Parcelable{
 public static Connection dbConnect = null;
     
     public VoteDB() {
@@ -164,4 +167,36 @@ public static Connection dbConnect = null;
             }
         }
     }
+    
+    @Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(idVote);
+		dest.writeInt(votant);
+		dest.writeInt(notee);
+		dest.writeFloat(vote);
+		dest.writeString(commentaire);
+	}
+
+	public static final Parcelable.Creator<VoteDB> CREATOR = new Parcelable.Creator<VoteDB>() {
+		@Override
+		public VoteDB createFromParcel(Parcel source) {
+			return new VoteDB(source);
+		}
+		@Override
+		public VoteDB[] newArray(int size) {
+			return new VoteDB[size];
+		}
+	};
+	public VoteDB(Parcel in) {
+		idVote = in.readInt();
+		votant = in.readInt();
+		notee = in.readInt();
+		vote = in.readFloat();
+		commentaire = in.readString();
+	}
 }
