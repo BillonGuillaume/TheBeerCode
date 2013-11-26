@@ -1,6 +1,7 @@
 package com.fjbg.thebeercode.model;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -103,7 +104,7 @@ public static Connection dbConnect = null;
         }
     }
     
-    public ArrayList<VoteDB> readCommentaires() throws Exception {
+    public ArrayList<VoteDB> readCommentairesBiere() throws Exception {
     	String req = "{?=call readCommentaire(?)}";
     	ArrayList <VoteDB> listCom = new ArrayList<VoteDB>();
     	VoteDB obj;
@@ -129,6 +130,36 @@ public static Connection dbConnect = null;
         } finally {
             try {
                 cstmt.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+    
+    public ArrayList<VoteDB> readCommentairesPersonne() throws Exception {
+    	String req = "SELECT idVote, votant, notee, vote, commentaire FROM Biere WHERE votant = ?";
+    	ArrayList <VoteDB> listVotes = new ArrayList<VoteDB>();
+    	VoteDB obj;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = dbConnect.prepareCall(req);
+            pstmt.setInt(2, votant);
+            pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+            	obj = new VoteDB();
+                this.idVote = rs.getInt("IDVOTE");
+                this.votant = rs.getInt("VOTANT");
+                this.notee = rs.getInt("NOTEE");
+                this.vote = rs.getFloat("VOTEE");
+                this.commentaire = rs.getString("COMMENTAIRE");
+                listVotes.add(obj);
+            }
+            return listVotes;
+        } catch (Exception e) {
+            throw new Exception("Erreur de lecture " + e.getMessage());
+        } finally {
+            try {
+                pstmt.close();
             } catch (Exception e) {
             }
         }

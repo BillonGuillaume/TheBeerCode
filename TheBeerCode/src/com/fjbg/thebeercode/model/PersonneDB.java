@@ -78,7 +78,6 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     @Override
     public void update() throws Exception {
         CallableStatement cstmt = null;
-
         try {
             String req = "call updatePersonne(?,?,?,?,?)";
             cstmt = dbConnect.prepareCall(req);
@@ -124,8 +123,7 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     		pstmt = dbConnect.prepareStatement(req);
     		pstmt.setString(1, login);
     		pstmt.setString(2,  mdp);
-    		ResultSet rs = null;
-    		rs = (ResultSet) pstmt.executeQuery();
+    		ResultSet rs = pstmt.executeQuery();
     		if (rs.next()) {
     			this.idPersonne = rs.getInt("IDPERSONNE");
     			this.login = rs.getString("LOGIN");
