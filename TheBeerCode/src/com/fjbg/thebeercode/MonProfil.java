@@ -1,11 +1,6 @@
 package com.fjbg.thebeercode;
 
-import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
-
-
-
-
 
 import android.os.AsyncTask;
 import android.os.Bundle;

@@ -1,10 +1,12 @@
 package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
+import com.fjbg.thebeercode.model.BiereDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -23,6 +25,8 @@ public class MesAjouts extends Activity {
 	ArrayAdapter<String> aa;
 	Button bBack;
 	ArrayList<String> aL;
+	ArrayList<BiereDB> listBeers;
+	public static final int SELECTEDBEER = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +114,11 @@ public class MesAjouts extends Activity {
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 						String selectedItem=(String)arg0.getItemAtPosition(arg2);
+						Intent showBeer = new Intent(MesAjouts.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
+						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
+						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
+						startActivity(showBeer);
+						finish();
 					}
 				});
 			}catch(Exception e) {

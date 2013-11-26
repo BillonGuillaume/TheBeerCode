@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Inscription extends Activity {
@@ -24,7 +23,6 @@ public class Inscription extends Activity {
 	
 	private Button valider = null;
 	private Button annuler = null;
-	private PersonneDB personne;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
