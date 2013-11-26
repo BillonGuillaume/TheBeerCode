@@ -90,6 +90,7 @@ public class AjoutBiere extends Activity {
 			catch(Exception e){
 				Toast.makeText(AjoutBiere.this, "Le degre doit être un nombre !", Toast.LENGTH_SHORT ).show();
 				exc = true;
+				ex = e;
 			}
 			
 			String imageBiere= eTimage.getText().toString();
