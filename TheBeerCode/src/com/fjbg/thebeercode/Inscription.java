@@ -2,6 +2,7 @@ package com.fjbg.thebeercode;
 
 import com.fjbg.thebeercode.model.PersonneDB;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -55,31 +56,33 @@ public class Inscription extends Activity {
 	private OnClickListener validerListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			PersonneDB personne =new PersonneDB();
-			String login=edlogin.getText().toString();
-			personne.setLogin(login);
-
-			String password= edpassword.getText().toString();
-			personne.setMdp(password);
-			String confPassword= edconfPassword.getText().toString();
-			if(password.compareTo(confPassword)!=0) {
-				Toast.makeText(Inscription.this, "Les mots de passe ne correspondent pas !", Toast.LENGTH_SHORT ).show();
-			}else {
-				String mail= edmail.getText().toString();
-				personne.setMail(mail);
-				String pays= edpays.getText().toString();
-				personne.setPays(pays);
-
-				try {
-					personne.create();
-					Intent i= new Intent();
-					i.putExtra(MainActivity.PERSONNE, personne);
-					setResult(RESULT_OK, i);
-					finish();
-				} catch(Exception e) {
-					Toast.makeText(Inscription.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
-				}
-			}
+			Create insc = new Create();
+			insc.execute();
+//			PersonneDB personne =new PersonneDB();
+//			String login=edlogin.getText().toString();
+//			personne.setLogin(login);
+//
+//			String password= edpassword.getText().toString();
+//			personne.setMdp(password);
+//			String confPassword= edconfPassword.getText().toString();
+//			if(password.compareTo(confPassword)!=0) {
+//				Toast.makeText(Inscription.this, "Les mots de passe ne correspondent pas !", Toast.LENGTH_SHORT ).show();
+//			}else {
+//				String mail= edmail.getText().toString();
+//				personne.setMail(mail);
+//				String pays= edpays.getText().toString();
+//				personne.setPays(pays);
+//
+//				try {
+//					personne.create();
+//					Intent i= new Intent();
+//					i.putExtra(MainActivity.PERSONNE, personne);
+//					setResult(RESULT_OK, i);
+//					finish();
+//				} catch(Exception e) {
+//					Toast.makeText(Inscription.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
+//				}
+//			}
 		}
 	};
 
@@ -88,6 +91,57 @@ public class Inscription extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.inscription, menu);
 		return true;
+	}
+	
+	public class Create extends AsyncTask<String, Integer, Boolean>{
+		Boolean exc = false;
+		Exception ex;
+		
+		public Create() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			PersonneDB personne =new PersonneDB();
+			String login=edlogin.getText().toString();
+			personne.setLogin(login);
+
+			String password= edpassword.getText().toString();
+			personne.setMdp(password);
+			String confPassword= edconfPassword.getText().toString();
+			try {
+				if(password.compareTo(confPassword)!=0) {
+					throw new Exception("Les mots de passe ne correspondent pas !");
+				}else {
+					String mail= edmail.getText().toString();
+					personne.setMail(mail);
+					String pays= edpays.getText().toString();
+					personne.setPays(pays);
+					try {
+						personne.create();
+						Intent i= new Intent();
+						i.putExtra(MainActivity.PERSONNE, personne);
+						setResult(RESULT_OK, i);
+						finish();
+					} catch(Exception e) {
+						ex = e;
+						exc = true;
+					}
+				}
+			}catch(Exception e) {
+				ex = e;
+				exc = true;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(Inscription.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}			
+		}
 	}
 
 }
