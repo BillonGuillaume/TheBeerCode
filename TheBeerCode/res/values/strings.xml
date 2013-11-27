@@ -34,5 +34,6 @@
     <string name="Add">Add</string>
     <string name="title_activity_mon_profil">MonProfil</string>
     <string name="title_activity_mes_votes">MesVotes</string>
+    <string name="title_activity_recherche_biere">RechercheBiere</string>
 
 </resources>

@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if(user!=null){
-				Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class);
+				Intent BeersActivity = new  Intent(MainActivity.this,RechercheBiere.class); // TODO remettre AjoutBiere
 				startActivity(BeersActivity);
 			}
 			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();

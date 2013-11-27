@@ -1,0 +1,103 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RechercheBiere" >
+
+    <TextView
+        android:id="@+id/tVPays"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="pays" />
+
+    <EditText
+        android:id="@+id/eTPays"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/tVDegreSup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="deg >" />
+
+    <EditText
+        android:id="@+id/eTDegreSup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal" />
+    
+    <TextView
+        android:id="@+id/tVDegreInf"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="deg inf" />
+
+    <EditText
+        android:id="@+id/eTDegreInf"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal" />
+    
+    <TextView
+        android:id="@+id/tVNom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Nom" />
+
+    <EditText
+        android:id="@+id/eTNom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+    
+    <TextView
+        android:id="@+id/tVNoteSup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Note >" />
+
+    <RatingBar
+        android:id="@+id/ratingBarSup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <TextView
+        android:id="@+id/tVNoteInf"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Note inf" />
+
+    <RatingBar
+        android:id="@+id/ratingBarInf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bRecherche"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rechercher" />
+        
+        <Button
+            android:id="@+id/bReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset" />
+
+        <Button
+            android:id="@+id/bCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Back" />
+    </LinearLayout>
+       
+</LinearLayout>
