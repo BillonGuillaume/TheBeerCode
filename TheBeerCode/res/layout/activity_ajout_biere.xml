@@ -47,11 +47,25 @@
         android:layout_height="wrap_content"
         android:text="@string/BeerPicture" />
 
-    <EditText
-        android:id="@+id/eTimage"
+   <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+         <ImageView
+        	android:id="@+id/BeerPicture"
+        	android:layout_width="100dip"
+			android:layout_height="100dip"
+        	android:src="@drawable/ic_launcher" />
+
+         <Button
+             android:id="@+id/bPicture"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/Picture" />
+
+    </LinearLayout>
     
     <LinearLayout
         android:layout_width="fill_parent"

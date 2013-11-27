@@ -21,5 +21,6 @@
     <string name="BeerPicture">Image Bière :</string>
     <string name="ABV">Degré alcool :</string>
     <string name="Add">Ajouter</string>
+    <string name="Picture">Choisir image</string>
     
 </resources>
