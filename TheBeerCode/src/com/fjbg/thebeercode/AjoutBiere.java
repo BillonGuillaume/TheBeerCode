@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -35,6 +36,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AjoutBiere extends Activity {
+	
+	ProgressDialog progress;
 	
 	EditText eTnom;
 	EditText eTpays;
@@ -172,6 +175,14 @@ public class AjoutBiere extends Activity {
 		public Ajout() {
 
 		}
+		
+		@Override
+        protected void onPreExecute(){
+                progress = new ProgressDialog(AjoutBiere.this);
+                progress.setMessage("Enregistrement de la biere en cours...");
+                progress.setCancelable(false);
+                progress.show();
+        }
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
@@ -223,6 +234,8 @@ public class AjoutBiere extends Activity {
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			if(progress.isShowing())
+                progress.dismiss();
 			if(exc) {
 				Toast.makeText(AjoutBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
