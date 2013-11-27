@@ -177,8 +177,7 @@ public class MainActivity extends Activity {
 		if (requestCode == INSCRIPTION_REQUEST){
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show();
-				Intent result = getIntent();
-				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
+				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show();
@@ -188,8 +187,7 @@ public class MainActivity extends Activity {
 		if (requestCode == PROFILE_REQUEST){
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(this, "Profil modifié", Toast.LENGTH_SHORT).show();
-				Intent result = getIntent();
-				user = (PersonneDB)result.getParcelableExtra(PERSONNE);
+				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 			}
 		}
 	}
