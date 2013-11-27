@@ -45,4 +45,7 @@
     <string name="Reset">Reset</string>
     <string name="Filtre">Filtre</string>
     <string name="Commentary">Commentary</string>
+    <string name="title_activity_mes_favoris">MesFavoris</string>
+    <string name="MyFavorites">My Favorites</string>
+
 </resources>

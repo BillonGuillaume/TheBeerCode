@@ -2,59 +2,51 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
+import com.fjbg.thebeercode.model.FavoriDB;
 import com.fjbg.thebeercode.model.PersonneDB;
-import com.fjbg.thebeercode.model.VoteDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MesVotes extends Activity {
-
+public class MesFavoris extends Activity {
+	
 	ListView lvItems;
 	int items;
-	VotesAdapter vA;
+	ArrayAdapter<String> aa;
 	Button bBack;
-	ArrayList<VoteDB> listVotes;
-	public static final String SELECTEDVOTE = "VOTE";
+	ArrayList<FavoriDB> listFavorites;
+	public static final String SELECTEDFAV = "FAV";
 	PersonneDB user;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mes_ajouts);
+		
 		Intent data = getIntent();
 		user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
-
+		
 		bBack = (Button)findViewById(R.id.bBack);
 		bBack.setOnClickListener(bBackListener);
-
+		
 		lvItems = (ListView)findViewById(R.id.lvItems);
-
-		//		VoteDB vote = new VoteDB(1, 2, 3, 3, "aa");
-		//		VoteDB vote2 = new VoteDB(12, 2, 3, 4, "aaa");
-		//		VoteDB vote3 = new VoteDB(21, 2, 3, 5, "aaaa");
-		//		listVotes = new ArrayList();
-		//		listVotes.add(vote);
-		//		listVotes.add(vote2);
-		//		listVotes.add(vote3);
-
-		vA = new VotesAdapter(MesVotes.this, listVotes);
-		lvItems.setAdapter(vA);
-		GetVotes getter = new GetVotes();
+		lvItems.setAdapter(aa);
+		
+		GetFavs getter = new GetFavs();		
 		getter.execute();
 	}
-
+	
 	private OnClickListener bBackListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -65,57 +57,52 @@ public class MesVotes extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.mes_votes, menu);
+		getMenuInflater().inflate(R.menu.mes_ajouts, menu);
 		return true;
 	}
-
+	
 	public void loadMore(int offset) {
-		Log.d("loadMore", "loeaee");
-		GetMoarVotes getMore = new GetMoarVotes();
+		GetMoarFavs getMore = new GetMoarFavs();
 		getMore.execute();
 	}
-
-	private void addItems(VoteDB item) {
-		if (item != null){
-			this.vA.add(item);
-			this.vA.notifyDataSetChanged();
-			items++;
-		}
+	
+	private void addItems(String item) {
+		if (item.length()>0){
+            this.aa.add(item);
+            this.aa.notifyDataSetChanged();
+            items++;
+        }
 	}
-
-	public class GetVotes extends AsyncTask<String, Integer, Boolean>{
+	
+	public class GetFavs extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
-
-		public GetVotes() {
+		
+		public GetFavs() {
 
 		}
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				ArrayList<VoteDB> liste = new ArrayList<VoteDB>();
-				liste = VoteDB.readCommentairesPersonne(1);
-				for(VoteDB vote : liste) {
-					addItems(vote);
-				}
-
-				lvItems.setOnScrollListener(new EndlessScrollListener(2) {
+				addItems("Favori"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
+				
+				lvItems.setOnScrollListener(new EndlessScrollListener() {
 					@Override
 					public void onLoadMore(int page, int totalItemsCount) {
 						loadMore(totalItemsCount);
 					}
 				});
-
+				
 				lvItems.setOnItemClickListener(new OnItemClickListener()
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
-						Intent showVote = new Intent(MesVotes.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage du vote ou alertBox
-						VoteDB selectedVote = (VoteDB)listVotes.get(arg2);
-						showVote.putExtra(MesVotes.SELECTEDVOTE, selectedVote);
-						startActivity(showVote);
+						Intent showFav = new Intent(MesFavoris.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
+						FavoriDB selectedFav = (FavoriDB)listFavorites.get(arg2);
+						showFav.putExtra(MesFavoris.SELECTEDFAV, selectedFav);
+						startActivity(showFav);
 						finish();
 					}
 				});
@@ -125,30 +112,29 @@ public class MesVotes extends Activity {
 			}
 			return true;
 		}
-
+		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			if(exc) {
-				Toast.makeText(MesVotes.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
-
-	public class GetMoarVotes extends AsyncTask<String, Integer, Boolean>{
+	
+	public class GetMoarFavs extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
-
-		public GetMoarVotes() {
+		
+		public GetMoarFavs() {
 
 		}
 
 		@Override
-		protected Boolean doInBackground(String... arg0) {  // TODO Créer la méthode pour récupérer un certain nombre + Que faire quand plus rien dans DB ?
+		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
 			try {
 				int nbrAjout;
-				for(nbrAjout = 0; nbrAjout <=2; nbrAjout++) {
-					VoteDB vote = new VoteDB(1, 2, 3, 3, "test");
-					addItems(vote);
+				for(nbrAjout = 0; nbrAjout <=5; nbrAjout++) {
+					addItems("Favori " + (items + 1));
 				}				
 			}catch(Exception e) {
 				ex = e;
@@ -156,11 +142,11 @@ public class MesVotes extends Activity {
 			}
 			return true;
 		}
-
+		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			if(exc) {
-				Toast.makeText(MesVotes.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}

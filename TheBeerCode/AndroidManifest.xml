@@ -60,6 +60,10 @@
             android:name="com.fjbg.thebeercode.RechercheBiere"
             android:label="@string/title_activity_recherche_biere" >
         </activity>
+        <activity
+            android:name="com.fjbg.thebeercode.MesFavoris"
+            android:label="@string/title_activity_mes_favoris" >
+        </activity>
     </application>
 
 </manifest>

@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
 	Button bBeers = null;
 	Button bAdditions = null;
 	Button bMyVotes = null;
+	Button bMyFavorites = null;
 	Button bDisconnection = null;
 	Button bProfile = null;
 	
@@ -78,7 +79,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if(user!=null){
-				Intent BeersActivity = new  Intent(MainActivity.this,RechercheBiere.class); // TODO remettre AjoutBiere
+				Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class); // TODO gérer AjoutBiere et RechercheBiere
 				startActivity(BeersActivity);
 			}
 			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();
@@ -89,6 +90,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			Intent AdditionsActivity = new  Intent(MainActivity.this,MesAjouts.class);
+			AdditionsActivity.putExtra(PERSONNE, user);
 			startActivity(AdditionsActivity);
 		}
 	};
@@ -97,6 +99,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			Intent MyVotesActivity = new  Intent(MainActivity.this,MesVotes.class);
+			MyVotesActivity.putExtra(PERSONNE, user);
 			startActivity(MyVotesActivity);
 		}
 	};
@@ -128,6 +131,15 @@ public class MainActivity extends Activity {
 		}
 	};
 	
+	private OnClickListener bMyFavoritesListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent mesFavoris = new  Intent(MainActivity.this,MesFavoris.class);
+			mesFavoris.putExtra(PERSONNE, user);
+			startActivity(mesFavoris);
+		}
+	};
+	
 	@Override
 	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if  (requestCode == LOGIN_REQUEST) {
@@ -142,12 +154,14 @@ public class MainActivity extends Activity {
 				bMyVotes = (Button)findViewById(R.id.bMyVotes);
 				bDisconnection = (Button)findViewById(R.id.bDisconnection);
 				bProfile = (Button)findViewById(R.id.bProfile);
+				bMyFavorites = (Button)findViewById(R.id.bMyFavorites);
 				
 				bBeers.setOnClickListener(bBeersListener);
 				bAdditions.setOnClickListener(bAdditionsListener);
 				bMyVotes.setOnClickListener(bMyVotesListener);
 				bDisconnection.setOnClickListener(bDisconnectionListener);
 				bProfile.setOnClickListener(bProfileListener);
+				bMyFavorites.setOnClickListener(bMyFavoritesListener);
 				
 				tVNameMenu.setText(" " + user.getLogin());
 						

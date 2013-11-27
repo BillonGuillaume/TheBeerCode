@@ -3,6 +3,7 @@ package com.fjbg.thebeercode;
 import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,11 +27,15 @@ public class MesAjouts extends Activity {
 	Button bBack;
 	ArrayList<BiereDB> listBeers;
 	public static final String SELECTEDBEER = "beer";
+	PersonneDB user;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mes_ajouts);
+		
+		Intent data = getIntent();
+		user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
 		
 		bBack = (Button)findViewById(R.id.bBack);
 		bBack.setOnClickListener(bBackListener);

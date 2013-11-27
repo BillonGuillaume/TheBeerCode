@@ -1,8 +1,11 @@
 package com.fjbg.thebeercode.model;
 import java.sql.*;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class FavoriDB extends Favori implements CRUD{
+
+public class FavoriDB extends Favori implements CRUD, Parcelable{
 public static Connection dbConnect = null;
     
     public FavoriDB() {
@@ -87,4 +90,32 @@ public static Connection dbConnect = null;
             }
         }
     }
+    
+    @Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(idFavori);
+		dest.writeInt(aimant);
+		dest.writeInt(favorite);
+	}
+
+	public static final Parcelable.Creator<FavoriDB> CREATOR = new Parcelable.Creator<FavoriDB>() {
+		@Override
+		public FavoriDB createFromParcel(Parcel source) {
+			return new FavoriDB(source);
+		}
+		@Override
+		public FavoriDB[] newArray(int size) {
+			return new FavoriDB[size];
+		}
+	};
+	public FavoriDB(Parcel in) {
+		idFavori = in.readInt();
+		aimant = in.readInt();
+		favorite = in.readInt();
+	}
 }

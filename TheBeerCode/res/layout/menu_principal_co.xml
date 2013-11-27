@@ -41,6 +41,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/MyVotes" />
+    
+    <Button
+        android:id="@+id/bMyFavorites"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/MyFavorites" />
 
     <Button
         android:id="@+id/bProfile"
