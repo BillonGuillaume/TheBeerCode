@@ -41,13 +41,13 @@ public class MesVotes extends Activity {
 
 		lvItems = (ListView)findViewById(R.id.lvItems);
 
-		//		VoteDB vote = new VoteDB(1, 2, 3, 3, "aa");
-		//		VoteDB vote2 = new VoteDB(12, 2, 3, 4, "aaa");
-		//		VoteDB vote3 = new VoteDB(21, 2, 3, 5, "aaaa");
-		//		listVotes = new ArrayList();
-		//		listVotes.add(vote);
-		//		listVotes.add(vote2);
-		//		listVotes.add(vote3);
+		VoteDB vote = new VoteDB(1, 2, 3, 3, "aa");
+		VoteDB vote2 = new VoteDB(12, 2, 3, 4, "aaa");
+		VoteDB vote3 = new VoteDB(21, 2, 3, 5, "aaaa");
+		listVotes = new ArrayList();
+		listVotes.add(vote);
+		listVotes.add(vote2);
+		listVotes.add(vote3);
 
 		vA = new VotesAdapter(MesVotes.this, listVotes);
 		lvItems.setAdapter(vA);
