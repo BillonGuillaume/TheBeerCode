@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,7 +67,10 @@ public class Login extends Activity {
 		return true;
 	}
 	
-	public class Connexion extends AsyncTask<String, Integer, Boolean>{		
+	public class Connexion extends AsyncTask<String, Integer, Boolean>{	
+		Boolean exc = false;
+		ExceptionError ee;
+		
 		public Connexion() {
 
 		}
@@ -79,22 +83,26 @@ public class Login extends Activity {
 			p.setLogin(login);
 			p.setMdp(mdp);
 			try {
+				if(login.matches("") || mdp.matches("")) throw new Exception("Login ou mdp vide/" + R.string.e1 + "/" + "Login ou mdp vide");
 				p.connection();
 				Intent result = new Intent();
 				result.putExtra(MainActivity.PERSONNE, p);
 				setResult(RESULT_OK, result);
 				finish();
-			} catch (Exception e) {		// TODO Déplacer la remise à zéro des edittext dans le postprocess		
+			} catch (Exception e) {
+				exc = true;
+				ee = new ExceptionError(e.getMessage());
+			}		
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
 				eTLogin.setText("");
 				eTPwd.setText("");
-				ExceptionError er = new ExceptionError(e.getMessage());
-				Toast.makeText(Login.this, getResources().getString(er.getCode()), Toast.LENGTH_SHORT).show();
+				Toast.makeText(Login.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT).show();				
 			}
-			Intent result = new Intent();
-			result.putExtra(MainActivity.PERSONNE, p);
-			setResult(RESULT_OK, result);
-			finish();
-			return true;
 		}
 	}
 

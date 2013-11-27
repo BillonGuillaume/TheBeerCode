@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unknown">Unknown Error</string>
+    <string name="e1">Login and/or password empty</string>
     
 </resources>
