@@ -5,6 +5,12 @@ import java.io.File;
 
 
 
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+import org.apache.commons.net.ftp.FTPClient;
+
 import com.fjbg.thebeercode.model.BiereDB;
 
 import android.net.Uri;
@@ -38,6 +44,7 @@ public class AjoutBiere extends Activity {
 	Button ajouter = null;
 	Button retour = null;
 	
+	String path = null;
 	ImageView photoBiere = null;
 	
 	AlertDialog dialog = null;
@@ -139,7 +146,6 @@ public class AjoutBiere extends Activity {
 	    if (resultCode != RESULT_OK) return;
 	    
         Bitmap bitmap   = null;
-        String path     = "";
  
         if (requestCode == PICK_FROM_FILE) {
             mImageCaptureUri = imageReturnedIntent.getData();
@@ -160,6 +166,7 @@ public class AjoutBiere extends Activity {
 	
 	public class Ajout extends AsyncTask<String, Integer, Boolean>{	
 		Boolean exc = false;
+		Boolean FTPpbm = false;
 		Exception ex;
 		
 		public Ajout() {
@@ -185,7 +192,24 @@ public class AjoutBiere extends Activity {
 				ex = e;
 			}
 			
-			biere.setCheminImage("osef");
+			if(path != null){
+				FTPClient mFtp = new FTPClient();
+			        try {
+			        	mFtp.connect("ftp.alokar.site90.net",21); // Using port no=21
+			        	mFtp.login("a7115779", "projet2013");
+			        	mFtp.enterLocalPassiveMode();
+				        mFtp.setFileType(FTPClient.BINARY_FILE_TYPE);
+				        InputStream is = new FileInputStream(path); 
+			        	mFtp.storeFile("/public_html/BeerPictures/image_" + biere.getNomBiere() + ".jpg", is);
+			        	biere.setCheminImage("/public_html/BeerPictures/image_" + biere.getNomBiere() + ".jpg");
+			        	is.close();
+			        	mFtp.disconnect();
+					} catch(Exception e) {
+						ex = e;
+						FTPpbm = true;
+					}
+			}
+			
 			if(!exc) {
 				try {
 					biere.create();
@@ -203,10 +227,17 @@ public class AjoutBiere extends Activity {
 				Toast.makeText(AjoutBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
 			else {
-				Toast.makeText(AjoutBiere.this, "Bière ajoutée !", Toast.LENGTH_SHORT ).show();
 				eTnom.setText(""); 
 				eTpays.setText("");
 				eTdegre.setText("");
+				photoBiere = (ImageView) findViewById(R.id.BeerPicture);
+				path = null;
+				if(FTPpbm){
+					Toast.makeText(AjoutBiere.this, "Bière ajoutée mais problème lors de l' upload de la photo (ftp) : " + ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				}
+				else{
+					Toast.makeText(AjoutBiere.this, "Bière ajoutée !", Toast.LENGTH_SHORT ).show();
+				}
 			}
 			
 		}
