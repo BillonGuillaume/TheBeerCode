@@ -1,21 +1,36 @@
 package com.fjbg.thebeercode;
 
+import java.util.ArrayList;
+
+import com.fjbg.thebeercode.model.BiereDB;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class RechercheBiere extends Activity {
+	
+	ListView lvItems;
+	int items;
+	ArrayAdapter<String> aa;
+	Button bBack;
+	ArrayList<String> aL;
+	ArrayList<BiereDB> listBeers;
+	public static final String SELECTEDBEER = "beer";
 	
 	Dialog custom;
 	Button bFiltre;
@@ -58,7 +73,6 @@ public class RechercheBiere extends Activity {
 		bFiltre.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				// TODO Auto-generated method stub
 				custom = new Dialog(RechercheBiere.this);
 				custom.setContentView(R.layout.filtre_layout);
 				tVPays = (TextView)custom.findViewById(R.id.tVPays);
@@ -103,6 +117,8 @@ public class RechercheBiere extends Activity {
 							Log.d("RechercheBiere", "Erreur de parsing");
 						}
 						custom.dismiss();
+						GetBeers getter = new GetBeers();
+						getter.execute();
 					}
 
 				});
@@ -129,9 +145,14 @@ public class RechercheBiere extends Activity {
 					}
 				});
 				custom.show();
-
 			}
 		});
+		
+		lvItems = (ListView)findViewById(R.id.lvItems);
+		lvItems.setAdapter(aa);
+		
+		InitList init = new InitList();
+		init.execute();
 	}		
 
 	@Override
@@ -148,5 +169,144 @@ public class RechercheBiere extends Activity {
 		nom = null;
 		noteSup = 0;
 		noteInf = 100;
+	}
+	
+	public void loadMore(int offset) {
+		GetMoarBeers more = new GetMoarBeers();
+		more.execute();
+	}
+	
+	private void addItems(String item) {
+		if (item.length()>0){
+            this.aa.add(item);
+            this.aa.notifyDataSetChanged();
+            items++;
+        }
+	}
+	
+	private void changeItems(ArrayList<String> list) {
+		this.aa.clear();
+		items = 0;
+		for(String item : list) {
+			addItems(item);
+		}
+	}
+	
+	public class InitList extends AsyncTask<String, Integer, Boolean>{  // Doit afficher des bières de base
+		Boolean exc = false;
+		Exception ex;
+		
+		public InitList() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			try {
+				addItems("biere"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
+				
+				lvItems.setOnItemClickListener(new OnItemClickListener()
+				{
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
+						Intent showBeer = new Intent(RechercheBiere.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
+						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
+						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
+						startActivity(showBeer);
+						finish();
+					}
+				});
+			}catch(Exception e) {
+				ex = e;
+				exc = true;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}			
+		}
+	}
+	
+	public class GetBeers extends AsyncTask<String, Integer, Boolean>{  // Va chercher les bières en fonction du filtre
+		Boolean exc = false;
+		Exception ex;
+		
+		public GetBeers() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			try {
+				addItems("biere"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
+				//changeItems();  // Récupérer la liste correspondant à la recherche puis intialiser la nouvelle liste
+				
+				lvItems.setOnScrollListener(new EndlessScrollListener() {
+					@Override
+					public void onLoadMore(int page, int totalItemsCount) {
+						loadMore(totalItemsCount);
+					}
+				});
+				
+				lvItems.setOnItemClickListener(new OnItemClickListener()
+				{
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
+						Intent showBeer = new Intent(RechercheBiere.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
+						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
+						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
+						startActivity(showBeer);
+						finish();
+					}
+				});
+			}catch(Exception e) {
+				ex = e;
+				exc = true;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}			
+		}
+	}
+	
+	public class GetMoarBeers extends AsyncTask<String, Integer, Boolean>{  // Va chercher plus de bières correspondanes au filtre
+		Boolean exc = false;
+		Exception ex;
+		
+		public GetMoarBeers() {
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
+			try {
+				int nbrAjout;
+				for(nbrAjout = 0; nbrAjout <=5; nbrAjout++) {
+					addItems("Bière " + (items + 1));
+				}				
+			}catch(Exception e) {
+				ex = e;
+				exc = true;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}
+		}
 	}
 }

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Login" />
+        android:text="@string/Login" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -26,6 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/ratingBar"
         android:layout_below="@+id/ratingBar"
-        android:text="Commentaire" />
+        android:text="@string/Commentary" />
 
 </RelativeLayout>

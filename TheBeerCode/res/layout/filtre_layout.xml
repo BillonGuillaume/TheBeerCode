@@ -9,7 +9,7 @@
         android:id="@+id/tVPays"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="pays" />
+        android:text="@string/Country" />
 
     <EditText
         android:id="@+id/eTPays"
@@ -21,7 +21,7 @@
         android:id="@+id/tVDegreSup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="deg >" />
+        android:text="@string/DegreSup" />
 
     <EditText
         android:id="@+id/eTDegreSup"
@@ -33,7 +33,7 @@
         android:id="@+id/tVDegreInf"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="deg inf" />
+        android:text="@string/DegreInf" />
 
     <EditText
         android:id="@+id/eTDegreInf"
@@ -45,7 +45,7 @@
         android:id="@+id/tVNom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Nom" />
+        android:text="@string/Name" />
 
     <EditText
         android:id="@+id/eTNom"
@@ -57,7 +57,7 @@
         android:id="@+id/tVNoteSup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Note >" />
+        android:text="@string/NoteSup" />
 
     <RatingBar
         android:id="@+id/ratingBarSup"
@@ -68,7 +68,7 @@
         android:id="@+id/tVNoteInf"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Note inf" />
+        android:text="@string/NoteInf" />
 
     <RatingBar
         android:id="@+id/ratingBarInf"
@@ -85,13 +85,13 @@
             android:id="@+id/bRecherche"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rechercher" />
+            android:text="@string/Research" />
         
         <Button
             android:id="@+id/bReset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reset" />
+            android:text="@string/Reset" />
 
         <Button
             android:id="@+id/bCancel"

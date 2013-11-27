@@ -24,7 +24,6 @@ public class MesAjouts extends Activity {
 	int items;
 	ArrayAdapter<String> aa;
 	Button bBack;
-	ArrayList<String> aL;
 	ArrayList<BiereDB> listBeers;
 	public static final String SELECTEDBEER = "beer";
 	
@@ -37,7 +36,6 @@ public class MesAjouts extends Activity {
 		bBack.setOnClickListener(bBackListener);
 		
 		lvItems = (ListView)findViewById(R.id.lvItems);
-		aL = new ArrayList<String>();
 		lvItems.setAdapter(aa);
 		
 		GetBeers getter = new GetBeers();		
