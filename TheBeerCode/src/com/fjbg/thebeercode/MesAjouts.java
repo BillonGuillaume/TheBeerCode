@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +25,7 @@ public class MesAjouts extends Activity {
 	int items;
 	ArrayAdapter<String> aa;
 	Button bBack;
-	public static final String SELECTEDBEER = "beer";
+	public static final String SELECTEDBEER = "BEER";
 	PersonneDB user;
 	Boolean scroll = true;
 	ArrayList<String> listBeers = new ArrayList<String>();
