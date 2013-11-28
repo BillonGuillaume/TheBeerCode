@@ -2,13 +2,14 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
-import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.AjoutDB;
 import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,9 +26,10 @@ public class MesAjouts extends Activity {
 	int items;
 	ArrayAdapter<String> aa;
 	Button bBack;
-	ArrayList<BiereDB> listBeers;
 	public static final String SELECTEDBEER = "beer";
 	PersonneDB user;
+	Boolean scroll = true;
+	ArrayList<String> listBeers = new ArrayList<String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MesAjouts extends Activity {
 		bBack.setOnClickListener(bBackListener);
 		
 		lvItems = (ListView)findViewById(R.id.lvItems);
+		aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listBeers);
 		lvItems.setAdapter(aa);
 		
 		GetBeers getter = new GetBeers();		
@@ -62,21 +65,22 @@ public class MesAjouts extends Activity {
 	}
 	
 	public void loadMore(int offset) {
+		if(scroll) {
 		GetMoarBeers getMore = new GetMoarBeers();
 		getMore.execute();
+		}
 	}
 	
 	private void addItems(String item) {
-		if (item.length()>0){
-            this.aa.add(item);
-            this.aa.notifyDataSetChanged();
-            items++;
-        }
+		this.aa.add(item);
+		this.aa.notifyDataSetChanged();
+		items++;
 	}
 	
 	public class GetBeers extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<String> list = new ArrayList<String>();
 		
 		public GetBeers() {
 
@@ -85,7 +89,7 @@ public class MesAjouts extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				addItems("biere"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
+				list = AjoutDB.readHistoriquePersonne(user.getIdPersonne(), 1, 5);
 				
 				lvItems.setOnScrollListener(new EndlessScrollListener() {
 					@Override
@@ -98,9 +102,8 @@ public class MesAjouts extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
 						Intent showBeer = new Intent(MesAjouts.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
-						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
+						String selectedBeer = (String)aa.getItem(arg2);
 						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
 						startActivity(showBeer);
 						finish();
@@ -109,12 +112,16 @@ public class MesAjouts extends Activity {
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(String item : list) {
+				addItems(item);
+			}
 			if(exc) {
 				Toast.makeText(MesAjouts.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			
@@ -124,31 +131,36 @@ public class MesAjouts extends Activity {
 	public class GetMoarBeers extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<String> list = new ArrayList<String>();
 		
 		public GetMoarBeers() {
 
 		}
+		
+		@Override
+        protected void onPreExecute(){
+             list = new ArrayList<String>(); 
+        }
 
 		@Override
-		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
+		protected Boolean doInBackground(String... arg0) {
 			try {
-				int nbrAjout;
-				for(nbrAjout = 0; nbrAjout <=5; nbrAjout++) {
-					addItems("Bière " + (items + 1));
-				}				
+				list = AjoutDB.readHistoriquePersonne(user.getIdPersonne(), items+1, items+6);
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(String item : list) {
+				addItems(item);
+			}
 			if(exc) {
 				Toast.makeText(MesAjouts.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
-			} else {
-				Toast.makeText(MesAjouts.this, "Chargement déclenché", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

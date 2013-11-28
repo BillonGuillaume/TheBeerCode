@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class VueVoteDB extends Vote implements CRUD, Parcelable{
+public class VueVoteDB extends Vote implements Parcelable{
 	public static Connection dbConnect = null;
 	int idBiere;
 	String nomBiere;
@@ -28,30 +28,6 @@ public class VueVoteDB extends Vote implements CRUD, Parcelable{
     
     public static void setDbConnect(Connection dbConnect) {
         VueVoteDB.dbConnect = dbConnect;
-    }
-
-    @Override
-    public void create() throws Exception {
-        // Not implemented
-    }
-
-    @Override
-    public void read() throws Exception {
-        // Not implemented
-    }
-
-    @Override
-    public void update() throws Exception {
-        // Not implemented
-    }
-
-    @Override
-    public void delete() throws Exception {
-        // Not implemented
-    }
-    
-    public void readVote() throws Exception {
-    	// Not implemented
     }
     
     public static ArrayList<VueVoteDB> readVotesPersonne(int id, int min, int max) throws Exception {

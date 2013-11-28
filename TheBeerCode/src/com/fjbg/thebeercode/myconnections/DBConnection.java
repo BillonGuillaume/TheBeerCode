@@ -3,6 +3,7 @@ package com.fjbg.thebeercode.myconnections;
 import java.sql.*;
 import java.util.*;
 
+import com.fjbg.thebeercode.model.AjoutDB;
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.CoordonneesDB;
 import com.fjbg.thebeercode.model.FavoriDB;
@@ -53,6 +54,7 @@ public class DBConnection {
 		CoordonneesDB.setConnection(connect);
 		PrixDB.setConnection(connect);
 		VueVoteDB.setDbConnect(connect);
+		AjoutDB.setDbConnect(connect);
 	}
 
 	public Connection getConnection() throws Exception{
