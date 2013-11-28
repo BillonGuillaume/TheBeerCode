@@ -1,0 +1,146 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".AffichageBiere" >
+
+    <TextView
+        android:id="@+id/ABV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvABV"
+        android:layout_alignBottom="@+id/tvABV"
+        android:layout_alignRight="@+id/BeerCountry"
+        android:text="ABV" />
+
+    <ImageView
+        android:id="@+id/BeerPicture"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/BeerCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvABV"
+        android:layout_toRightOf="@+id/BeerPicture"
+        android:text="Beer's country" />
+
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ABV"
+        android:layout_alignParentBottom="true"
+        android:text="@string/Back" />
+
+    <TextView
+        android:id="@+id/NbVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvNbVotes"
+        android:layout_alignBottom="@+id/tvNbVotes"
+        android:layout_toRightOf="@+id/tvNbVotes"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/tvBeerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/BeerPicture"
+        android:layout_below="@+id/BeerPicture"
+        android:layout_marginTop="14dp"
+        android:text="@string/BeerName" />
+
+    <TextView
+        android:id="@+id/Beername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvCountry"
+        android:layout_toRightOf="@+id/BeerPicture"
+        android:text="Beer&apos;s name" />
+
+    <TextView
+        android:id="@+id/tvCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvBeerName"
+        android:layout_below="@+id/tvBeerName"
+        android:text="@string/Country" />
+
+    <TextView
+        android:id="@+id/tvABV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvCountry"
+        android:layout_below="@+id/tvCountry"
+        android:text="@string/ABV" />
+
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/BeerPicture"
+        android:layout_toRightOf="@+id/BeerPicture"
+        android:text="@string/Rating" />
+
+    <RatingBar
+        android:id="@+id/ratingBeer"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRating"
+        android:layout_toRightOf="@+id/BeerPicture" />
+
+    <TextView
+        android:id="@+id/tvNbVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingBeer"
+        android:layout_toRightOf="@+id/BeerPicture"
+        android:text="@string/NbVotes" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvNbVotes"
+        android:layout_alignTop="@+id/imageButton1"
+        android:src="@drawable/ic_stat_favorite" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNbVotes"
+        android:layout_toRightOf="@+id/imageButton2"
+        android:src="@drawable/ic_tab_location" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageButton1"
+        android:layout_toRightOf="@+id/imageButton1"
+        android:src="@drawable/ic_stat_note" />
+
+    <ListView
+        android:id="@+id/listComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btBack"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/imageButton3" >
+
+    </ListView>
+
+</RelativeLayout>

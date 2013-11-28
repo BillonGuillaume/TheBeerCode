@@ -47,5 +47,10 @@
     <string name="Commentary">Commentary</string>
     <string name="title_activity_mes_favoris">MesFavoris</string>
     <string name="MyFavorites">My Favorites</string>
+    <string name="title_activity_affichage_biere">AffichageBiere</string>
+    <string name="Rating">Rating :</string>
+    <string name="NbVotes">Number of votes :</string>
+    <string name="btRating">Rate</string>
+    <string name="Localization">Localization</string>
 
 </resources>
