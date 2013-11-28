@@ -3,15 +3,12 @@ package com.fjbg.thebeercode;
 import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.PersonneDB;
-import com.fjbg.thebeercode.model.VoteDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +25,7 @@ public class MesVotes extends Activity {
 	VotesAdapter vA;
 	Button bBack;
 	ArrayList<VueVoteDB> listVotes;
-	public static final String SELECTEDVOTE = "VOTE";
+	public static final String SELECTEDBEER = "BEER";
 	PersonneDB user;
 	Boolean scroll = true;
 
@@ -109,9 +106,9 @@ public class MesVotes extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						Intent showVote = new Intent(MesVotes.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage du vote ou alertBox
-						VueVoteDB selectedVote = (VueVoteDB)listVotes.get(arg2);
-						showVote.putExtra(MesVotes.SELECTEDVOTE, selectedVote);
+						Intent showVote = new Intent(MesVotes.this, AffichageBiere.class);
+						String selectedBeer = (listVotes.get(arg2)).getNomBiere();
+						showVote.putExtra(MesVotes.SELECTEDBEER, selectedBeer);
 						startActivity(showVote);
 						finish();
 					}

@@ -102,7 +102,7 @@ public class MesAjouts extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						Intent showBeer = new Intent(MesAjouts.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
+						Intent showBeer = new Intent(MesAjouts.this, AffichageBiere.class);
 						String selectedBeer = (String)aa.getItem(arg2);
 						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
 						startActivity(showBeer);

@@ -51,7 +51,7 @@ public class VotesAdapter extends BaseAdapter {
         VueVoteDB vote = data.get(position);
         tVBeer.setText(vote.getNomBiere());
         tVCom.setText(vote.getCommentaire());
-        rating.setRating(vote.getVote()/2);
+        rating.setRating(vote.getVote()/2); // TODO diminuer la taille avec le code de jérôme
         rating.setIsIndicator(true);
         return vi;
     }
