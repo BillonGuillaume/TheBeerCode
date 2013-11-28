@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.VoteDB;
+import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -25,9 +27,10 @@ public class MesVotes extends Activity {
 	int items;
 	VotesAdapter vA;
 	Button bBack;
-	ArrayList<VoteDB> listVotes;
+	ArrayList<VueVoteDB> listVotes;
 	public static final String SELECTEDVOTE = "VOTE";
 	PersonneDB user;
+	Boolean scroll = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +43,7 @@ public class MesVotes extends Activity {
 		bBack.setOnClickListener(bBackListener);
 
 		lvItems = (ListView)findViewById(R.id.lvItems);
-
-		VoteDB vote = new VoteDB(1, 2, 3, 3, "aa");
-		VoteDB vote2 = new VoteDB(12, 2, 3, 4, "aaa");
-		VoteDB vote3 = new VoteDB(21, 2, 3, 5, "aaaa");
-		listVotes = new ArrayList();
-		listVotes.add(vote);
-		listVotes.add(vote2);
-		listVotes.add(vote3);
-
+		listVotes = new ArrayList<VueVoteDB>();
 		vA = new VotesAdapter(MesVotes.this, listVotes);
 		lvItems.setAdapter(vA);
 		GetVotes getter = new GetVotes();
@@ -70,12 +65,13 @@ public class MesVotes extends Activity {
 	}
 
 	public void loadMore(int offset) {
-		Log.d("loadMore", "loeaee");
+		if(scroll) {
 		GetMoarVotes getMore = new GetMoarVotes();
 		getMore.execute();
+		}
 	}
 
-	private void addItems(VoteDB item) {
+	private void addItems(VueVoteDB item) {
 		if (item != null){
 			this.vA.add(item);
 			this.vA.notifyDataSetChanged();
@@ -86,19 +82,21 @@ public class MesVotes extends Activity {
 	public class GetVotes extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<VueVoteDB> liste = new ArrayList<VueVoteDB>();
 
 		public GetVotes() {
 
 		}
+		
+		@Override
+        protected void onPreExecute(){
+                
+        }
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
-			try {
-				ArrayList<VoteDB> liste = new ArrayList<VoteDB>();
-				liste = VoteDB.readCommentairesPersonne(1);
-				for(VoteDB vote : liste) {
-					addItems(vote);
-				}
+			try {				
+				liste = VueVoteDB.readVotesPersonne(user.getIdPersonne(), 1, 5);
 
 				lvItems.setOnScrollListener(new EndlessScrollListener(2) {
 					@Override
@@ -111,9 +109,8 @@ public class MesVotes extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
 						Intent showVote = new Intent(MesVotes.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage du vote ou alertBox
-						VoteDB selectedVote = (VoteDB)listVotes.get(arg2);
+						VueVoteDB selectedVote = (VueVoteDB)listVotes.get(arg2);
 						showVote.putExtra(MesVotes.SELECTEDVOTE, selectedVote);
 						startActivity(showVote);
 						finish();
@@ -122,12 +119,16 @@ public class MesVotes extends Activity {
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(VueVoteDB vote : liste) {
+				addItems(vote);
+			}
 			if(exc) {
 				Toast.makeText(MesVotes.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			
@@ -137,28 +138,34 @@ public class MesVotes extends Activity {
 	public class GetMoarVotes extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<VueVoteDB> liste;
 
 		public GetMoarVotes() {
 
 		}
+		
+		@Override
+        protected void onPreExecute(){
+             liste = new ArrayList<VueVoteDB>(); 
+        }
 
 		@Override
-		protected Boolean doInBackground(String... arg0) {  // TODO Créer la méthode pour récupérer un certain nombre + Que faire quand plus rien dans DB ?
-			try {
-				int nbrAjout;
-				for(nbrAjout = 0; nbrAjout <=2; nbrAjout++) {
-					VoteDB vote = new VoteDB(1, 2, 3, 3, "test");
-					addItems(vote);
-				}				
+		protected Boolean doInBackground(String... arg0) {
+			try {				
+				liste = VueVoteDB.readVotesPersonne(user.getIdPersonne(), items+1, items+6);			
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(VueVoteDB vote : liste) {
+				addItems(vote);
+			}
 			if(exc) {
 				Toast.makeText(MesVotes.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
