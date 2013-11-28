@@ -1,10 +1,14 @@
 package com.fjbg.thebeercode;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.SocketException;
 
@@ -13,6 +17,7 @@ import org.apache.commons.net.ftp.FTPClient;
 
 import com.fjbg.thebeercode.model.BiereDB;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +25,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -93,6 +99,8 @@ public class AffichageBiere extends Activity {
 		Exception ex;
 		BiereDB biereRech;
 		Bitmap bitmap   = null;
+		File downloadFile;
+		File file;
 		
 		public Lecture() {
 
@@ -126,42 +134,129 @@ public class AffichageBiere extends Activity {
 			
 			if(!exc){
 				FTPClient ftp = null;
-			
 				try {
-					ftp = new FTPClient();
-					ftp.connect("ftp.alokar.site90.net",21);
-					ftp.login("a7115779", "projet2013");
-					ftp.setFileType(FTP.BINARY_FILE_TYPE);
-					ftp.enterLocalPassiveMode();
+				FTPClient mFTPClient = new FTPClient();
+				  mFTPClient.connect("ftp.alokar.site90.net",21);      
+				  mFTPClient.login("a7115779", "projet2013");
+				  mFTPClient.enterLocalPassiveMode();
+				InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
+                file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png");
+                file.createNewFile();
+                OutputStream outputStream = new FileOutputStream(file);
+                int read = 0;
+                byte[] bytes = new byte[1024*1024];
+                while ((read = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
+                }
+                outputStream.close();
+                inputStream.close();
+				}catch(Exception e) {
+					Log.d("exception", "exception : " + e.getMessage());
+				}
+				
+			
+				
+//					ftp = new FTPClient();
+//					ftp.connect("ftp.alokar.site90.net",21);
+//					ftp.login("a7115779", "projet2013");
+//					ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//					ftp.enterLocalPassiveMode();
+//					Log.d("FTP", "1");
+//					
+//					FTPClient mFTPClient = new FTPClient();
+//					  mFTPClient.connect("ftp.alokar.site90.net",21);      
+//					  mFTPClient.login("a7115779", "projet2013");
+//					  mFTPClient.enterLocalPassiveMode();
+//					  InputStream inStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
+//					  InputStreamReader isr = new InputStreamReader(inStream, nomBiere);
 
-					OutputStream outputStream = null;
-					boolean success = false;
-		            outputStream = new BufferedOutputStream(new FileOutputStream(Environment.getExternalStorageDirectory()));
-		            success = ftp.retrieveFile(biereRech.getCheminImage(), outputStream);
-		            if (outputStream != null) {
-		                outputStream.close();
-		            }
-		       
-				 }
-				 catch(Exception e){
-					 
-				 }
-				 finally {
-					 try{
-						 if(ftp != null){
-							 ftp.logout();
-							 ftp.disconnect();
-						 }
-					 }
-					 catch(Exception e){}
-				  } 
-			 }
+//					String remoteFile = biereRech.getCheminImage();
+//					String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+//					File downloadFile = new File(path + "/tmp.jpg");
+//					OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
+//					Boolean success = false;
+//					try {
+//						success = ftp.retrieveFile(remoteFile, outputStream);
+//					} catch(Exception e) {
+//						Log.d("succes", "succes : " + e.getMessage());
+//					}
+//					outputStream.flush();
+//					outputStream.close();
+//					if(success) {
+//						Log.d("success", "success");
+////						BitmapFactory.Options options = new BitmapFactory.Options();
+////						bitmap = BitmapFactory.decodeFile(downloadFile.getAbsolutePath(), options);
+//						
+//					}
+//					FTPClient client = new FTPClient();
+//			        FileOutputStream fos = null;
+//			        String remoteFile = biereRech.getCheminImage();
+//			 
+//			        try {
+//			            client.connect("ftp.alokar.site90.net", 21);
+//			            client.login("a7115779", "projet2013");
+//			            
+//			            //
+//			            // The remote filename to be downloaded.
+//			            //
+//			            String filename = "image_Noir.jpg";
+//			            fos = new FileOutputStream(filename);
+//			 
+//			            //
+//			            // Download file from FTP server
+//			            //
+//			            client.retrieveFile("/" + filename, fos);
+//			        } catch (IOException e) {
+//			            Log.d("Exception", "exception : " + e.getMessage());
+//			        } finally {
+//			            try {
+//			                if (fos != null) {
+//			                    fos.close();
+//			                }
+//			                client.disconnect();
+//			            } catch (IOException e) {
+//			                e.printStackTrace();
+//			            }
+//			        }
+//		       
+//				 }
+//				 catch(Exception e){
+//					 Log.d("Exception", "exception : " + e.getMessage());
+//					 
+//				 }
+//				 finally {
+//					 try{
+//						 if(ftp != null){
+//							 ftp.logout();
+//							 ftp.disconnect();
+//						 }
+//					 }
+//					 catch(Exception e){
+//					 }
+//				  }
+					
+					
+				}
 			
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = 2;
+			try {
+				Log.d("Asbolute", file.getAbsolutePath());
+				bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+			}catch (Exception e) {
+				Log.d("exception post", "exception 2 : " + e.getMessage());
+			}				
+			try {
+				BeerPicture.setImageBitmap(bitmap);
+			} catch(Exception e) {
+				Log.d("exception post", "exception  : " + e.getMessage());
+			}
 			if(progress.isShowing())
                 progress.dismiss();
 			if(exc) {
