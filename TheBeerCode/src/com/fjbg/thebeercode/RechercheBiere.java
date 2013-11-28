@@ -3,6 +3,7 @@ package com.fjbg.thebeercode;
 import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,11 +31,14 @@ public class RechercheBiere extends Activity {
 	Button bBack;
 	ArrayList<String> aL;
 	ArrayList<BiereDB> listBeers;
-	public static final String SELECTEDBEER = "beer";
+	public static final String SELECTEDBEER = "BEER";
+	public static final String USER = "USER";
 	
 	Dialog custom;
 	Button bFiltre;
 	Boolean recherche = false;
+	
+	PersonneDB user;
 	
 	// Valeurs du filtre
 	String country;
@@ -67,6 +71,9 @@ public class RechercheBiere extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recherche_biere);
+		
+		Intent data = getIntent();
+		user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
 		
 		bFiltre = (Button)findViewById(R.id.bFiltre);
 		
@@ -212,7 +219,8 @@ public class RechercheBiere extends Activity {
 						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
 						Intent showBeer = new Intent(RechercheBiere.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
 						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
-						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
+						showBeer.putExtra(RechercheBiere.SELECTEDBEER, selectedBeer);
+						showBeer.putExtra(RechercheBiere.USER, user);
 						startActivity(showBeer);
 						finish();
 					}

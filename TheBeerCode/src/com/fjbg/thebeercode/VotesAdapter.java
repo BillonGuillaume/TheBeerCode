@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +50,7 @@ public class VotesAdapter extends BaseAdapter {
         VueVoteDB vote = data.get(position);
         tVBeer.setText(vote.getNomBiere());
         tVCom.setText(vote.getCommentaire());
-        rating.setRating(vote.getVote()/2); // TODO diminuer la taille avec le code de jérôme
-        rating.setIsIndicator(true);
+        rating.setRating(vote.getVote()/2);
         return vi;
     }
     

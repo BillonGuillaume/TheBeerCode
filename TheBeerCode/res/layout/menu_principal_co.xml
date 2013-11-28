@@ -25,10 +25,16 @@
     </LinearLayout>
     
     <Button
-        android:id="@+id/bBeers"
+        android:id="@+id/bSearchBeer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Beers" />
+        android:text="@string/SearchBeer" />
+    
+    <Button
+        android:id="@+id/bAddBeer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/AddBeer" />
     
     <Button
         android:id="@+id/bAdditions"

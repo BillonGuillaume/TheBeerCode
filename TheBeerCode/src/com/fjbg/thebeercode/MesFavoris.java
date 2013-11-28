@@ -27,6 +27,7 @@ public class MesFavoris extends Activity {
 	Button bBack;
 	ArrayList<FavoriDB> listFavorites;
 	public static final String SELECTEDFAV = "FAV";
+	public static final String USER = "USER";
 	PersonneDB user;
 	
 	@Override
@@ -98,10 +99,10 @@ public class MesFavoris extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
-						Intent showFav = new Intent(MesFavoris.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
+						Intent showFav = new Intent(MesFavoris.this, AffichageBiere.class);
 						FavoriDB selectedFav = (FavoriDB)listFavorites.get(arg2);
 						showFav.putExtra(MesFavoris.SELECTEDFAV, selectedFav);
+						showFav.putExtra(MesFavoris.USER, user);
 						startActivity(showFav);
 						finish();
 					}

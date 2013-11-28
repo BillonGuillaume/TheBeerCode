@@ -26,6 +26,7 @@ public class MesVotes extends Activity {
 	Button bBack;
 	ArrayList<VueVoteDB> listVotes;
 	public static final String SELECTEDBEER = "BEER";
+	public static final String USER = "USER";
 	PersonneDB user;
 	Boolean scroll = true;
 
@@ -93,9 +94,9 @@ public class MesVotes extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {				
-				liste = VueVoteDB.readVotesPersonne(user.getIdPersonne(), 1, 5);
+				liste = VueVoteDB.readVotesPersonne(user.getIdPersonne(), 1, 10);
 
-				lvItems.setOnScrollListener(new EndlessScrollListener(2) {
+				lvItems.setOnScrollListener(new EndlessScrollListener(5) {
 					@Override
 					public void onLoadMore(int page, int totalItemsCount) {
 						loadMore(totalItemsCount);
@@ -109,6 +110,7 @@ public class MesVotes extends Activity {
 						Intent showVote = new Intent(MesVotes.this, AffichageBiere.class);
 						String selectedBeer = (listVotes.get(arg2)).getNomBiere();
 						showVote.putExtra(MesVotes.SELECTEDBEER, selectedBeer);
+						showVote.putExtra(MesVotes.USER, user);
 						startActivity(showVote);
 						finish();
 					}

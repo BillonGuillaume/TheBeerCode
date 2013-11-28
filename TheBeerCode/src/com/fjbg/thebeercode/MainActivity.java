@@ -26,7 +26,8 @@ public class MainActivity extends Activity {
 	
 	Button bConnection = null;
 	Button bInscription = null;
-	Button bBeers = null;
+	Button bAddBeer = null;
+	Button bSearchBeer = null;
 	Button bAdditions = null;
 	Button bMyVotes = null;
 	Button bMyFavorites = null;
@@ -45,11 +46,11 @@ public class MainActivity extends Activity {
 				
 		bConnection = (Button)findViewById(R.id.bConnection);
 		bInscription = (Button)findViewById(R.id.bInscription);
-		bBeers = (Button)findViewById(R.id.bBeers);
+		bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
 		
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
-		bBeers.setOnClickListener(bBeersListener);
+		bSearchBeer.setOnClickListener(bSearchBeerListener);
 		
 		try {
 			connec = new ConnexionDB();
@@ -75,11 +76,19 @@ public class MainActivity extends Activity {
 		}
 	};
 	
-	private OnClickListener bBeersListener = new OnClickListener() {
+	private OnClickListener bSearchBeerListener = new OnClickListener() {  // Gérer l'envoi de la personne
+		@Override
+		public void onClick(View v) {
+			Intent BeersActivity = new  Intent(MainActivity.this,RechercheBiere.class);
+			startActivity(BeersActivity);
+		}
+	};
+	
+	private OnClickListener bAddBeerListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			if(user!=null){
-				Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class); // TODO gérer AjoutBiere et RechercheBiere
+				Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class);
 				startActivity(BeersActivity);
 			}
 			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();
@@ -111,11 +120,11 @@ public class MainActivity extends Activity {
 
 			bConnection = (Button)findViewById(R.id.bConnection);
 			bInscription = (Button)findViewById(R.id.bInscription);
-			bBeers = (Button)findViewById(R.id.bBeers);
+			bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
 
 			bConnection.setOnClickListener(bConnectionListener);
 			bInscription.setOnClickListener(bInscriptionListener);
-			bBeers.setOnClickListener(bBeersListener);
+			bSearchBeer.setOnClickListener(bSearchBeerListener);
 			
 			user = null;
 			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show();
@@ -149,14 +158,16 @@ public class MainActivity extends Activity {
 				setContentView(R.layout.menu_principal_co);
 				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
 				tVNameMenu = (TextView)findViewById(R.id.tVNameMenu);
-				bBeers = (Button)findViewById(R.id.bBeers);
+				bAddBeer = (Button)findViewById(R.id.bAddBeer);
+				bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
 				bAdditions = (Button)findViewById(R.id.bAdditions);
 				bMyVotes = (Button)findViewById(R.id.bMyVotes);
 				bDisconnection = (Button)findViewById(R.id.bDisconnection);
 				bProfile = (Button)findViewById(R.id.bProfile);
 				bMyFavorites = (Button)findViewById(R.id.bMyFavorites);
 				
-				bBeers.setOnClickListener(bBeersListener);
+				bAddBeer.setOnClickListener(bAddBeerListener);
+				bSearchBeer.setOnClickListener(bSearchBeerListener);
 				bAdditions.setOnClickListener(bAdditionsListener);
 				bMyVotes.setOnClickListener(bMyVotesListener);
 				bDisconnection.setOnClickListener(bDisconnectionListener);

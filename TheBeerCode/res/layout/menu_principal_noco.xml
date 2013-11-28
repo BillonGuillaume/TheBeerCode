@@ -18,9 +18,9 @@
         android:text="@string/Inscription" />
     
     <Button
-        android:id="@+id/bBeers"
+        android:id="@+id/bSearchBeer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Beers" />
+        android:text="@string/SearchBeer" />
     
 </LinearLayout>

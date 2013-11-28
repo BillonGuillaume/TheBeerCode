@@ -26,6 +26,7 @@ public class MesAjouts extends Activity {
 	ArrayAdapter<String> aa;
 	Button bBack;
 	public static final String SELECTEDBEER = "BEER";
+	public static final String USER = "USER";
 	PersonneDB user;
 	Boolean scroll = true;
 	ArrayList<String> listBeers = new ArrayList<String>();
@@ -104,6 +105,7 @@ public class MesAjouts extends Activity {
 						Intent showBeer = new Intent(MesAjouts.this, AffichageBiere.class);
 						String selectedBeer = (String)aa.getItem(arg2);
 						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
+						showBeer.putExtra(MesAjouts.USER, user);
 						startActivity(showBeer);
 						finish();
 					}

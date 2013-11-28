@@ -53,5 +53,7 @@
     <string name="btRating">Rate</string>
     <string name="Localization">Localization</string>
     <string name="Beer">Beer</string>
+    <string name="SearchBeer">Search Beer</string>
+    <string name="AddBeer">Add Beer</string>
 
 </resources>
