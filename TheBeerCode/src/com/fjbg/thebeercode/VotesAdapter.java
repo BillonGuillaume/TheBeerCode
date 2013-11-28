@@ -2,7 +2,7 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
-import com.fjbg.thebeercode.model.VoteDB;
+import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.content.Context;
 import android.util.Log;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 public class VotesAdapter extends BaseAdapter {
 	private Context activity;
     private static LayoutInflater inflater=null;
-    private ArrayList<VoteDB> data;
+    private ArrayList<VueVoteDB> data;
  
-    public VotesAdapter(Context a, ArrayList<VoteDB> listVotes) {
+    public VotesAdapter(Context a, ArrayList<VueVoteDB> listVotes) {
         activity = a;
         data=listVotes;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,26 +38,25 @@ public class VotesAdapter extends BaseAdapter {
  
     public View getView(int position, View convertView, ViewGroup parent) {
     	
-    	Log.d("VotesAdapter", "getView");
+    	//Log.d("VotesAdapter", "getView");
         View vi=convertView;
         
         if(convertView==null)
             vi = inflater.inflate(R.layout.list_row, null);
  
-        TextView tVLogin = (TextView)vi.findViewById(R.id.tVLogin);
+        TextView tVBeer = (TextView)vi.findViewById(R.id.tVBeer);
         TextView tVCom = (TextView)vi.findViewById(R.id.tVCom);
         RatingBar rating = (RatingBar)vi.findViewById(R.id.ratingBar);
  
-        VoteDB vote = data.get(position);
-        String votant = Integer.toString(vote.getVotant());
-        tVLogin.setText(votant);
+        VueVoteDB vote = data.get(position);
+        tVBeer.setText(vote.getNomBiere());
         tVCom.setText(vote.getCommentaire());
-        rating.setRating(vote.getVote());
+        rating.setRating(vote.getVote()/2);
         rating.setIsIndicator(true);
         return vi;
     }
     
-    public void add(VoteDB item) {
+    public void add(VueVoteDB item) {
     	data.add(item);
     }
 }

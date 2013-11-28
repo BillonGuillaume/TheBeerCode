@@ -52,5 +52,6 @@
     <string name="NbVotes">Number of votes :</string>
     <string name="btRating">Rate</string>
     <string name="Localization">Localization</string>
+    <string name="Beer">Beer</string>
 
 </resources>

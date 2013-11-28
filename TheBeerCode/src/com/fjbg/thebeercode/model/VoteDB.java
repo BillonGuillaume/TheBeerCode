@@ -138,7 +138,7 @@ public static Connection dbConnect = null;
         }
     }
     
-    public static ArrayList<VoteDB> readCommentairesPersonne(int votant) throws Exception {
+    public static ArrayList<VoteDB> readVotesPersonne(int votant) throws Exception {
     	String req = "SELECT idVote, votant, notee, vote, commentaire FROM Vote WHERE votant = ?";
     	ArrayList <VoteDB> listVotes = new ArrayList<VoteDB>();
     	VoteDB obj;
