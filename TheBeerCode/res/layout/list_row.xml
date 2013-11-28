@@ -17,8 +17,8 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tVBeer"
-        android:layout_below="@+id/tVBeer" />
+        android:layout_alignLeft="@+id/tVLogin"
+        android:layout_below="@+id/tVLogin" />
 
     <TextView
         android:id="@+id/tVCom"
