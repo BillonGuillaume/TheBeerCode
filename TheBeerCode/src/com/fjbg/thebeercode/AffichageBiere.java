@@ -123,36 +123,34 @@ public class AffichageBiere extends Activity {
 			
 			try{
 				biereRech.readBiere();
-				Log.d("osef","biereRech.readBiere(); ok");
 			}
 			catch(Exception e){
 				ex = e;
 				exc = true;
-				Log.d("osef","biereRech.readBiere(); not ok");
 			}
 			
 			
 			if(!exc){
-				FTPClient ftp = null;
-				try {
-				FTPClient mFTPClient = new FTPClient();
-				  mFTPClient.connect("ftp.alokar.site90.net",21);      
-				  mFTPClient.login("a7115779", "projet2013");
-				  mFTPClient.enterLocalPassiveMode();
-				InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
-                file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png");
-                file.createNewFile();
-                OutputStream outputStream = new FileOutputStream(file);
-                int read = 0;
-                byte[] bytes = new byte[1024*1024];
-                while ((read = inputStream.read(bytes)) != -1) {
-                    outputStream.write(bytes, 0, read);
-                }
-                outputStream.close();
-                inputStream.close();
-				}catch(Exception e) {
-					Log.d("exception", "exception : " + e.getMessage());
-				}
+//				FTPClient ftp = null;
+//				try {
+//				FTPClient mFTPClient = new FTPClient();
+//				  mFTPClient.connect("ftp.alokar.site90.net",21);      
+//				  mFTPClient.login("a7115779", "projet2013");
+//				  mFTPClient.enterLocalPassiveMode();
+//				InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
+//                file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png"); // TODO Changer le nom du fichier + supprimer après lecture
+//                file.createNewFile();
+//                OutputStream outputStream = new FileOutputStream(file);
+//                int read = 0;
+//                byte[] bytes = new byte[1024*1024];
+//                while ((read = inputStream.read(bytes)) != -1) {
+//                    outputStream.write(bytes, 0, read);
+//                }
+//                outputStream.close();
+//                inputStream.close();
+//				}catch(Exception e) {
+//					Log.d("exception", "exception : " + e.getMessage());
+//				}
 				
 			
 				
@@ -247,18 +245,13 @@ public class AffichageBiere extends Activity {
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = 2;
 			try {
-				Log.d("Asbolute", file.getAbsolutePath());
 				bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 			}catch (Exception e) {
 				Log.d("exception post", "exception 2 : " + e.getMessage());
 			}				
-			try {
-				BeerPicture.setImageBitmap(bitmap);
-			} catch(Exception e) {
-				Log.d("exception post", "exception  : " + e.getMessage());
-			}
+			BeerPicture.setImageBitmap(bitmap);
 			if(progress.isShowing())
-                progress.dismiss();
+				progress.dismiss();
 			if(exc) {
 				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
