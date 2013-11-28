@@ -56,31 +56,6 @@ public class Inscription extends Activity {
 		public void onClick(View v) {
 			Create insc = new Create();
 			insc.execute();
-//			PersonneDB personne =new PersonneDB();
-//			String login=edlogin.getText().toString();
-//			personne.setLogin(login);
-//
-//			String password= edpassword.getText().toString();
-//			personne.setMdp(password);
-//			String confPassword= edconfPassword.getText().toString();
-//			if(password.compareTo(confPassword)!=0) {
-//				Toast.makeText(Inscription.this, "Les mots de passe ne correspondent pas !", Toast.LENGTH_SHORT ).show();
-//			}else {
-//				String mail= edmail.getText().toString();
-//				personne.setMail(mail);
-//				String pays= edpays.getText().toString();
-//				personne.setPays(pays);
-//
-//				try {
-//					personne.create();
-//					Intent i= new Intent();
-//					i.putExtra(MainActivity.PERSONNE, personne);
-//					setResult(RESULT_OK, i);
-//					finish();
-//				} catch(Exception e) {
-//					Toast.makeText(Inscription.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
-//				}
-//			}
 		}
 	};
 

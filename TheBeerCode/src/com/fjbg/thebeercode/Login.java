@@ -25,6 +25,7 @@ public class Login extends Activity {
 	
 	Button bSignIn = null;
 	Button bCancel = null;
+	public final static int INSCRIPTION_REQUEST = 2;
 	
 	
 	@Override
@@ -41,6 +42,7 @@ public class Login extends Activity {
 		
 		bSignIn.setOnClickListener(bSignInListener);
 		bCancel.setOnClickListener(bCancelListener);
+		tVNotYetRegistered.setOnClickListener(tVNYRListener);
 	}
 	
 	private OnClickListener bSignInListener = new OnClickListener() {
@@ -51,6 +53,14 @@ public class Login extends Activity {
 		}
 	};
 	
+	private OnClickListener tVNYRListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent SignUpActivity = new  Intent(Login.this,Inscription.class);
+			startActivityForResult(SignUpActivity, INSCRIPTION_REQUEST);
+		}
+	};
+	
 	private OnClickListener bCancelListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -58,6 +68,24 @@ public class Login extends Activity {
 			finish();
 		}
 	};
+	
+	@Override
+	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {		
+		if (requestCode == INSCRIPTION_REQUEST){
+			if  (resultCode == RESULT_OK) {
+				PersonneDB user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
+				Intent i= new Intent();
+				i.putExtra(MainActivity.PERSONNE, user);
+				setResult(RESULT_OK, i);
+				finish();
+			}
+			if(resultCode == RESULT_CANCELED) {
+				Intent i = new Intent();
+				setResult(RESULT_CANCELED, i);
+				finish();
+			}
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
