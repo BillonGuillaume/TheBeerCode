@@ -202,7 +202,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
     		     	this.nbreVotes=rs.getInt("NBREVOTES");
     		     	this.cheminImage=rs.getString("CHEMINIMAGE");
     		     	this.paysBiere=rs.getString("PAYSBIERE");
-    		     	this.degreBiere=rs.getInt("DEGREBIERE");
+    		     	this.degreBiere=rs.getFloat("DEGREBIERE");
     		        
     	              }
     		      else { 
