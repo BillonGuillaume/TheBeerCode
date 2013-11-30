@@ -1,29 +1,18 @@
 package com.fjbg.thebeercode;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.SocketException;
 import java.util.ArrayList;
 
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
-import com.fjbg.thebeercode.MesVotes.GetMoarVotes;
-import com.fjbg.thebeercode.MesVotes.GetVotes;
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.FavoriDB;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,16 +25,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class AffichageBiere extends Activity {
 	
@@ -158,11 +144,11 @@ public class AffichageBiere extends Activity {
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
-			
+
 			biereRech =new BiereDB();
-			
+
 			biereRech.setNomBiere(nomBiere);
-			
+
 			try{
 				biereRech.readBiere();
 				favorite= FavoriDB.verifFavorite(user.getIdPersonne(),biereRech.getIdBiere());
@@ -171,117 +157,35 @@ public class AffichageBiere extends Activity {
 				ex = e;
 				exc = true;
 			}
-			
-			
+
+
 			if(!exc){
-				FTPClient ftp = null;
 				try {
-				FTPClient mFTPClient = new FTPClient();
-				  mFTPClient.connect("ftp.alokar.site90.net",21);      
-				  mFTPClient.login("a7115779", "projet2013");
-				  mFTPClient.enterLocalPassiveMode();
-				InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
-                file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png"); // TODO Changer le nom du fichier + supprimer après lecture
-                file.createNewFile();
-                OutputStream outputStream = new FileOutputStream(file);
-                int read = 0;
-                byte[] bytes = new byte[1024*1024];
-                while ((read = inputStream.read(bytes)) != -1) {
-                    outputStream.write(bytes, 0, read);
-                }
-                outputStream.close();
-                inputStream.close();
+					FTPClient mFTPClient = new FTPClient();
+					mFTPClient.connect("ftp.alokar.site90.net",21);      
+					mFTPClient.login("a7115779", "projet2013");
+					mFTPClient.enterLocalPassiveMode();
+					InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
+					file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png"); // TODO Changer le nom du fichier + supprimer après lecture
+					file.createNewFile();
+					OutputStream outputStream = new FileOutputStream(file);
+					int read = 0;
+					byte[] bytes = new byte[1024*1024];
+					while ((read = inputStream.read(bytes)) != -1) {
+						outputStream.write(bytes, 0, read);
+					}
+					outputStream.close();
+					inputStream.close();
 				}catch(Exception e) {
 					Log.d("exception", "exception : " + e.getMessage());
 				}
-				
-			
-				
-//					ftp = new FTPClient();
-//					ftp.connect("ftp.alokar.site90.net",21);
-//					ftp.login("a7115779", "projet2013");
-//					ftp.setFileType(FTP.BINARY_FILE_TYPE);
-//					ftp.enterLocalPassiveMode();
-//					Log.d("FTP", "1");
-//					
-//					FTPClient mFTPClient = new FTPClient();
-//					  mFTPClient.connect("ftp.alokar.site90.net",21);      
-//					  mFTPClient.login("a7115779", "projet2013");
-//					  mFTPClient.enterLocalPassiveMode();
-//					  InputStream inStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
-//					  InputStreamReader isr = new InputStreamReader(inStream, nomBiere);
 
-//					String remoteFile = biereRech.getCheminImage();
-//					String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-//					File downloadFile = new File(path + "/tmp.jpg");
-//					OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(downloadFile));
-//					Boolean success = false;
-//					try {
-//						success = ftp.retrieveFile(remoteFile, outputStream);
-//					} catch(Exception e) {
-//						Log.d("succes", "succes : " + e.getMessage());
-//					}
-//					outputStream.flush();
-//					outputStream.close();
-//					if(success) {
-//						Log.d("success", "success");
-////						BitmapFactory.Options options = new BitmapFactory.Options();
-////						bitmap = BitmapFactory.decodeFile(downloadFile.getAbsolutePath(), options);
-//						
-//					}
-//					FTPClient client = new FTPClient();
-//			        FileOutputStream fos = null;
-//			        String remoteFile = biereRech.getCheminImage();
-//			 
-//			        try {
-//			            client.connect("ftp.alokar.site90.net", 21);
-//			            client.login("a7115779", "projet2013");
-//			            
-//			            //
-//			            // The remote filename to be downloaded.
-//			            //
-//			            String filename = "image_Noir.jpg";
-//			            fos = new FileOutputStream(filename);
-//			 
-//			            //
-//			            // Download file from FTP server
-//			            //
-//			            client.retrieveFile("/" + filename, fos);
-//			        } catch (IOException e) {
-//			            Log.d("Exception", "exception : " + e.getMessage());
-//			        } finally {
-//			            try {
-//			                if (fos != null) {
-//			                    fos.close();
-//			                }
-//			                client.disconnect();
-//			            } catch (IOException e) {
-//			                e.printStackTrace();
-//			            }
-//			        }
-//		       
-//				 }
-//				 catch(Exception e){
-//					 Log.d("Exception", "exception : " + e.getMessage());
-//					 
-//				 }
-//				 finally {
-//					 try{
-//						 if(ftp != null){
-//							 ftp.logout();
-//							 ftp.disconnect();
-//						 }
-//					 }
-//					 catch(Exception e){
-//					 }
-//				  }
-					
-					
-				}
-			
+
+			}
+
 			return true;
 		}
-		
+
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 
@@ -293,7 +197,7 @@ public class AffichageBiere extends Activity {
 			}catch (Exception e) {
 				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
 			}				
-			
+
 			if(progress.isShowing())
 				progress.dismiss();
 			if(exc) {
@@ -313,7 +217,7 @@ public class AffichageBiere extends Activity {
 					Toast.makeText(AffichageBiere.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
 				}
 			}
-			
+
 		}
 	}
 	
