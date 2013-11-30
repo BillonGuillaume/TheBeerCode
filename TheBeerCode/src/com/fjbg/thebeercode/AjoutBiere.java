@@ -12,6 +12,8 @@ import java.io.InputStream;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.HistoriqueDB;
+import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -55,6 +57,8 @@ public class AjoutBiere extends Activity {
 
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_FILE = 2;
+	
+	PersonneDB user;
 
 	
 	@Override
@@ -76,6 +80,9 @@ public class AjoutBiere extends Activity {
 		
 		retour = (Button) findViewById(R.id.bBack);
 		retour.setOnClickListener(retourListener);
+		
+		Intent i= getIntent();
+		user= (PersonneDB)i.getParcelableExtra(MainActivity.USER);
 		
 		final String [] items			= new String [] {"From Camera", "From SD Card"};
 		ArrayAdapter<String> adapter	= new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);
@@ -225,6 +232,9 @@ public class AjoutBiere extends Activity {
 			if(!exc) {
 				try {
 					biere.create();
+					HistoriqueDB histo= new HistoriqueDB(0, user.getIdPersonne(),biere.getIdBiere(),"ajout");
+					histo.create();
+					
 				} catch(Exception e) {
 					ex = e;
 					exc = true;
