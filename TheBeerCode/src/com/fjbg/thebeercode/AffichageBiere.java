@@ -34,10 +34,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AffichageBiere extends Activity {
-	
+
 	public static final String SELECTEDBEER = "BEER";
 	public static final String USER = "USER";
-	
+
 	private ListView listComments;
 	private TextView BeerName;
 	private TextView BeerCountry;
@@ -62,51 +62,51 @@ public class AffichageBiere extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_affichage_biere);
-		
+
 		BeerName = (TextView)findViewById(R.id.Beername);
 		BeerCountry = (TextView)findViewById(R.id.BeerCountry);
 		ABV = (TextView)findViewById(R.id.ABV);
 		NbVotes = (TextView)findViewById(R.id.NbVotes);
-		
+
 		BeerPicture = (ImageView) findViewById(R.id.BeerPicture);
-		
+
 		ratingBeer = (RatingBar) findViewById(R.id.ratingBeer);
-		
+
 		listComments = (ListView)findViewById(R.id.listComments);
-		
+
 		retour = (Button) findViewById(R.id.btBack);
 		retour.setOnClickListener(retourListener);
-		
+
 		favoris = (ImageButton) findViewById(R.id.imageFavoris); 
-				
+
 		Intent i=getIntent();
-	    nomBiere=(String)i.getStringExtra(SELECTEDBEER);
-	    user= (PersonneDB)i.getParcelableExtra(USER);
-	    
-	    Lecture lec= new Lecture();
-	    lec.execute();
-	    
-	    listVotes = new ArrayList<VueVoteDB>();
-	    vbA = new VotesBiereAdapter(AffichageBiere.this, listVotes);
+		nomBiere=(String)i.getStringExtra(SELECTEDBEER);
+		user= (PersonneDB)i.getParcelableExtra(USER);
+
+		Lecture lec= new Lecture();
+		lec.execute();
+
+		listVotes = new ArrayList<VueVoteDB>();
+		vbA = new VotesBiereAdapter(AffichageBiere.this, listVotes);
 		listComments.setAdapter(vbA);
 		GetVotes getter = new GetVotes();
 		getter.execute();
 	}
-	
+
 	private OnClickListener retourListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			finish();
 		}
 	};
-	
+
 	public void loadMore(int offset) {
 		if(scroll) {
-		GetMoarVotes getMore = new GetMoarVotes();
-		getMore.execute();
+			GetMoarVotes getMore = new GetMoarVotes();
+			getMore.execute();
 		}
 	}
-	
+
 	private void addItems(VueVoteDB item) {
 		if (item != null){
 			this.vbA.add(item);
@@ -114,14 +114,14 @@ public class AffichageBiere extends Activity {
 			items++;
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.affichage_biere, menu);
 		return true;
 	}
-	
+
 	public class Lecture extends AsyncTask<String, Integer, Boolean>{	
 		Boolean exc = false;
 		Exception ex;
@@ -129,18 +129,18 @@ public class AffichageBiere extends Activity {
 		Bitmap bitmap   = null;
 		File downloadFile;
 		File file;
-		
+
 		public Lecture() {
 
 		}
-		
+
 		@Override
-        protected void onPreExecute(){
-                progress = new ProgressDialog(AffichageBiere.this);
-                progress.setMessage("Téléchargement des données en cours...");
-                progress.setCancelable(false);
-                progress.show();
-        }
+		protected void onPreExecute(){
+			progress = new ProgressDialog(AffichageBiere.this);
+			progress.setMessage("Téléchargement des données en cours...");
+			progress.setCancelable(false);
+			progress.show();
+		}
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
@@ -182,7 +182,6 @@ public class AffichageBiere extends Activity {
 
 
 			}
-
 			return true;
 		}
 
@@ -220,7 +219,7 @@ public class AffichageBiere extends Activity {
 
 		}
 	}
-	
+
 	public class GetVotes extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
@@ -229,11 +228,11 @@ public class AffichageBiere extends Activity {
 		public GetVotes() {
 
 		}
-		
+
 		@Override
-        protected void onPreExecute(){
-                
-        }
+		protected void onPreExecute(){
+
+		}
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
@@ -274,11 +273,11 @@ public class AffichageBiere extends Activity {
 		public GetMoarVotes() {
 
 		}
-		
+
 		@Override
-        protected void onPreExecute(){
-             liste = new ArrayList<VueVoteDB>(); 
-        }
+		protected void onPreExecute(){
+			liste = new ArrayList<VueVoteDB>(); 
+		}
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
