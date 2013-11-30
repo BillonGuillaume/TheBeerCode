@@ -26,13 +26,27 @@
         android:text="@string/Research"
         android:textSize="@dimen/activity_vertical_margin" />
 
-    <Button
-        android:id="@+id/bFiltre"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lvItems"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/Filtre" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bBack"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Back" />
+
+        <Button
+            android:id="@+id/bFiltre"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Filtre" />
+    </LinearLayout>
 
 </RelativeLayout>

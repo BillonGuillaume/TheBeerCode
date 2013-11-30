@@ -76,6 +76,15 @@ public class RechercheBiere extends Activity {
 		user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
 		
 		bFiltre = (Button)findViewById(R.id.bFiltre);
+		bBack = (Button)findViewById(R.id.bBack);
+		
+		bBack.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();				
+			}
+		});
 		
 		bFiltre.setOnClickListener(new View.OnClickListener() {
 			@Override
