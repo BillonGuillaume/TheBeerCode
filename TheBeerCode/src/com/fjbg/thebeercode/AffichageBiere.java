@@ -8,15 +8,18 @@ import java.util.ArrayList;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import com.fjbg.thebeercode.RechercheBiere.GetBeers;
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.FavoriDB;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.model.VoteDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +29,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -47,9 +51,18 @@ public class AffichageBiere extends Activity {
 	private RatingBar ratingBeer;
 	private Button retour = null;
 	private ImageButton favoris = null;
+	private ImageButton noter = null;
 	ProgressDialog progress;
 	Boolean scroll = true;
-
+	
+	Dialog custom;
+	private TextView tvNoter;
+	private TextView tvCommenter;
+	private RatingBar rbBeer;
+	private EditText etCommentary;
+	private Button bConfirm;
+	private Button bCancel;
+	
 	ArrayList<VueVoteDB> listVotes;
 	int items;
 	VotesBiereAdapter vbA;
@@ -58,6 +71,8 @@ public class AffichageBiere extends Activity {
 	PersonneDB user;
 	boolean favorite = false;
 	FavoriDB favori;
+	String commentaire;
+	Float note;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +95,10 @@ public class AffichageBiere extends Activity {
 
 		favoris = (ImageButton) findViewById(R.id.imageFavoris);
 		favoris.setOnClickListener(favorisListener);
-
+		
+		noter = (ImageButton) findViewById(R.id.imageNote);
+		noter.setOnClickListener(noterListener);
+		
 		Intent i=getIntent();
 		nomBiere=(String)i.getStringExtra(SELECTEDBEER);
 		user= (PersonneDB)i.getParcelableExtra(USER);
@@ -107,6 +125,49 @@ public class AffichageBiere extends Activity {
 			MF.execute();
 		}
 	};
+	
+	private OnClickListener noterListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			custom = new Dialog(AffichageBiere.this);
+			custom.setContentView(R.layout.noter_layout);
+			
+			tvNoter = (TextView)custom.findViewById(R.id.tvNoter);
+			tvCommenter = (TextView)custom.findViewById(R.id.tvCommenter);
+			
+			rbBeer = (RatingBar)custom.findViewById(R.id.rbBeer);
+			etCommentary = (EditText)custom.findViewById(R.id.etCommentary);
+			
+			bConfirm = (Button)custom.findViewById(R.id.bConfirm);
+			bCancel = (Button)custom.findViewById(R.id.bCancel);
+
+			custom.setTitle("Evaluation");
+
+			bConfirm.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					commentaire = etCommentary.getText().toString();
+					note = rbBeer.getRating();
+					
+					custom.dismiss();
+					ModifNote MN = new ModifNote();
+					MN.execute();
+				}
+
+			});
+			bCancel.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					custom.dismiss();
+
+				}
+			});
+			custom.show();
+		}
+	};
+
 
 	public void loadMore(int offset) {
 		if(scroll) {
@@ -378,6 +439,83 @@ public class AffichageBiere extends Activity {
 			}
 			
 		}
+		
+		
 	}
+	
+	public class ModifNote extends AsyncTask<String, Integer, Boolean>{
+		Boolean exc = false;
+		Boolean dejaVote = false;
+		Exception ex;
 
+		public ModifNote() {
+			
+		}
+
+		@Override
+		protected void onPreExecute(){
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			VoteDB vote = new VoteDB();
+			vote.setVotant(user.getIdPersonne());
+			vote.setNotee(biere.getIdBiere());
+			
+			try{
+				vote.readVote();
+				dejaVote = true;
+			}
+			catch(Exception e){
+				
+			}
+			
+			vote.setVote(note*2);
+			vote.setCommentaire(commentaire);
+			
+			if(dejaVote){
+				try{
+					vote.update();
+				}
+				catch(Exception e){
+					ex = e;
+					exc = true;
+				}
+				
+			}
+			else{
+				try{
+					vote.create();
+				}
+				catch(Exception e){
+					ex = e;
+					exc = true;
+				}
+			}
+			
+			if(!exc){
+				try{
+					biere.read();
+				}
+				catch(Exception e){
+					
+				}
+			}
+
+			return true;
+		}
+
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}
+			else{
+				Toast.makeText(AffichageBiere.this, "Vote enregistré !", Toast.LENGTH_SHORT ).show();
+				ratingBeer.setRating(biere.getCoteBiere()/2);
+			}
+			
+		}
+	}
 }

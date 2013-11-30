@@ -117,7 +117,7 @@
         android:text="@string/Back" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/imageNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNbVotes"
@@ -128,8 +128,8 @@
         android:id="@+id/imageButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageButton3"
-        android:layout_toRightOf="@+id/imageButton3"
+        android:layout_alignTop="@+id/imageNote"
+        android:layout_toRightOf="@+id/imageNote"
         android:src="@drawable/ic_tab_location" />
     
     <ListView

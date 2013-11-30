@@ -56,5 +56,8 @@
     <string name="SearchBeer">Search Beer</string>
     <string name="AddBeer">Add Beer</string>
     <string name="User">User</string>
+    <string name="Comment">Comment :</string>
+    <string name="Note">Evaluation :</string>
+    <string name="Confirm">Confirm</string>
 
 </resources>
