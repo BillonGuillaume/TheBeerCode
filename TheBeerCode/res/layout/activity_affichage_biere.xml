@@ -119,19 +119,19 @@
         android:text="@string/NbVotes" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imageFavoris"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvNbVotes"
         android:layout_alignTop="@+id/imageButton1"
-        android:src="@drawable/ic_stat_favorite" />
+        android:src="@drawable/ic_stat_favorite2" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageButton1"
-        android:layout_toRightOf="@+id/imageButton2"
+        android:layout_toRightOf="@+id/imageFavoris"
         android:src="@drawable/ic_stat_note" />
 
     <ImageButton
