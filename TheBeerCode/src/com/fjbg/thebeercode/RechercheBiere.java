@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,12 +28,13 @@ public class RechercheBiere extends Activity {
 	
 	ListView lvItems;
 	int items;
-	ArrayAdapter<String> aa;
+	RechercheAdapter rA;
 	Button bBack;
 	ArrayList<String> aL;
-	ArrayList<BiereDB> listBeers;
+	ArrayList<BiereDB> listResult;
 	public static final String SELECTEDBEER = "BEER";
 	public static final String USER = "USER";
+	Boolean scroll = false;
 	
 	Dialog custom;
 	Button bFiltre;
@@ -156,7 +158,9 @@ public class RechercheBiere extends Activity {
 		});
 		
 		lvItems = (ListView)findViewById(R.id.lvItems);
-		lvItems.setAdapter(aa);
+		listResult = new ArrayList<BiereDB>();
+		rA = new RechercheAdapter(RechercheBiere.this, listResult);
+		lvItems.setAdapter(rA);
 		
 		InitList init = new InitList();
 		init.execute();
@@ -179,29 +183,33 @@ public class RechercheBiere extends Activity {
 	}
 	
 	public void loadMore(int offset) {
+		GetMoar more = new GetMoar();
+		more.execute();
+	}
+	
+	public void loadMoreFiltered(int offset) {
 		GetMoarBeers more = new GetMoarBeers();
 		more.execute();
 	}
 	
-	private void addItems(String item) {
-		if (item.length()>0){
-            this.aa.add(item);
-            this.aa.notifyDataSetChanged();
-            items++;
-        }
+	private void addItems(BiereDB item) {
+		this.rA.add(item);
+		this.rA.notifyDataSetChanged();
+		items++;
 	}
 	
-	private void changeItems(ArrayList<String> list) {
-		this.aa.clear();
+	private void changeItems(ArrayList<BiereDB> list) {
+		this.rA.clear();
 		items = 0;
-		for(String item : list) {
+		for(BiereDB item : list) {
 			addItems(item);
 		}
 	}
 	
-	public class InitList extends AsyncTask<String, Integer, Boolean>{  // Doit afficher des bières de base
+	public class InitList extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<BiereDB> liste = new ArrayList<BiereDB>();
 		
 		public InitList() {
 
@@ -210,17 +218,16 @@ public class RechercheBiere extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				addItems("biere"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
+				liste = BiereDB.readBieres(1, 5);
 				
 				lvItems.setOnItemClickListener(new OnItemClickListener()
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
-						Intent showBeer = new Intent(RechercheBiere.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
-						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
-						showBeer.putExtra(RechercheBiere.SELECTEDBEER, selectedBeer);
-						showBeer.putExtra(RechercheBiere.USER, user);
+						Intent showBeer = new Intent(RechercheBiere.this, AffichageBiere.class);
+						String selectedBeer = (listResult.get(arg2)).getNomBiere();
+						showBeer.putExtra(MesVotes.SELECTEDBEER, selectedBeer);
+						showBeer.putExtra(MesVotes.USER, user);
 						startActivity(showBeer);
 						finish();
 					}
@@ -228,36 +235,81 @@ public class RechercheBiere extends Activity {
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(BiereDB vote : liste) {
+				addItems(vote);
+			}
 			if(exc) {
 				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
 	
+	public class GetMoar extends AsyncTask<String, Integer, Boolean>{  // Va chercher plus de bières sans filtre
+		Boolean exc = false;
+		Exception ex;
+		ArrayList<BiereDB> liste;
+		
+		public GetMoar() {
+
+		}
+		
+		protected void onPreExecute(){
+            liste = new ArrayList<BiereDB>(); 
+       }
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
+			try {
+				liste = BiereDB.readBieres(items+1, items+6);
+			}catch(Exception e) {
+				ex = e;
+				exc = true;
+				scroll = false;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			for(BiereDB item : liste) {
+				addItems(item);
+			}
+			if(exc) {
+				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}
+		}
+	}
+	
 	public class GetBeers extends AsyncTask<String, Integer, Boolean>{  // Va chercher les bières en fonction du filtre
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<BiereDB> liste = new ArrayList<BiereDB>();
 		
 		public GetBeers() {
 
 		}
+		
+		@Override
+        protected void onPreExecute(){
+			scroll = true;
+        }
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				addItems("biere"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
-				//changeItems();  // Récupérer la liste correspondant à la recherche puis intialiser la nouvelle liste
+				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteInf, noteSup, 1, 5);
 				
 				lvItems.setOnScrollListener(new EndlessScrollListener() {
 					@Override
 					public void onLoadMore(int page, int totalItemsCount) {
-						loadMore(totalItemsCount);
+						loadMoreFiltered(totalItemsCount);
 					}
 				});
 				
@@ -265,10 +317,10 @@ public class RechercheBiere extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-						//String selectedItem=(String)arg0.getItemAtPosition(arg2);
-						Intent showBeer = new Intent(RechercheBiere.this, AjoutBiere.class); // TODO Lancer l'activité d'affichage de bière
-						BiereDB selectedBeer = (BiereDB)listBeers.get(arg2);
-						showBeer.putExtra(MesAjouts.SELECTEDBEER, selectedBeer);
+						Intent showBeer = new Intent(RechercheBiere.this, AffichageBiere.class);
+						String selectedBeer = (listResult.get(arg2)).getNomBiere();
+						showBeer.putExtra(MesVotes.SELECTEDBEER, selectedBeer);
+						showBeer.putExtra(MesVotes.USER, user);
 						startActivity(showBeer);
 						finish();
 					}
@@ -276,12 +328,14 @@ public class RechercheBiere extends Activity {
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			changeItems(liste);
 			if(exc) {
 				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			
@@ -291,27 +345,33 @@ public class RechercheBiere extends Activity {
 	public class GetMoarBeers extends AsyncTask<String, Integer, Boolean>{  // Va chercher plus de bières correspondanes au filtre
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<BiereDB> liste;
 		
 		public GetMoarBeers() {
 
 		}
+		
+		protected void onPreExecute(){
+            liste = new ArrayList<BiereDB>(); 
+       }
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
 			try {
-				int nbrAjout;
-				for(nbrAjout = 0; nbrAjout <=5; nbrAjout++) {
-					addItems("Bière " + (items + 1));
-				}				
+				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteInf, noteSup, items+1, items+6);				
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(BiereDB item : liste) {
+				addItems(item);
+			}
 			if(exc) {
 				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}

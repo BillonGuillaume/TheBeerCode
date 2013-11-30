@@ -83,7 +83,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 	     	this.nbreVotes=rs.getInt("NBREVOTES");
 	     	this.cheminImage=rs.getString("CHEMINIMAGE");
 	     	this.paysBiere=rs.getString("PAYSBIERE");
-	     	this.degreBiere=rs.getInt("DEGREBIERE");
+	     	this.degreBiere=rs.getFloat("DEGREBIERE");
 	        
               }
 	      else { 
@@ -188,6 +188,80 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
              catch (Exception e){}
          }
      }
+     
+     public static ArrayList<BiereDB> rechBieres(String nomBiere, float degMin, float degMax, String pays, float noteMin, float noteMax, int min, int max) throws Exception{
+    	String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? AND nomBiere LIKE '%'||?||'%' AND (degreBiere BETWEEN ? AND ?) AND paysBiere LIKE '%'||?||'%' AND (coteBiere BETWEEN ? AND ?)";
+     	ArrayList <BiereDB> list = new ArrayList<BiereDB>();
+     	BiereDB obj;
+     	PreparedStatement pstmt = null;
+     	try {
+     		pstmt = dbConnect.prepareStatement(req);
+     		pstmt.setInt(1, min);
+     		pstmt.setInt(2, max);
+     		pstmt.setString(3, nomBiere);
+     		pstmt.setFloat(4, degMin);
+     		pstmt.setFloat(5, degMax);
+     		pstmt.setString(6, pays);
+     		pstmt.setFloat(7, noteMin);
+     		pstmt.setFloat(8, noteMax);
+     		ResultSet rs = pstmt.executeQuery();
+     		while (rs.next()) {
+     			obj = new BiereDB();
+     			obj.idBiere = rs.getInt("IDBIERE");
+     			obj.nomBiere=rs.getString("NOMBIERE");
+    	     	obj.coteBiere=rs.getFloat("COTEBIERE");
+    	     	obj.nbreVotes=rs.getInt("NBREVOTES");
+    	     	obj.cheminImage=rs.getString("CHEMINIMAGE");
+    	     	obj.paysBiere=rs.getString("PAYSBIERE");
+    	     	obj.degreBiere=rs.getFloat("DEGREBIERE");
+     			list.add(obj);
+     		}
+     		if (list.size() == 0) throw new Exception("Aucune bière correspondante.");
+     		else if (list.size() == 0) throw new Exception("Plus de bière correspondante.");
+     		return list;
+     	} catch (Exception e) {
+     		throw new Exception("Erreur de lecture " + e.getMessage());
+     	} finally {
+     		try {
+     			pstmt.close();
+     		} catch (Exception e) {
+     		}
+         }
+     }
+     
+     public static ArrayList<BiereDB> readBieres(int min, int max) throws Exception{
+     	String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=?";
+      	ArrayList <BiereDB> list = new ArrayList<BiereDB>();
+      	BiereDB obj;
+      	PreparedStatement pstmt = null;
+      	try {
+      		pstmt = dbConnect.prepareStatement(req);
+      		pstmt.setInt(1, min);
+     		pstmt.setInt(2, max);
+      		ResultSet rs = pstmt.executeQuery();
+      		while (rs.next()) {
+      			obj = new BiereDB();
+      			obj.idBiere = rs.getInt("IDBIERE");
+      			obj.nomBiere=rs.getString("NOMBIERE");
+     	     	obj.coteBiere=rs.getFloat("COTEBIERE");
+     	     	obj.nbreVotes=rs.getInt("NBREVOTES");
+     	     	obj.cheminImage=rs.getString("CHEMINIMAGE");
+     	     	obj.paysBiere=rs.getString("PAYSBIERE");
+     	     	obj.degreBiere=rs.getFloat("DEGREBIERE");
+      			list.add(obj);
+      		}
+      		if (list.size() == 0) throw new Exception("Aucune bière existante.");
+      		else if (list.size() == 0) throw new Exception("Plus de bière.");
+      		return list;
+      	} catch (Exception e) {
+      		throw new Exception("Erreur de lecture " + e.getMessage());
+      	} finally {
+      		try {
+      			pstmt.close();
+      		} catch (Exception e) {
+      		}
+          }
+      }
      
      public void readBiere ()throws Exception{
     		
