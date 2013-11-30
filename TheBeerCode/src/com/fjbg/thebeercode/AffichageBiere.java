@@ -289,10 +289,11 @@ public class AffichageBiere extends Activity {
 			options.inSampleSize = 2;
 			try {
 				bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+				BeerPicture.setImageBitmap(bitmap);
 			}catch (Exception e) {
 				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
 			}				
-			BeerPicture.setImageBitmap(bitmap);
+			
 			if(progress.isShowing())
 				progress.dismiss();
 			if(exc) {
@@ -333,6 +334,7 @@ public class AffichageBiere extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {				
+				Log.d("image","test avant readVotesBiere" + biere.getIdBiere());
 				liste = VueVoteDB.readVotesBiere(biere.getIdBiere(), 1, 10);
 
 				listComments.setOnScrollListener(new EndlessScrollListener(5) {
