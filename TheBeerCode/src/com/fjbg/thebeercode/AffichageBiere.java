@@ -57,6 +57,7 @@ public class AffichageBiere extends Activity {
 	private String nomBiere;
 	PersonneDB user;
 	boolean favorite = false;
+	FavoriDB favori;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,8 @@ public class AffichageBiere extends Activity {
 		retour = (Button) findViewById(R.id.btBack);
 		retour.setOnClickListener(retourListener);
 
-		favoris = (ImageButton) findViewById(R.id.imageFavoris); 
+		favoris = (ImageButton) findViewById(R.id.imageFavoris);
+		favoris.setOnClickListener(favorisListener);
 
 		Intent i=getIntent();
 		nomBiere=(String)i.getStringExtra(SELECTEDBEER);
@@ -95,6 +97,14 @@ public class AffichageBiere extends Activity {
 		@Override
 		public void onClick(View v) {
 			finish();
+		}
+	};
+	
+	private OnClickListener favorisListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			ModifFavoris MF= new ModifFavoris();
+			MF.execute();
 		}
 	};
 
@@ -144,12 +154,13 @@ public class AffichageBiere extends Activity {
 		protected Boolean doInBackground(String... arg0) {
 
 			biereRech =new BiereDB();
-
 			biereRech.setNomBiere(nomBiere);
+			favori= new FavoriDB();
+			favori.setAimant(user.getIdPersonne());
+			favori.setFavorite(biereRech.getIdBiere());
 
 			try{
 				biereRech.readBiere();
-				favorite= FavoriDB.verifFavorite(user.getIdPersonne(),biereRech.getIdBiere());
 			}
 			catch(Exception e){
 				ex = e;
@@ -158,6 +169,15 @@ public class AffichageBiere extends Activity {
 
 
 			if(!exc){
+				
+				try{
+					favori.readFavorite();
+					favorite=true;
+				}
+				catch(Exception e){
+					favorite= false;
+				}
+				
 				try {
 					FTPClient mFTPClient = new FTPClient();
 					mFTPClient.connect("ftp.alokar.site90.net",21);      
@@ -299,6 +319,65 @@ public class AffichageBiere extends Activity {
 			if(exc) {
 				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
+		}
+	}
+	
+	public class ModifFavoris extends AsyncTask<String, Integer, Boolean>{
+		Boolean exc = false;
+		Exception ex;
+
+		public ModifFavoris() {
+			
+		}
+
+		@Override
+		protected void onPreExecute(){
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			if(favorite){
+				try{
+					favori.delete();
+					favorite=false;
+				}
+				catch(Exception e){
+					ex = e;
+					exc = true;
+				}
+			}
+			else{
+				favori.setAimant(user.getIdPersonne());
+				favori.setFavorite(biere.getIdBiere());
+				try{
+					favori.create();
+					favorite=true;
+				}
+				catch(Exception e){
+					ex = e;
+					exc = true;
+				}
+			}
+			return true;
+		}
+
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}
+			else{
+				if(favorite){
+					favoris.setImageResource(R.drawable.ic_stat_favoritetrue);
+					Toast.makeText(AffichageBiere.this, "Ajoutée aux favoris !", Toast.LENGTH_SHORT ).show();
+				}
+				else {
+					favoris.setImageResource(R.drawable.ic_stat_favoritefalse);
+					Toast.makeText(AffichageBiere.this, "Supprimée des favoris !", Toast.LENGTH_SHORT ).show();
+				}
+			}
+			
 		}
 	}
 

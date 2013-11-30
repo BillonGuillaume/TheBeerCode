@@ -93,7 +93,7 @@ public static Connection dbConnect = null;
         }
     }
     
-    public static boolean verifFavorite(int aimant, int favorite) throws Exception {  // verifier si la biere est dans les favoris de l'utilisateur
+    public void readFavorite() throws Exception {  // verifier si la biere est dans les favoris de l'utilisateur
     	String req = "SELECT idfavori, aimant, favorite FROM Favori WHERE aimant = ? AND favorite = ?";
     	
     	PreparedStatement pstmt = null;
@@ -103,9 +103,10 @@ public static Connection dbConnect = null;
     		pstmt.setInt(2,  favorite);
     		ResultSet rs = pstmt.executeQuery();
     		if (rs.next()) {
-    			return true;
+    			this.idFavori = rs.getInt("IDFAVORI");
+    			
     		} else {
-    			return false;
+    			throw new Exception("Pas en favorite");
     		}
     	} catch (Exception e) { // Exception internationalisée
     		throw new Exception("Erreur de lecture/" + R.string.unknown + "/" + e.getMessage());
