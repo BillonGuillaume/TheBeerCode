@@ -68,6 +68,9 @@
             android:name="com.fjbg.thebeercode.AffichageBiere"
             android:label="@string/title_activity_affichage_biere" >
         </activity>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBW-DHsMPIAvZnmQpwUVD-QCc_jdhr_4n4" />
     </application>
 
 </manifest>
