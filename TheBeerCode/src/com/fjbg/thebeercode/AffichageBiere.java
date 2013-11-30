@@ -164,8 +164,8 @@ public class AffichageBiere extends Activity {
 					mFTPClient.login("a7115779", "projet2013");
 					mFTPClient.enterLocalPassiveMode();
 					InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
-					file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png"); // TODO Changer le nom du fichier + supprimer après lecture
-					file.createNewFile();
+					String cheminBiere = biere.getNomBiere().replace(' ', '_');
+					file = new File(Environment.getExternalStorageDirectory() + File.separator + cheminBiere +".png"); // TODO mettre toutes les images dans me même dossier
 					OutputStream outputStream = new FileOutputStream(file);
 					int read = 0;
 					byte[] bytes = new byte[1024*1024];

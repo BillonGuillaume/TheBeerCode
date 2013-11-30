@@ -210,9 +210,10 @@ public class AjoutBiere extends Activity {
 			        	mFtp.login("a7115779", "projet2013");
 			        	mFtp.enterLocalPassiveMode();
 				        mFtp.setFileType(FTPClient.BINARY_FILE_TYPE);
-				        InputStream is = new FileInputStream(path); 
-			        	mFtp.storeFile("/public_html/BeerPictures/image_" + biere.getNomBiere() + ".jpg", is);
-			        	biere.setCheminImage("/public_html/BeerPictures/image_" + biere.getNomBiere() + ".jpg");
+				        InputStream is = new FileInputStream(path);
+				        String cheminBiere = biere.getNomBiere().replace(' ', '_');
+			        	mFtp.storeFile("/public_html/BeerPictures/image_" + cheminBiere + ".jpg", is);
+			        	biere.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
 			        	is.close();
 			        	mFtp.disconnect();
 					} catch(Exception e) {
