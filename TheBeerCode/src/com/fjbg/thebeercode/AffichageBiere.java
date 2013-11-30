@@ -185,7 +185,7 @@ public class AffichageBiere extends Activity {
 					mFTPClient.enterLocalPassiveMode();
 					InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
 					String cheminBiere = biere.getNomBiere().replace(' ', '_');
-					file = new File(Environment.getExternalStorageDirectory() + File.separator + cheminBiere +".png"); // TODO mettre toutes les images dans me même dossier
+					file = new File(Environment.getExternalStorageDirectory() + File.separator + cheminBiere +".jpg"); // TODO mettre toutes les images dans me même dossier
 					OutputStream outputStream = new FileOutputStream(file);
 					int read = 0;
 					byte[] bytes = new byte[1024*1024];
@@ -210,11 +210,10 @@ public class AffichageBiere extends Activity {
 			options.inSampleSize = 2;
 			try {
 				bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
-				BeerPicture.setImageBitmap(bitmap);
 			}catch (Exception e) {
 				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
 			}				
-
+			BeerPicture.setImageBitmap(bitmap);
 			if(progress.isShowing())
 				progress.dismiss();
 			if(exc) {
