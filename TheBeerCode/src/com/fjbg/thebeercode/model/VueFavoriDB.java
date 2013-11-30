@@ -30,9 +30,9 @@ public class VueFavoriDB extends Favori implements Parcelable{
         VueFavoriDB.dbConnect = dbConnect;
     }
     
-    public static ArrayList<VueFavoriDB> readVotesPersonne(int id, int min, int max) throws Exception {
-    	String req = "SELECT * FROM vueVotes WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idBiere";
-    	ArrayList <VueFavoriDB> listFav = new ArrayList<VueFavoriDB>();
+    public static ArrayList<String> readFavPersonne(int id, int min, int max) throws Exception {
+    	String req = "SELECT * FROM vueFavori WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idFavori";
+    	ArrayList <String> listFav = new ArrayList<String>();
     	VueFavoriDB obj;
     	PreparedStatement pstmt = null;
     	try {
@@ -50,7 +50,7 @@ public class VueFavoriDB extends Favori implements Parcelable{
     			obj.favorite = rs.getInt("FAVORITE");
     			obj.idPersonne = rs.getInt("IDPERSONNE");
     			obj.login = rs.getString("LOGIN");
-    			listFav.add(obj);
+    			listFav.add(obj.getNomBiere());
     		}
     		if (listFav.size() == 0 && min==1) throw new Exception("Vous n'avez aucun favori.");
     		else if (listFav.size() == 0) throw new Exception("Plus de favori à afficher.");
