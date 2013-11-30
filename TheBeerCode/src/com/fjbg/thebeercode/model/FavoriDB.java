@@ -1,6 +1,8 @@
 package com.fjbg.thebeercode.model;
 import java.sql.*;
 
+import com.fjbg.thebeercode.R;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -89,6 +91,30 @@ public static Connection dbConnect = null;
             } catch (Exception e) {
             }
         }
+    }
+    
+    public static boolean verifFavorite(int aimant, int favorite) throws Exception {  // verifier si la biere est dans les favoris de l'utilisateur
+    	String req = "SELECT idfavori, aimant, favorite FROM Favori WHERE aimant = ? AND favorite = ?";
+    	
+    	PreparedStatement pstmt = null;
+    	try {
+    		pstmt = dbConnect.prepareStatement(req);
+    		pstmt.setInt(1, aimant);
+    		pstmt.setInt(2,  favorite);
+    		ResultSet rs = pstmt.executeQuery();
+    		if (rs.next()) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	} catch (Exception e) { // Exception internationalisée
+    		throw new Exception("Erreur de lecture/" + R.string.unknown + "/" + e.getMessage());
+    	} finally {
+    		try {
+    			pstmt.close();
+    		} catch (Exception e) {
+    		}
+    	}
     }
     
     @Override

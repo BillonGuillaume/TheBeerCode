@@ -19,6 +19,8 @@ import org.apache.commons.net.ftp.FTPClient;
 import com.fjbg.thebeercode.MesVotes.GetMoarVotes;
 import com.fjbg.thebeercode.MesVotes.GetVotes;
 import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.FavoriDB;
+import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.net.Uri;
@@ -37,6 +39,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -47,6 +50,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class AffichageBiere extends Activity {
 	
 	public static final String SELECTEDBEER = "BEER";
+	public static final String USER = "USER";
 	
 	private ListView listComments;
 	private TextView BeerName;
@@ -56,6 +60,7 @@ public class AffichageBiere extends Activity {
 	private ImageView BeerPicture;
 	private RatingBar ratingBeer;
 	private Button retour = null;
+	private ImageButton favoris = null;
 	ProgressDialog progress;
 	Boolean scroll = true;
 
@@ -64,6 +69,8 @@ public class AffichageBiere extends Activity {
 	VotesBiereAdapter vbA;
 	private BiereDB biere;
 	private String nomBiere;
+	PersonneDB user;
+	boolean favorite = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +91,11 @@ public class AffichageBiere extends Activity {
 		retour = (Button) findViewById(R.id.btBack);
 		retour.setOnClickListener(retourListener);
 		
+		favoris = (ImageButton) findViewById(R.id.imageFavoris); 
+				
 		Intent i=getIntent();
 	    nomBiere=(String)i.getStringExtra(SELECTEDBEER);
+	    user= (PersonneDB)i.getParcelableExtra(USER);
 	    
 	    Lecture lec= new Lecture();
 	    lec.execute();
@@ -155,6 +165,7 @@ public class AffichageBiere extends Activity {
 			
 			try{
 				biereRech.readBiere();
+				favorite= FavoriDB.verifFavorite(user.getIdPersonne(),biereRech.getIdBiere());
 			}
 			catch(Exception e){
 				ex = e;
@@ -163,26 +174,26 @@ public class AffichageBiere extends Activity {
 			
 			
 			if(!exc){
-//				FTPClient ftp = null;
-//				try {
-//				FTPClient mFTPClient = new FTPClient();
-//				  mFTPClient.connect("ftp.alokar.site90.net",21);      
-//				  mFTPClient.login("a7115779", "projet2013");
-//				  mFTPClient.enterLocalPassiveMode();
-//				InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
-//                file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png"); // TODO Changer le nom du fichier + supprimer après lecture
-//                file.createNewFile();
-//                OutputStream outputStream = new FileOutputStream(file);
-//                int read = 0;
-//                byte[] bytes = new byte[1024*1024];
-//                while ((read = inputStream.read(bytes)) != -1) {
-//                    outputStream.write(bytes, 0, read);
-//                }
-//                outputStream.close();
-//                inputStream.close();
-//				}catch(Exception e) {
-//					Log.d("exception", "exception : " + e.getMessage());
-//				}
+				FTPClient ftp = null;
+				try {
+				FTPClient mFTPClient = new FTPClient();
+				  mFTPClient.connect("ftp.alokar.site90.net",21);      
+				  mFTPClient.login("a7115779", "projet2013");
+				  mFTPClient.enterLocalPassiveMode();
+				InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
+                file = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png"); // TODO Changer le nom du fichier + supprimer après lecture
+                file.createNewFile();
+                OutputStream outputStream = new FileOutputStream(file);
+                int read = 0;
+                byte[] bytes = new byte[1024*1024];
+                while ((read = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
+                }
+                outputStream.close();
+                inputStream.close();
+				}catch(Exception e) {
+					Log.d("exception", "exception : " + e.getMessage());
+				}
 				
 			
 				
@@ -295,6 +306,7 @@ public class AffichageBiere extends Activity {
 					ABV.setText(String.valueOf(biere.getDegreBiere()));
 					ratingBeer.setRating((biere.getCoteBiere())/2);
 					NbVotes.setText(String.valueOf(biere.getNbreVotes()));
+					if(favorite)favoris.setImageResource(R.drawable.ic_stat_favoritetrue);
 				}
 				catch(Exception e){
 					Toast.makeText(AffichageBiere.this, e.getMessage(), Toast.LENGTH_SHORT ).show();

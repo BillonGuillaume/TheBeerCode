@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvNbVotes"
         android:layout_alignTop="@+id/imageButton1"
-        android:src="@drawable/ic_stat_favorite2" />
+        android:src="@drawable/ic_stat_favoritefalse" />
 
     <ImageButton
         android:id="@+id/imageButton3"
