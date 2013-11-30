@@ -2,8 +2,8 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
-import com.fjbg.thebeercode.model.FavoriDB;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.model.VueFavoriDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,10 +25,11 @@ public class MesFavoris extends Activity {
 	int items;
 	ArrayAdapter<String> aa;
 	Button bBack;
-	ArrayList<FavoriDB> listFavorites;
-	public static final String SELECTEDFAV = "FAV";
+	ArrayList<String> listFav;
+	public static final String SELECTEDBEER = "BEER";
 	public static final String USER = "USER";
 	PersonneDB user;
+	Boolean scroll = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MesFavoris extends Activity {
 		bBack.setOnClickListener(bBackListener);
 		
 		lvItems = (ListView)findViewById(R.id.lvItems);
+		aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listFav);
 		lvItems.setAdapter(aa);
 		
 		GetFavs getter = new GetFavs();		
@@ -63,8 +65,11 @@ public class MesFavoris extends Activity {
 	}
 	
 	public void loadMore(int offset) {
-		GetMoarFavs getMore = new GetMoarFavs();
-		getMore.execute();
+		if(scroll) {
+			GetMoarFavs getMore = new GetMoarFavs();
+			getMore.execute();
+		}
+		
 	}
 	
 	private void addItems(String item) {
@@ -78,6 +83,7 @@ public class MesFavoris extends Activity {
 	public class GetFavs extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<String> list = new ArrayList<String>();
 		
 		public GetFavs() {
 
@@ -86,7 +92,7 @@ public class MesFavoris extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				addItems("Favori"); // TODO Ajouter un throw à la fonction de recup si rien à afficher pour éviter un scroll et un click
+				list = VueFavoriDB.readFavPersonne(user.getIdPersonne(), 1, 5);
 				
 				lvItems.setOnScrollListener(new EndlessScrollListener() {
 					@Override
@@ -100,8 +106,8 @@ public class MesFavoris extends Activity {
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 						Intent showFav = new Intent(MesFavoris.this, AffichageBiere.class);
-						FavoriDB selectedFav = (FavoriDB)listFavorites.get(arg2);
-						showFav.putExtra(MesFavoris.SELECTEDFAV, selectedFav);
+						String selectedFav = (String)aa.getItem(arg2);
+						showFav.putExtra(MesFavoris.SELECTEDBEER, selectedFav);
 						showFav.putExtra(MesFavoris.USER, user);
 						startActivity(showFav);
 						finish();
@@ -110,12 +116,16 @@ public class MesFavoris extends Activity {
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll = false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(String item : list) {
+				addItems(item);
+			}
 			if(exc) {
 				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			
@@ -125,27 +135,34 @@ public class MesFavoris extends Activity {
 	public class GetMoarFavs extends AsyncTask<String, Integer, Boolean>{
 		Boolean exc = false;
 		Exception ex;
+		ArrayList<String> list = new ArrayList<String>();
 		
 		public GetMoarFavs() {
 
 		}
+		
+		@Override
+        protected void onPreExecute(){
+             list = new ArrayList<String>(); 
+        }
 
 		@Override
-		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
+		protected Boolean doInBackground(String... arg0) {
 			try {
-				int nbrAjout;
-				for(nbrAjout = 0; nbrAjout <=5; nbrAjout++) {
-					addItems("Favori " + (items + 1));
-				}				
+				list = VueFavoriDB.readFavPersonne(user.getIdPersonne(), items+1, items+6);
 			}catch(Exception e) {
 				ex = e;
 				exc = true;
+				scroll =  false;
 			}
 			return true;
 		}
 		
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
+			for(String item : list) {
+				addItems(item);
+			}
 			if(exc) {
 				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
