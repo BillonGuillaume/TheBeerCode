@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 	public final static int INSCRIPTION_REQUEST = 2;
 	public final static int CONNECTION_FAILED = -2;
 	public final static int PROFILE_REQUEST = 5;
+	public final static String USER = "USER";
 	public final static String PERSONNE = "personne";
 	static Connection connect;
 	static ConnexionDB connec;
@@ -88,8 +89,9 @@ public class MainActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if(user!=null){
-				Intent BeersActivity = new  Intent(MainActivity.this,AjoutBiere.class);
-				startActivity(BeersActivity);
+				Intent addBeerActivity = new  Intent(MainActivity.this,AjoutBiere.class);
+				addBeerActivity.putExtra(USER, user);
+				startActivity(addBeerActivity);
 			}
 			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();
 		}
