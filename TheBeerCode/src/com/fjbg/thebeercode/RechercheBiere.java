@@ -96,6 +96,8 @@ public class RechercheBiere extends Activity {
 				rBNoteSup = (RatingBar)custom.findViewById(R.id.ratingBarSup);
 				rBNoteInf = (RatingBar)custom.findViewById(R.id.ratingBarInf);
 				
+				rBNoteInf.setRating(5);
+				
 				bRecherche = (Button)custom.findViewById(R.id.bRecherche);
 				bCancel = (Button)custom.findViewById(R.id.bCancel);
 				bReset = (Button)custom.findViewById(R.id.bReset);
@@ -114,14 +116,20 @@ public class RechercheBiere extends Activity {
 					public void onClick(View view) {
 						recherche = true;
 						country = eTPays.getText().toString();
-						nom = eTNom.getText().toString();noteSup = rBNoteSup.getRating();
+						nom = eTNom.getText().toString();
+						noteSup = rBNoteSup.getRating();
 						noteInf = rBNoteInf.getRating();
-						try {
-							degreSup = Float.parseFloat(eTDegreSup.getText().toString());
-							degreInf = Float.parseFloat(eTDegreInf.getText().toString());
-
+						String degSup = eTDegreSup.getText().toString();						
+						try {							
+							if(degSup != "") degreSup = Float.parseFloat(degSup);
 						} catch (Exception e){
-							Log.d("RechercheBiere", "Erreur de parsing");
+							degreSup = (float) 99.9;
+						}
+						String degInf = eTDegreInf.getText().toString();
+						try {							
+							if(degInf != "") degreInf = Float.parseFloat(degInf);
+						} catch (Exception e){
+							degreInf = (float) 0.0;
 						}
 						custom.dismiss();
 						GetBeers getter = new GetBeers();
@@ -148,7 +156,7 @@ public class RechercheBiere extends Activity {
 						eTDegreInf.setText("");
 						eTNom.setText("");
 						rBNoteSup.setRating(0);
-						rBNoteInf.setRating(0);
+						rBNoteInf.setRating(5);
 					}
 				});
 				custom.show();
@@ -263,7 +271,7 @@ public class RechercheBiere extends Activity {
        }
 
 		@Override
-		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
+		protected Boolean doInBackground(String... arg0) {
 			try {
 				liste = BiereDB.readBieres(items+1, items+6);
 			}catch(Exception e) {
@@ -302,7 +310,7 @@ public class RechercheBiere extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteInf, noteSup, 1, 5);
+				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteSup, noteInf, 1, 5);
 				
 				lvItems.setOnScrollListener(new EndlessScrollListener() {
 					@Override
@@ -354,9 +362,9 @@ public class RechercheBiere extends Activity {
        }
 
 		@Override
-		protected Boolean doInBackground(String... arg0) {  // TODO Que faire il n'y a plus rien dans la DB ?
+		protected Boolean doInBackground(String... arg0) {
 			try {
-				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteInf, noteSup, items+1, items+6);				
+				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteSup, noteInf, items+1, items+6);				
 			}catch(Exception e) {
 				ex = e;
 				exc = true;

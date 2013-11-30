@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +44,7 @@ public class MesFavoris extends Activity {
 		bBack.setOnClickListener(bBackListener);
 		
 		lvItems = (ListView)findViewById(R.id.lvItems);
+		listFav = new ArrayList<String>();
 		aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listFav);
 		lvItems.setAdapter(aa);
 		
@@ -86,7 +88,7 @@ public class MesFavoris extends Activity {
 		ArrayList<String> list = new ArrayList<String>();
 		
 		public GetFavs() {
-
+			Log.d("GetFav", "constructeur");
 		}
 
 		@Override
@@ -128,6 +130,7 @@ public class MesFavoris extends Activity {
 			}
 			if(exc) {
 				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				Log.d("onPost", "exception : " + ex.getMessage());
 			}			
 		}
 	}

@@ -1,4 +1,5 @@
 package com.fjbg.thebeercode.model;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -202,8 +203,8 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
      		pstmt.setFloat(4, degMin);
      		pstmt.setFloat(5, degMax);
      		pstmt.setString(6, pays);
-     		pstmt.setFloat(7, noteMin);
-     		pstmt.setFloat(8, noteMax);
+     		pstmt.setFloat(7, noteMin*2);
+     		pstmt.setFloat(8, noteMax*2);
      		ResultSet rs = pstmt.executeQuery();
      		while (rs.next()) {
      			obj = new BiereDB();

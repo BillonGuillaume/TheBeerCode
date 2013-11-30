@@ -279,7 +279,7 @@ public class AffichageBiere extends Activity {
 			try {
 				bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 			}catch (Exception e) {
-				Log.d("exception post", "exception 2 : " + e.getMessage());
+				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
 			}				
 			BeerPicture.setImageBitmap(bitmap);
 			if(progress.isShowing())

@@ -10,19 +10,15 @@ import android.os.Parcelable;
 
 public class VueFavoriDB extends Favori implements Parcelable{
 	public static Connection dbConnect = null;
-	int idBiere;
 	String nomBiere;
-	int idPersonne;
 	String login;
     
     public VueFavoriDB() {
     }
     
-    public VueFavoriDB(int idFavori, int aimant, int favorite, int idBiere, String nomBiere, int idPersonne, String login) {
+    public VueFavoriDB(int idFavori, int aimant, int favorite, String nomBiere, String login) {
         super(idFavori, aimant, favorite);
-        this.idBiere = idBiere;
         this.nomBiere = nomBiere;
-        this.idPersonne = idPersonne;
         this.login = login;
     }
     
@@ -43,12 +39,10 @@ public class VueFavoriDB extends Favori implements Parcelable{
     		ResultSet rs = pstmt.executeQuery();
     		while (rs.next()) {
     			obj = new VueFavoriDB();
-    			obj.idBiere = rs.getInt("IDBIERE");
+    			obj.favorite = rs.getInt("IDBIERE");
     			obj.nomBiere = rs.getString("NOMBIERE");
-    			obj.idFavori = rs.getInt("IDVOTE");
-    			obj.aimant = rs.getInt("AIMANT");
-    			obj.favorite = rs.getInt("FAVORITE");
-    			obj.idPersonne = rs.getInt("IDPERSONNE");
+    			obj.idFavori = rs.getInt("IDFAVORI");
+    			obj.aimant = rs.getInt("IDPERSONNE");
     			obj.login = rs.getString("LOGIN");
     			listFav.add(obj.getNomBiere());
     		}
@@ -72,12 +66,10 @@ public class VueFavoriDB extends Favori implements Parcelable{
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(idBiere);
 		dest.writeString(nomBiere);
 		dest.writeInt(idFavori);
 		dest.writeInt(aimant);
 		dest.writeInt(favorite);
-		dest.writeInt(idPersonne);
 		dest.writeString(login);
 	}
 
@@ -92,12 +84,10 @@ public class VueFavoriDB extends Favori implements Parcelable{
 		}
 	};
 	public VueFavoriDB(Parcel in) {
-		idBiere = in.readInt();
 		nomBiere = in.readString();
 		idFavori = in.readInt();
 		aimant = in.readInt();
 		favorite = in.readInt();
-		idPersonne = in.readInt();
 		login = in.readString();
 	}
 
