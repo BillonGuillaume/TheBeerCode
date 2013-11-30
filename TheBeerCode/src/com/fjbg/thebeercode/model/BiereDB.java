@@ -218,7 +218,6 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
      			list.add(obj);
      		}
      		if (list.size() == 0) throw new Exception("Aucune bière correspondante.");
-     		else if (list.size() == 0) throw new Exception("Plus de bière correspondante.");
      		return list;
      	} catch (Exception e) {
      		throw new Exception("Erreur de lecture " + e.getMessage());
