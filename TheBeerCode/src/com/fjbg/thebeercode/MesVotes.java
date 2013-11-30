@@ -33,7 +33,7 @@ public class MesVotes extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_mes_ajouts);
+		setContentView(R.layout.activity_mes_votes);
 		Intent data = getIntent();
 		user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
 

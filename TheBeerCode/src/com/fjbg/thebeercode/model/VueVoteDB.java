@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class VueVoteDB extends Vote implements Parcelable{
 	public static Connection dbConnect = null;
@@ -91,8 +92,8 @@ public class VueVoteDB extends Vote implements Parcelable{
     			obj.login = rs.getString("LOGIN");
     			listVotes.add(obj);
     		}
-    		if (listVotes.size() == 0 && min==1) throw new Exception("Vous n'avez laissé aucun commentaire.");
-    		else if (listVotes.size() == 0) throw new Exception("Plus de commentaires à afficher.");
+    		if (listVotes.size() == 0 && min==1) throw new Exception("Aucun commentaire.");
+    		else if (listVotes.size() == 0) throw new Exception("Plus de commentaire à afficher.");
     		return listVotes;
     	} catch (Exception e) {
     		throw new Exception("Erreur de lecture " + e.getMessage());

@@ -83,14 +83,12 @@ public class AffichageBiere extends Activity {
 		nomBiere=(String)i.getStringExtra(SELECTEDBEER);
 		user= (PersonneDB)i.getParcelableExtra(USER);
 
-		Lecture lec= new Lecture();
-		lec.execute();
-
 		listVotes = new ArrayList<VueVoteDB>();
 		vbA = new VotesBiereAdapter(AffichageBiere.this, listVotes);
 		listComments.setAdapter(vbA);
-		GetVotes getter = new GetVotes();
-		getter.execute();
+		
+		Lecture lec= new Lecture();
+		lec.execute();
 	}
 
 	private OnClickListener retourListener = new OnClickListener() {
@@ -216,6 +214,8 @@ public class AffichageBiere extends Activity {
 					Toast.makeText(AffichageBiere.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
 				}
 			}
+			GetVotes getter = new GetVotes();
+			getter.execute();
 
 		}
 	}
@@ -231,7 +231,7 @@ public class AffichageBiere extends Activity {
 
 		@Override
 		protected void onPreExecute(){
-
+			Log.d("AffichageBiere", "onPreExecute");
 		}
 
 		@Override
