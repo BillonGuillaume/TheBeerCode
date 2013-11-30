@@ -43,12 +43,12 @@ public class VotesAdapter extends BaseAdapter {
         if(convertView==null)
             vi = inflater.inflate(R.layout.list_row, null);
  
-        TextView tVBeer = (TextView)vi.findViewById(R.id.tVUser);
+        TextView tVBeer = (TextView)vi.findViewById(R.id.tVBeer);
         TextView tVCom = (TextView)vi.findViewById(R.id.tVCom);
         RatingBar rating = (RatingBar)vi.findViewById(R.id.ratingBar);
  
         VueVoteDB vote = data.get(position);
-        tVBeer.setText(vote.getLogin());
+        tVBeer.setText(vote.getNomBiere());
         tVCom.setText(vote.getCommentaire());
         rating.setRating(vote.getVote()/2);
         return vi;

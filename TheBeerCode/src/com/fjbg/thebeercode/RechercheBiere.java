@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.PersonneDB;
-import com.fjbg.thebeercode.model.VueVoteDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
