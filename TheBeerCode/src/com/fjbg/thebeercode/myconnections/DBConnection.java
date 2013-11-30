@@ -11,6 +11,7 @@ import com.fjbg.thebeercode.model.HistoriqueDB;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.PrixDB;
 import com.fjbg.thebeercode.model.VoteDB;
+import com.fjbg.thebeercode.model.VueFavoriDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
 public class DBConnection {
@@ -55,6 +56,7 @@ public class DBConnection {
 		PrixDB.setConnection(connect);
 		VueVoteDB.setDbConnect(connect);
 		AjoutDB.setDbConnect(connect);
+		VueFavoriDB.setDbConnect(connect);
 	}
 
 	public Connection getConnection() throws Exception{
