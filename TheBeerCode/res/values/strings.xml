@@ -59,5 +59,6 @@
     <string name="Comment">Comment :</string>
     <string name="Note">Evaluation :</string>
     <string name="Confirm">Confirm</string>
+    <string name="title_activity_map">MapActivity</string>
 
 </resources>
