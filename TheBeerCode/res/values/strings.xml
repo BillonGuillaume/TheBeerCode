@@ -55,5 +55,6 @@
     <string name="Beer">Beer</string>
     <string name="SearchBeer">Search Beer</string>
     <string name="AddBeer">Add Beer</string>
+    <string name="User">User</string>
 
 </resources>

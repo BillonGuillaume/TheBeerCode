@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/BeerPicture"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
@@ -35,14 +35,6 @@
         android:layout_toRightOf="@+id/BeerPicture"
         android:text="Beer's country" />
 
-    <Button
-        android:id="@+id/btBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ABV"
-        android:layout_alignParentBottom="true"
-        android:text="@string/Back" />
-
     <TextView
         android:id="@+id/NbVotes"
         android:layout_width="wrap_content"
@@ -51,15 +43,6 @@
         android:layout_alignBottom="@+id/tvNbVotes"
         android:layout_toRightOf="@+id/tvNbVotes"
         android:text="0" />
-
-    <TextView
-        android:id="@+id/tvBeerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/BeerPicture"
-        android:layout_below="@+id/BeerPicture"
-        android:layout_marginTop="14dp"
-        android:text="@string/BeerName" />
 
     <TextView
         android:id="@+id/Beername"
@@ -117,29 +100,45 @@
         android:layout_alignTop="@+id/imageButton1"
         android:src="@drawable/ic_stat_favorite" />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
+    <TextView
+        android:id="@+id/tvBeerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNbVotes"
-        android:layout_toRightOf="@+id/imageButton2"
-        android:src="@drawable/ic_tab_location" />
+        android:layout_alignLeft="@+id/BeerPicture"
+        android:layout_below="@+id/BeerPicture"
+        android:text="@string/BeerName" />
+
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvABV"
+        android:layout_toRightOf="@+id/tvCountry"
+        android:text="@string/Back" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageButton1"
-        android:layout_toRightOf="@+id/imageButton1"
+        android:layout_below="@+id/tvNbVotes"
+        android:layout_toRightOf="@+id/imageButton2"
         android:src="@drawable/ic_stat_note" />
 
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageButton3"
+        android:layout_toRightOf="@+id/imageButton3"
+        android:src="@drawable/ic_tab_location" />
+    
     <ListView
         android:id="@+id/listComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/btBack"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/imageButton3" >
+        android:layout_toRightOf="@+id/imageButton1" >
 
     </ListView>
 

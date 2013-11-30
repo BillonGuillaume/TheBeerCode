@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/BeerPicture"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="5dp"
@@ -127,19 +127,19 @@
         android:src="@drawable/ic_stat_favorite" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNbVotes"
-        android:layout_toRightOf="@+id/imageButton2"
-        android:src="@drawable/ic_tab_location" />
-
-    <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageButton1"
-        android:layout_toRightOf="@+id/imageButton1"
+        android:layout_toRightOf="@+id/imageButton2"
         android:src="@drawable/ic_stat_note" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NbVotes"
+        android:layout_toRightOf="@+id/imageButton3"
+        android:src="@drawable/ic_tab_location" />
 
 </RelativeLayout>

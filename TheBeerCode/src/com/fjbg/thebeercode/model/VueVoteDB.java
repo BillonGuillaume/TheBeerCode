@@ -67,6 +67,43 @@ public class VueVoteDB extends Vote implements Parcelable{
         }
     }
     
+    public static ArrayList<VueVoteDB> readVotesBiere(int id, int min, int max) throws Exception {
+    	String req = "SELECT * FROM vueVotes WHERE rownum>=? AND rownum<=? AND idBiere=? ORDER BY idVote";
+    	ArrayList <VueVoteDB> listVotes = new ArrayList<VueVoteDB>();
+    	VueVoteDB obj;
+    	PreparedStatement pstmt = null;
+    	try {
+    		pstmt = dbConnect.prepareStatement(req);
+    		pstmt.setInt(1, min);
+    		pstmt.setInt(2, max);
+    		pstmt.setInt(3, id);
+    		ResultSet rs = pstmt.executeQuery();
+    		while (rs.next()) {
+    			obj = new VueVoteDB();
+    			obj.idBiere = rs.getInt("IDBIERE");
+    			obj.nomBiere = rs.getString("NOMBIERE");
+    			obj.idVote = rs.getInt("IDVOTE");
+    			obj.votant = rs.getInt("VOTANT");
+    			obj.notee = rs.getInt("NOTEE");
+    			obj.vote = rs.getFloat("VOTE");
+    			obj.commentaire = rs.getString("COMMENTAIRE");
+    			obj.idPersonne = rs.getInt("IDPERSONNE");
+    			obj.login = rs.getString("LOGIN");
+    			listVotes.add(obj);
+    		}
+    		if (listVotes.size() == 0 && min==1) throw new Exception("Vous n'avez laissé aucun commentaire.");
+    		else if (listVotes.size() == 0) throw new Exception("Plus de commentaires à afficher.");
+    		return listVotes;
+    	} catch (Exception e) {
+    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} finally {
+    		try {
+    			pstmt.close();
+    		} catch (Exception e) {
+    		}
+        }
+    }
+    
     @Override
 	public int describeContents() {
 		return 0;
