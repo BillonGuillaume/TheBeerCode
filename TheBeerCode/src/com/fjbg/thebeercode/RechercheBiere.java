@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,7 +72,7 @@ public class RechercheBiere extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recherche_biere);
 		
-		Intent data = getIntent();
+		Intent data = getIntent();		
 		user = (PersonneDB)data.getParcelableExtra(MainActivity.PERSONNE);
 		
 		bFiltre = (Button)findViewById(R.id.bFiltre);
@@ -131,6 +132,7 @@ public class RechercheBiere extends Activity {
 							degreInf = (float) 0.0;
 						}
 						custom.dismiss();
+						Log.d("OnClickListener bRech", "avant getter");
 						GetBeers getter = new GetBeers();
 						getter.execute();
 					}
@@ -166,7 +168,13 @@ public class RechercheBiere extends Activity {
 		listResult = new ArrayList<BiereDB>();
 		rA = new RechercheAdapter(RechercheBiere.this, listResult);
 		lvItems.setAdapter(rA);
-		
+		lvItems.setOnScrollListener(new EndlessScrollListener() {
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				loadMore(totalItemsCount);
+			}
+		});
+		Log.d("Main", "avant initList");
 		InitList init = new InitList();
 		init.execute();
 	}		
@@ -229,12 +237,19 @@ public class RechercheBiere extends Activity {
 				{
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+						try {
 						Intent showBeer = new Intent(RechercheBiere.this, AffichageBiere.class);
+						Log.d("Selectedbeer", "selected : " + (listResult.get(arg2)).getNomBiere());
 						String selectedBeer = (listResult.get(arg2)).getNomBiere();
-						showBeer.putExtra(MesVotes.SELECTEDBEER, selectedBeer);
-						showBeer.putExtra(MesVotes.USER, user);
+						showBeer.putExtra(RechercheBiere.SELECTEDBEER, selectedBeer);
+						showBeer.putExtra(RechercheBiere.USER, user);
+						Log.d("InitList", "user : " + user.getLogin());
 						startActivity(showBeer);
-						finish();
+						Log.d("InitList", "click et intent envoyé");
+						finish();						
+						} catch(Exception e) {
+							Log.d("InitList", "exception : " + e.getMessage());
+						}
 					}
 				});
 			}catch(Exception e) {

@@ -8,6 +8,7 @@ import com.fjbg.thebeercode.model.PersonneDB;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +22,7 @@ public class MainActivity extends Activity {
 	public final static int CONNECTION_FAILED = -2;
 	public final static int PROFILE_REQUEST = 5;
 	public final static String USER = "USER";
-	public final static String PERSONNE = "personne";
+	public final static String PERSONNE = "PERSONNE";
 	static Connection connect;
 	static ConnexionDB connec;
 	
@@ -89,11 +90,12 @@ public class MainActivity extends Activity {
 		}
 	};
 	
-	private OnClickListener bSearchBeerListener = new OnClickListener() {  // Gérer l'envoi de la personne
+	private OnClickListener bSearchBeerListener = new OnClickListener() { // TODO gérer quand on se connecte pas
 		@Override
 		public void onClick(View v) {
-			Intent BeersActivity = new  Intent(MainActivity.this,RechercheBiere.class);
-			startActivity(BeersActivity);
+			Intent searchBeerActivity = new  Intent(MainActivity.this,RechercheBiere.class);
+			searchBeerActivity.putExtra(PERSONNE, user);
+			startActivity(searchBeerActivity);
 		}
 	};
 	
@@ -102,7 +104,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			if(user!=null){
 				Intent addBeerActivity = new  Intent(MainActivity.this,AjoutBiere.class);
-				addBeerActivity.putExtra(USER, user);
+				addBeerActivity.putExtra(PERSONNE, user);
 				startActivity(addBeerActivity);
 			}
 			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();
