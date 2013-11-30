@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 	Button bMyFavorites = null;
 	Button bDisconnection = null;
 	Button bProfile = null;
+	Button bMap = null;  // TODO effacer
 	
 	TextView tVWelcome = null;
 	TextView tVNameMenu = null;
@@ -49,6 +50,9 @@ public class MainActivity extends Activity {
 		bInscription = (Button)findViewById(R.id.bInscription);
 		bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
 		
+		bMap = (Button)findViewById(R.id.bMap);
+		bMap.setOnClickListener(bMapListener);
+		
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
 		bSearchBeer.setOnClickListener(bSearchBeerListener);
@@ -60,6 +64,14 @@ public class MainActivity extends Activity {
 			Toast.makeText(MainActivity.this, "Exception  : " + e.getMessage(), Toast.LENGTH_SHORT).show();
 		}	
 	}
+	
+	private OnClickListener bMapListener = new OnClickListener() {  // TODO a effacer
+		@Override
+		public void onClick(View v) {
+			Intent loginActivity = new  Intent(MainActivity.this,MapActivity.class);
+			startActivity(loginActivity);
+			}
+	};
 	
 	private OnClickListener bConnectionListener = new OnClickListener() {
 		@Override

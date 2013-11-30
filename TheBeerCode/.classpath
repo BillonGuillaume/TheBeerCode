@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry exported="true" kind="lib" path="E:/Documents/commons-net-3.3/commons-net-3.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Jérôme/Dropbox/Ecole/3eme/Android/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Ecole/HEPH/3eme année/Android/commons-net-3.3.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Ecole/HEPH/3eme année/Android/ojdbc14.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
