@@ -65,32 +65,6 @@ public class MonProfil extends Activity {
 		public void onClick(View v) {
 			Update update = new Update();
 			update.execute();
-//			PersonneDB personne =new PersonneDB();
-//			personne.setIdPersonne(p.getIdPersonne());
-//			String login=edlogin.getText().toString();
-//			personne.setLogin(login);
-//
-//			String password= edpassword.getText().toString();
-//			personne.setMdp(password);
-//			String confPassword= edconfPassword.getText().toString();
-//			if(password.compareTo(confPassword)!=0) {
-//				Toast.makeText(MonProfil.this, "Les mots de passe ne correspondent pas !", Toast.LENGTH_SHORT ).show();
-//			}else {
-//				String mail= edmail.getText().toString();
-//				personne.setMail(mail);
-//				String pays= edpays.getText().toString();
-//				personne.setPays(pays);
-//
-//				try {
-//					personne.update();
-//					Intent i= new Intent();
-//					i.putExtra(MainActivity.PERSONNE, personne);
-//					setResult(RESULT_OK, i);
-//					finish();
-//				} catch(Exception e) {
-//					Toast.makeText(MonProfil.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
-//				}
-//			}
 		}
 	};
 

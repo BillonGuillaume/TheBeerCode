@@ -45,6 +45,8 @@ public class AffichageBiere extends Activity {
 
 	public static final String SELECTEDBEER = "BEER";
 	public static final String USER = "USER";
+	public static final String IMAGE = "IMAGE";
+	public final static int EDIT_REQUEST = 1;
 
 	private ListView listComments;
 	private TextView BeerName;
@@ -81,6 +83,7 @@ public class AffichageBiere extends Activity {
 	HistoriqueDB histo;
 	String commentaire;
 	Float note;
+	Bitmap bitmap   = null;
 	
 	final Context context = this;
 	@Override
@@ -190,7 +193,10 @@ public class AffichageBiere extends Activity {
 	private OnClickListener editListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			
+			Intent EditActivity = new  Intent(AffichageBiere.this,ModifierBiere.class);
+			EditActivity.putExtra(SELECTEDBEER, biere);
+			EditActivity.putExtra(IMAGE, bitmap);
+			startActivityForResult(EditActivity,EDIT_REQUEST);
 		}
 	};
 	
@@ -251,7 +257,6 @@ public class AffichageBiere extends Activity {
 		Boolean exc = false;
 		Exception ex;
 		BiereDB biereRech;
-		Bitmap bitmap   = null;
 		File downloadFile;
 		File file;
 
@@ -345,7 +350,7 @@ public class AffichageBiere extends Activity {
 			}catch (Exception e) {
 				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
 			}				
-			BeerPicture.setImageBitmap(bitmap);
+			if(bitmap!=null) BeerPicture.setImageBitmap(bitmap);
 			if(progress.isShowing())
 				progress.dismiss();
 			if(exc) {
@@ -668,5 +673,20 @@ public class AffichageBiere extends Activity {
 		}
 		
 		
+	}
+	
+	@Override
+	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == EDIT_REQUEST){
+			if  (resultCode == RESULT_OK) {
+				Toast.makeText(this, "Modification effectuée", Toast.LENGTH_SHORT).show();
+				biere = (BiereDB)data.getParcelableExtra(SELECTEDBEER);
+				bitmap = (Bitmap)data.getParcelableExtra(IMAGE);
+				BeerName.setText(biere.getNomBiere());
+				BeerCountry.setText(biere.getPaysBiere());
+				ABV.setText(String.valueOf(biere.getDegreBiere()));
+				if(bitmap != null)BeerPicture.setImageBitmap(bitmap);
+			}
+		}
 	}
 }
