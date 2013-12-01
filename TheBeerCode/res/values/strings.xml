@@ -61,5 +61,6 @@
     <string name="Confirm">Confirm</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="Edit">Edit</string>
+    <string name="title_activity_modifier_biere">ModifierBiere</string>
 
 </resources>

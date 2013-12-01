@@ -20,8 +20,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,12 +81,13 @@ public class AffichageBiere extends Activity {
 	HistoriqueDB histo;
 	String commentaire;
 	Float note;
-
+	
+	final Context context = this;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_affichage_biere);
-
+		
 		BeerName = (TextView)findViewById(R.id.Beername);
 		BeerCountry = (TextView)findViewById(R.id.BeerCountry);
 		ABV = (TextView)findViewById(R.id.ABV);
@@ -193,7 +197,31 @@ public class AffichageBiere extends Activity {
 	private OnClickListener deleteListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			final AlertDialog.Builder boiteVerif;
+			boiteVerif = new AlertDialog.Builder(context);
+			boiteVerif.setTitle("Supprimer");
+			boiteVerif.setIcon(R.drawable.ic_launcher);
+			boiteVerif.setMessage("Voulez vous supprimer cette bière ? Les commentaires, favoris etc... y faisant référence seront égalemment supprimé.");
 			
+			boiteVerif.setPositiveButton("Non", new DialogInterface.OnClickListener() {
+               
+                public void onClick(DialogInterface dialog, int which) {
+                	dialog.cancel();
+                }
+                }
+			);
+			
+			boiteVerif.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
+                
+                public void onClick(DialogInterface dialog, int which) {
+                	Supprimer supp= new Supprimer();
+                	supp.execute();
+                	dialog.cancel();
+                }
+                }
+            );
+			
+			boiteVerif.show();
 		}
 	};
 	
@@ -598,5 +626,47 @@ public class AffichageBiere extends Activity {
 			}
 			
 		}
+	}
+	
+	public class Supprimer extends AsyncTask<String, Integer, Boolean>{
+		Boolean exc = false;
+		Exception ex;
+
+		public Supprimer() {
+			
+		}
+
+		@Override
+		protected void onPreExecute(){
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+
+			try{
+				biere.delete();
+			}
+			catch(Exception e){
+				ex = e;
+				exc = true;
+			}
+
+			return true;
+		}
+
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(exc) {
+				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+			}
+			else{
+				Toast.makeText(AffichageBiere.this, "Bière supprimée !", Toast.LENGTH_SHORT ).show();
+				finish();
+			}
+			
+		}
+		
+		
 	}
 }
