@@ -59,6 +59,7 @@ public class ModifierBiere extends Activity {
 	
 	BiereDB biere;
 	Bitmap bitmap;
+	Bitmap bitmapModif;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -165,9 +166,7 @@ public class ModifierBiere extends Activity {
 
 	    if (resultCode != RESULT_OK) return;
 	    
-        Bitmap bitmap   = null;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inSampleSize = 2;
+        bitmapModif   = null;
  
         if (requestCode == PICK_FROM_FILE) {
             mImageCaptureUri = imageReturnedIntent.getData();
@@ -177,13 +176,13 @@ public class ModifierBiere extends Activity {
                 path = mImageCaptureUri.getPath(); //from File Manager
  
             if (path != null)
-                bitmap  = BitmapFactory.decodeFile(path,options);
+                bitmapModif  = BitmapFactory.decodeFile(path);
         } else {
             path    = mImageCaptureUri.getPath();
-            bitmap  = BitmapFactory.decodeFile(path);
+            bitmapModif  = BitmapFactory.decodeFile(path);
         }
  
-        photoBiere.setImageBitmap(bitmap);
+        photoBiere.setImageBitmap(bitmapModif);
 	}
 	
 	public class Modifier extends AsyncTask<String, Integer, Boolean>{	
@@ -204,16 +203,17 @@ public class ModifierBiere extends Activity {
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
-			BiereDB biere =new BiereDB();
+
+			BiereDB biereModif = biere;
 			
 			String nomBiere=eTnom.getText().toString();
-			biere.setNomBiere(nomBiere);
+			biereModif.setNomBiere(nomBiere);
 
 			String paysBiere= eTpays.getText().toString();
-			biere.setPaysBiere(paysBiere);
+			biereModif.setPaysBiere(paysBiere);
 			try{
 				float degreBiere= Float.parseFloat(eTdegre.getText().toString());
-				biere.setDegreBiere(degreBiere);
+				biereModif.setDegreBiere(degreBiere);
 			}
 			catch(Exception e){
 				Toast.makeText(ModifierBiere.this, "Le degre doit être un nombre !", Toast.LENGTH_SHORT ).show();
@@ -231,7 +231,7 @@ public class ModifierBiere extends Activity {
 				        InputStream is = new FileInputStream(path);
 				        String cheminBiere = biere.getNomBiere().replace(' ', '_');
 			        	mFtp.storeFile("/public_html/BeerPictures/image_" + cheminBiere + ".jpg", is);
-			        	biere.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
+			        	biereModif.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
 			        	is.close();
 			        	mFtp.disconnect();
 					} catch(Exception e) {
@@ -242,7 +242,9 @@ public class ModifierBiere extends Activity {
 			
 			if(!exc) {
 				try {
-					biere.update();
+					biereModif.update();
+					biere=biereModif;
+					bitmap=bitmapModif;
 					
 				} catch(Exception e) {
 					ex = e;

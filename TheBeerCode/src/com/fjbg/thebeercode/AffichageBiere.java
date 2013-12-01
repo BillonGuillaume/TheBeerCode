@@ -679,7 +679,6 @@ public class AffichageBiere extends Activity {
 	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == EDIT_REQUEST){
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Modification effectuée", Toast.LENGTH_SHORT).show();
 				biere = (BiereDB)data.getParcelableExtra(SELECTEDBEER);
 				bitmap = (Bitmap)data.getParcelableExtra(IMAGE);
 				BeerName.setText(biere.getNomBiere());

@@ -156,7 +156,7 @@ public class AjoutBiere extends Activity {
 	    if (resultCode != RESULT_OK) return;
 	    
         Bitmap bitmap   = null;
- 
+
         if (requestCode == PICK_FROM_FILE) {
             mImageCaptureUri = imageReturnedIntent.getData();
             path = getRealPathFromURI(mImageCaptureUri); //from Gallery
