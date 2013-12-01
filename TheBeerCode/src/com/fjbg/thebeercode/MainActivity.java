@@ -3,12 +3,15 @@ package com.fjbg.thebeercode;
 import java.sql.Connection;
 
 import com.fjbg.thebeercode.model.ConnexionDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.myconnections.DBConnection;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,8 +26,9 @@ public class MainActivity extends Activity {
 	public final static int PROFILE_REQUEST = 5;
 	public final static String USER = "USER";
 	public final static String PERSONNE = "PERSONNE";
-	static Connection connect;
-	static ConnexionDB connec;
+	//static Connection connect;
+	static ConnectDB connec;
+	ProgressDialog progress;
 	
 	Button bConnection = null;
 	Button bInscription = null;
@@ -35,7 +39,7 @@ public class MainActivity extends Activity {
 	Button bMyFavorites = null;
 	Button bDisconnection = null;
 	Button bProfile = null;
-	Button bMap = null;  // TODO effacer
+	Button bLeave = null;
 	
 	TextView tVWelcome = null;
 	TextView tVNameMenu = null;
@@ -51,26 +55,25 @@ public class MainActivity extends Activity {
 		bInscription = (Button)findViewById(R.id.bInscription);
 		bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
 		
-		bMap = (Button)findViewById(R.id.bMap);
-		bMap.setOnClickListener(bMapListener);
+		bLeave = (Button)findViewById(R.id.bLeave);
+		bLeave.setOnClickListener(bLeaveListener);
 		
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
 		bSearchBeer.setOnClickListener(bSearchBeerListener);
 		
 		try {
-			connec = new ConnexionDB();
+			connec = new ConnectDB();
 			connec.execute();
 		} catch (Exception e) {
 			Toast.makeText(MainActivity.this, "Exception  : " + e.getMessage(), Toast.LENGTH_SHORT).show();
 		}	
 	}
 	
-	private OnClickListener bMapListener = new OnClickListener() {  // TODO a effacer
+	private OnClickListener bLeaveListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent loginActivity = new  Intent(MainActivity.this,MapActivity.class);
-			startActivity(loginActivity);
+			finish();
 			}
 	};
 	
@@ -137,10 +140,12 @@ public class MainActivity extends Activity {
 			bConnection = (Button)findViewById(R.id.bConnection);
 			bInscription = (Button)findViewById(R.id.bInscription);
 			bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
+			bLeave = (Button)findViewById(R.id.bLeave);
 
 			bConnection.setOnClickListener(bConnectionListener);
 			bInscription.setOnClickListener(bInscriptionListener);
 			bSearchBeer.setOnClickListener(bSearchBeerListener);
+			bLeave.setOnClickListener(bLeaveListener);
 			
 			user = null;
 			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show();
@@ -224,6 +229,48 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public class ConnectDB extends AsyncTask<String, Integer, Boolean>{
+		private DBConnection dbconnect = null;
+		Boolean exc = false;
+		Exception ex;
+		
+		public ConnectDB() {
+
+		}
+		
+		@Override
+		protected void onPreExecute(){
+			progress = new ProgressDialog(MainActivity.this);
+			progress.setMessage("Connexion à la DB en cours...");
+			progress.setCancelable(false);
+			progress.show();
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			dbconnect = DBConnection.getInstance();
+			try{
+				dbconnect.init(dbconnect.getConnection());
+			}
+			catch(Exception e){
+				ex = e;
+				exc = true;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(progress.isShowing())
+			progress.dismiss();
+			if(exc) {
+				Toast.makeText(MainActivity.this, "Exeption : " + ex.getMessage(), Toast.LENGTH_SHORT).show();				
+			} else Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();	
+		}
+		
+		
 	}
 
 }
