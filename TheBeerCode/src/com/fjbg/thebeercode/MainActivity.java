@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
 	Button bMyFavorites = null;
 	Button bDisconnection = null;
 	Button bProfile = null;
-	Button bMap = null;  // TODO effacer
+	Button bLeave = null;
 	
 	TextView tVWelcome = null;
 	TextView tVNameMenu = null;
@@ -55,8 +55,8 @@ public class MainActivity extends Activity {
 		bInscription = (Button)findViewById(R.id.bInscription);
 		bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
 		
-		bMap = (Button)findViewById(R.id.bMap);
-		bMap.setOnClickListener(bMapListener);
+		bLeave = (Button)findViewById(R.id.bLeave);
+		bLeave.setOnClickListener(bLeaveListener);
 		
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
@@ -70,11 +70,10 @@ public class MainActivity extends Activity {
 		}	
 	}
 	
-	private OnClickListener bMapListener = new OnClickListener() {  // TODO a effacer
+	private OnClickListener bLeaveListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent loginActivity = new  Intent(MainActivity.this,MapActivity.class);
-			startActivity(loginActivity);
+			finish();
 			}
 	};
 	
@@ -141,10 +140,12 @@ public class MainActivity extends Activity {
 			bConnection = (Button)findViewById(R.id.bConnection);
 			bInscription = (Button)findViewById(R.id.bInscription);
 			bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
+			bLeave = (Button)findViewById(R.id.bLeave);
 
 			bConnection.setOnClickListener(bConnectionListener);
 			bInscription.setOnClickListener(bInscriptionListener);
 			bSearchBeer.setOnClickListener(bSearchBeerListener);
+			bLeave.setOnClickListener(bLeaveListener);
 			
 			user = null;
 			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show();
