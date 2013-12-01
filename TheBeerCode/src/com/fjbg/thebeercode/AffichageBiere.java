@@ -121,50 +121,60 @@ public class AffichageBiere extends Activity {
 	private OnClickListener favorisListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			ModifFavoris MF= new ModifFavoris();
-			MF.execute();
+			if(user!=null){
+				ModifFavoris MF= new ModifFavoris();
+				MF.execute();
+			}
+			else{
+				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour ajouter cette bière aux favoris !", Toast.LENGTH_SHORT ).show();
+			}
 		}
 	};
 	
 	private OnClickListener noterListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			custom = new Dialog(AffichageBiere.this);
-			custom.setContentView(R.layout.noter_layout);
-			
-			tvNoter = (TextView)custom.findViewById(R.id.tvNoter);
-			tvCommenter = (TextView)custom.findViewById(R.id.tvCommenter);
-			
-			rbBeer = (RatingBar)custom.findViewById(R.id.rbBeer);
-			etCommentary = (EditText)custom.findViewById(R.id.etCommentary);
-			
-			bConfirm = (Button)custom.findViewById(R.id.bConfirm);
-			bCancel = (Button)custom.findViewById(R.id.bCancel);
-
-			custom.setTitle("Evaluation");
-
-			bConfirm.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					commentaire = etCommentary.getText().toString();
-					note = rbBeer.getRating();
-					
-					custom.dismiss();
-					ModifNote MN = new ModifNote();
-					MN.execute();
-				}
-
-			});
-			bCancel.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					custom.dismiss();
-
-				}
-			});
-			custom.show();
+			if(user!=null){
+				custom = new Dialog(AffichageBiere.this);
+				custom.setContentView(R.layout.noter_layout);
+				
+				tvNoter = (TextView)custom.findViewById(R.id.tvNoter);
+				tvCommenter = (TextView)custom.findViewById(R.id.tvCommenter);
+				
+				rbBeer = (RatingBar)custom.findViewById(R.id.rbBeer);
+				etCommentary = (EditText)custom.findViewById(R.id.etCommentary);
+				
+				bConfirm = (Button)custom.findViewById(R.id.bConfirm);
+				bCancel = (Button)custom.findViewById(R.id.bCancel);
+	
+				custom.setTitle("Evaluation");
+	
+				bConfirm.setOnClickListener(new View.OnClickListener() {
+	
+					@Override
+					public void onClick(View view) {
+						commentaire = etCommentary.getText().toString();
+						note = rbBeer.getRating();
+						
+						custom.dismiss();
+						ModifNote MN = new ModifNote();
+						MN.execute();
+					}
+	
+				});
+				bCancel.setOnClickListener(new View.OnClickListener() {
+	
+					@Override
+					public void onClick(View view) {
+						custom.dismiss();
+	
+					}
+				});
+				custom.show();
+			}
+			else{
+				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour noter cette bière !", Toast.LENGTH_SHORT ).show();
+			}
 		}
 	};
 
@@ -216,9 +226,6 @@ public class AffichageBiere extends Activity {
 
 			biereRech =new BiereDB();
 			biereRech.setNomBiere(nomBiere);
-			favori= new FavoriDB();
-			favori.setAimant(user.getIdPersonne());
-			favori.setFavorite(biereRech.getIdBiere());
 
 			try{
 				biereRech.readBiere();
@@ -227,17 +234,23 @@ public class AffichageBiere extends Activity {
 				ex = e;
 				exc = true;
 			}
-
-
+			
 			if(!exc){
 				
-				try{
-					favori.readFavorite();
-					favorite=true;
+				if(user!=null){
+					favori= new FavoriDB();
+					favori.setAimant(user.getIdPersonne());
+					favori.setFavorite(biereRech.getIdBiere());
+					
+					try{
+						favori.readFavorite();
+						favorite=true;
+					}
+					catch(Exception e){
+						favorite= false;
+					}
 				}
-				catch(Exception e){
-					favorite= false;
-				}
+				
 				
 				try {
 					FTPClient mFTPClient = new FTPClient();
