@@ -190,7 +190,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
          }
      }
      
-     public static ArrayList<BiereDB> rechBieres(String nomBiere, float degMin, float degMax, String pays, float noteMin, float noteMax, int min, int max) throws Exception{
+     public static ArrayList<BiereDB> rechBieres(String nomBiere, float degInf, float degSup, String pays, float noteMin, float noteMax, int min, int max) throws Exception{
     	String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? AND nomBiere LIKE '%'||?||'%' AND (degreBiere BETWEEN ? AND ?) AND paysBiere LIKE '%'||?||'%' AND (coteBiere BETWEEN ? AND ?)";
      	ArrayList <BiereDB> list = new ArrayList<BiereDB>();
      	BiereDB obj;
@@ -200,8 +200,8 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
      		pstmt.setInt(1, min);
      		pstmt.setInt(2, max);
      		pstmt.setString(3, nomBiere);
-     		pstmt.setFloat(4, degMin);
-     		pstmt.setFloat(5, degMax);
+     		pstmt.setFloat(4, degSup);
+     		pstmt.setFloat(5, degInf);
      		pstmt.setString(6, pays);
      		pstmt.setFloat(7, noteMin*2);
      		pstmt.setFloat(8, noteMax*2);
