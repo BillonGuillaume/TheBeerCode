@@ -3,12 +3,15 @@ package com.fjbg.thebeercode;
 import java.sql.Connection;
 
 import com.fjbg.thebeercode.model.ConnexionDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
+import com.fjbg.thebeercode.myconnections.DBConnection;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,8 +26,9 @@ public class MainActivity extends Activity {
 	public final static int PROFILE_REQUEST = 5;
 	public final static String USER = "USER";
 	public final static String PERSONNE = "PERSONNE";
-	static Connection connect;
-	static ConnexionDB connec;
+	//static Connection connect;
+	static ConnectDB connec;
+	ProgressDialog progress;
 	
 	Button bConnection = null;
 	Button bInscription = null;
@@ -59,7 +63,7 @@ public class MainActivity extends Activity {
 		bSearchBeer.setOnClickListener(bSearchBeerListener);
 		
 		try {
-			connec = new ConnexionDB();
+			connec = new ConnectDB();
 			connec.execute();
 		} catch (Exception e) {
 			Toast.makeText(MainActivity.this, "Exception  : " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -224,6 +228,48 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	public class ConnectDB extends AsyncTask<String, Integer, Boolean>{
+		private DBConnection dbconnect = null;
+		Boolean exc = false;
+		Exception ex;
+		
+		public ConnectDB() {
+
+		}
+		
+		@Override
+		protected void onPreExecute(){
+			progress = new ProgressDialog(MainActivity.this);
+			progress.setMessage("Connexion à la DB en cours...");
+			progress.setCancelable(false);
+			progress.show();
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			dbconnect = DBConnection.getInstance();
+			try{
+				dbconnect.init(dbconnect.getConnection());
+			}
+			catch(Exception e){
+				ex = e;
+				exc = true;
+			}
+			return true;
+		}
+		
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+			if(progress.isShowing())
+			progress.dismiss();
+			if(exc) {
+				Toast.makeText(MainActivity.this, "Exeption : " + ex.getMessage(), Toast.LENGTH_SHORT).show();				
+			} else Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();	
+		}
+		
+		
 	}
 
 }
