@@ -11,6 +11,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import com.fjbg.thebeercode.RechercheBiere.GetBeers;
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.FavoriDB;
+import com.fjbg.thebeercode.model.HistoriqueDB;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.VoteDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
@@ -52,6 +53,8 @@ public class AffichageBiere extends Activity {
 	private Button retour = null;
 	private ImageButton favoris = null;
 	private ImageButton noter = null;
+	private ImageButton edit = null;
+	private ImageButton delete = null;
 	ProgressDialog progress;
 	Boolean scroll = true;
 	
@@ -70,7 +73,9 @@ public class AffichageBiere extends Activity {
 	private String nomBiere;
 	PersonneDB user;
 	boolean favorite = false;
+	boolean createur = false;
 	FavoriDB favori;
+	HistoriqueDB histo;
 	String commentaire;
 	Float note;
 
@@ -178,7 +183,20 @@ public class AffichageBiere extends Activity {
 		}
 	};
 
-
+	private OnClickListener editListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			
+		}
+	};
+	
+	private OnClickListener deleteListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			
+		}
+	};
+	
 	public void loadMore(int offset) {
 		if(scroll) {
 			GetMoarVotes getMore = new GetMoarVotes();
@@ -249,6 +267,18 @@ public class AffichageBiere extends Activity {
 					catch(Exception e){
 						favorite= false;
 					}
+					
+					histo= new HistoriqueDB();
+					histo.setActeur(user.getIdPersonne());
+					histo.setUtilise(biereRech.getIdBiere());
+					
+					try{
+						histo.readHistorique();
+						createur = true;
+					}
+					catch(Exception e){
+						createur = false;
+					}
 				}
 				
 				
@@ -295,6 +325,43 @@ public class AffichageBiere extends Activity {
 			}
 			else {
 				try{
+					if(createur){
+						setContentView(R.layout.activity_affichage_biere2);
+						
+						BeerName = (TextView)findViewById(R.id.Beername);
+						BeerCountry = (TextView)findViewById(R.id.BeerCountry);
+						ABV = (TextView)findViewById(R.id.ABV);
+						NbVotes = (TextView)findViewById(R.id.NbVotes);
+
+						BeerPicture = (ImageView) findViewById(R.id.BeerPicture);
+
+						ratingBeer = (RatingBar) findViewById(R.id.ratingBeer);
+
+						listComments = (ListView)findViewById(R.id.listComments);
+
+						retour = (Button) findViewById(R.id.btBack);
+						retour.setOnClickListener(retourListener);
+
+						favoris = (ImageButton) findViewById(R.id.imageFavoris);
+						favoris.setOnClickListener(favorisListener);
+						
+						noter = (ImageButton) findViewById(R.id.imageNote);
+						noter.setOnClickListener(noterListener);
+						
+						Intent i=getIntent();
+						nomBiere=(String)i.getStringExtra(SELECTEDBEER);
+						user= (PersonneDB)i.getParcelableExtra(USER);
+
+						listVotes = new ArrayList<VueVoteDB>();
+						vbA = new VotesBiereAdapter(AffichageBiere.this, listVotes);
+						listComments.setAdapter(vbA);
+						
+						edit = (ImageButton) findViewById(R.id.imageEdit);
+						edit.setOnClickListener(editListener);
+
+						delete = (ImageButton) findViewById(R.id.imageDelete);
+						delete.setOnClickListener(deleteListener);
+					}
 					biere=biereRech;
 					BeerName.setText(biere.getNomBiere());
 					BeerCountry.setText(biere.getPaysBiere());

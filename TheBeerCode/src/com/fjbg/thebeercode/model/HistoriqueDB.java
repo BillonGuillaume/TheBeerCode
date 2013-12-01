@@ -1,6 +1,8 @@
 package com.fjbg.thebeercode.model;
 import java.sql.*;
 
+import com.fjbg.thebeercode.R;
+
 public class HistoriqueDB extends Historique implements CRUD {
 
 	public static Connection dbConnect = null;
@@ -65,6 +67,32 @@ public class HistoriqueDB extends Historique implements CRUD {
             } catch (Exception e) {
             }
         }
+    }
+    
+    public void readHistorique() throws Exception {  // verifier si la biere a été crée par l'utilisateur
+    	String req = "SELECT idhistorique, acteur, utilise, action FROM Historique WHERE acteur = ? AND utilise = ? AND action LIKE 'ajout'";
+    	
+    	PreparedStatement pstmt = null;
+    	try {
+    		pstmt = dbConnect.prepareStatement(req);
+    		pstmt.setInt(1, acteur);
+    		pstmt.setInt(2,  utilise);
+    		ResultSet rs = pstmt.executeQuery();
+    		if (rs.next()) {
+    			this.idHistorique = rs.getInt("IDHISTORIQUE");
+    			this.action = rs.getString("ACTION");
+    			
+    		} else {
+    			throw new Exception("Pas créateur");
+    		}
+    	} catch (Exception e) { // Exception internationalisée
+    		throw new Exception("Erreur de lecture/" + R.string.unknown + "/" + e.getMessage());
+    	} finally {
+    		try {
+    			pstmt.close();
+    		} catch (Exception e) {
+    		}
+    	}
     }
 
     @Override
