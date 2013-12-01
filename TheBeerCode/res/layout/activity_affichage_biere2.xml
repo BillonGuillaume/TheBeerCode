@@ -35,6 +35,23 @@
         android:layout_toRightOf="@+id/BeerPicture"
         android:text="Beer's country" />
 
+    <ListView
+        android:id="@+id/listComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvABV"
+        android:layout_below="@+id/ABV"
+        android:layout_marginBottom="45dp" >
+    </ListView>
+
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ABV"
+        android:layout_alignParentBottom="true"
+        android:text="@string/Back" />
+
     <TextView
         android:id="@+id/NbVotes"
         android:layout_width="wrap_content"
@@ -43,6 +60,15 @@
         android:layout_alignBottom="@+id/tvNbVotes"
         android:layout_toRightOf="@+id/tvNbVotes"
         android:text="0" />
+
+    <TextView
+        android:id="@+id/tvBeerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/BeerPicture"
+        android:layout_below="@+id/BeerPicture"
+        android:layout_marginTop="14dp"
+        android:text="@string/BeerName" />
 
     <TextView
         android:id="@+id/Beername"
@@ -100,19 +126,11 @@
         android:layout_alignTop="@+id/imageLocalisation"
         android:src="@drawable/ic_stat_favoritefalse" />
 
-    <TextView
-        android:id="@+id/tvBeerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/BeerPicture"
-        android:layout_below="@+id/BeerPicture"
-        android:text="@string/BeerName" />
-
     <ImageButton
         android:id="@+id/imageNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNbVotes"
+        android:layout_alignTop="@+id/imageLocalisation"
         android:layout_toRightOf="@+id/imageFavoris"
         android:src="@drawable/ic_stat_note" />
 
@@ -120,26 +138,24 @@
         android:id="@+id/imageLocalisation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageNote"
+        android:layout_below="@+id/NbVotes"
         android:layout_toRightOf="@+id/imageNote"
         android:src="@drawable/ic_tab_location" />
-    
-    <ListView
-        android:id="@+id/listComments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btBack"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/imageLocalisation" >
 
-    </ListView>
-
-    <Button
-        android:id="@+id/btBack"
+    <ImageButton
+        android:id="@+id/imageEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/tvABV"
-        android:text="@string/Back" />
+        android:layout_below="@+id/BeerPicture"
+        android:layout_toRightOf="@+id/NbVotes"
+        android:src="@drawable/ic_stat_edit" />
+
+    <ImageButton
+        android:id="@+id/imageDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageEdit"
+        android:layout_below="@+id/imageEdit"
+        android:src="@drawable/ic_stat_delete" />
 
 </RelativeLayout>

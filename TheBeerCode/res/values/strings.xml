@@ -60,5 +60,6 @@
     <string name="Note">Evaluation :</string>
     <string name="Confirm">Confirm</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="Edit">Edit</string>
 
 </resources>

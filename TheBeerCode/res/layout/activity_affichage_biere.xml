@@ -123,19 +123,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvNbVotes"
-        android:layout_alignTop="@+id/imageButton1"
+        android:layout_alignTop="@+id/imageLocalisation"
         android:src="@drawable/ic_stat_favoritefalse" />
 
     <ImageButton
         android:id="@+id/imageNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageButton1"
+        android:layout_alignTop="@+id/imageLocalisation"
         android:layout_toRightOf="@+id/imageFavoris"
         android:src="@drawable/ic_stat_note" />
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/imageLocalisation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/NbVotes"
