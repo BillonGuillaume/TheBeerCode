@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,7 +83,9 @@ public class AjoutBiere extends Activity {
 		retour.setOnClickListener(retourListener);
 		
 		Intent i= getIntent();
-		user= (PersonneDB)i.getParcelableExtra(MainActivity.USER);
+		Log.d("BiereDB", "affichage personne");
+		user= (PersonneDB)i.getParcelableExtra(MainActivity.PERSONNE);
+		Log.d("BiereDB", "User : " + user.getLogin());
 		
 		final String [] items			= new String [] {"From Camera", "From SD Card"};
 		ArrayAdapter<String> adapter	= new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);
@@ -232,9 +235,8 @@ public class AjoutBiere extends Activity {
 			if(!exc) {
 				try {
 					biere.create();
-					HistoriqueDB histo= new HistoriqueDB(0, user.getIdPersonne(),biere.getIdBiere(),"ajout");
-					histo.create();
-					
+					HistoriqueDB histo = new HistoriqueDB(0, user.getIdPersonne(),biere.getIdBiere(),"ajout");
+					histo.create();					
 				} catch(Exception e) {
 					ex = e;
 					exc = true;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class BiereDB extends Biere implements CRUD, Parcelable{
 	protected static Connection dbConnect=null;
@@ -38,33 +39,28 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
     }
     
 
-   public void create() throws Exception{
-        CallableStatement   cstmt=null;
-       try{
-	     String req = "call createbiere(?,?,?,?,?)";
-	     cstmt = dbConnect.prepareCall(req);
-         cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
-         cstmt.setString(2,nomBiere);
-         cstmt.setString(3,cheminImage);
-         cstmt.setString(4,paysBiere);
-         cstmt.setFloat(5,degreBiere);
-         try {
-         cstmt.executeUpdate();
-         } catch(Exception e) {
-        	 throw new Exception("Erreur execute update : " + e.getMessage());
-         }
-         this.idBiere=cstmt.getInt(1);
-       }
-       catch(Exception e ){
-          
-                throw new Exception("Erreur de création "+e.getMessage());
-             }
-       finally{
-            try{
-              cstmt.close();
-            }
-            catch (Exception e){}
-        }
+    public void create() throws Exception{
+    	CallableStatement   cstmt=null;
+    	try{
+    		String req = "call createbiere(?,?,?,?,?)";
+    		cstmt = dbConnect.prepareCall(req);
+    		cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
+    		cstmt.setString(2,nomBiere);
+    		cstmt.setString(3,cheminImage);
+    		cstmt.setString(4,paysBiere);
+    		cstmt.setFloat(5,degreBiere);
+    		cstmt.executeUpdate();
+    		this.idBiere=cstmt.getInt(1);
+    	}
+    	catch(Exception e ){ 
+    		throw new Exception("Erreur de création "+e.getMessage());
+    	}
+    	finally{
+    		try{
+    			cstmt.close();
+    		}
+    		catch (Exception e){}
+    	}
     }
    
    public void read ()throws Exception{

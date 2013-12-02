@@ -1,6 +1,8 @@
 package com.fjbg.thebeercode.model;
 import java.sql.*;
 
+import android.util.Log;
+
 import com.fjbg.thebeercode.R;
 
 public class HistoriqueDB extends Historique implements CRUD {
@@ -22,6 +24,7 @@ public class HistoriqueDB extends Historique implements CRUD {
     public void create() throws Exception {
         CallableStatement cstmt = null;
         try {
+        	Log.d("BiereDB", "debut create histo");
             String req = "call createHistorique(?,?,?,?)";
             cstmt = dbConnect.prepareCall(req);
             cstmt.registerOutParameter(1, java.sql.Types.INTEGER); 
