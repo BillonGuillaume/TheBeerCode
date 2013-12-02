@@ -210,6 +210,26 @@ public class MainActivity extends Activity {
 			if  (resultCode == RESULT_OK) {
 				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show();
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
+				setContentView(R.layout.menu_principal_co);
+				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
+				tVNameMenu = (TextView)findViewById(R.id.tVNameMenu);
+				bAddBeer = (Button)findViewById(R.id.bAddBeer);
+				bSearchBeer = (Button)findViewById(R.id.bSearchBeer);
+				bAdditions = (Button)findViewById(R.id.bAdditions);
+				bMyVotes = (Button)findViewById(R.id.bMyVotes);
+				bDisconnection = (Button)findViewById(R.id.bDisconnection);
+				bProfile = (Button)findViewById(R.id.bProfile);
+				bMyFavorites = (Button)findViewById(R.id.bMyFavorites);
+				
+				bAddBeer.setOnClickListener(bAddBeerListener);
+				bSearchBeer.setOnClickListener(bSearchBeerListener);
+				bAdditions.setOnClickListener(bAdditionsListener);
+				bMyVotes.setOnClickListener(bMyVotesListener);
+				bDisconnection.setOnClickListener(bDisconnectionListener);
+				bProfile.setOnClickListener(bProfileListener);
+				bMyFavorites.setOnClickListener(bMyFavoritesListener);
+				
+				tVNameMenu.setText(" " + user.getLogin());
 			}
 			if(resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show();
