@@ -212,10 +212,9 @@ public class ModifierBiere extends Activity {
 			biereModif.setPaysBiere(paysBiere);
 			try{
 				float degreBiere= Float.parseFloat(eTdegre.getText().toString());
-				biereModif.setDegreBiere(degreBiere);
+				biere.setDegreBiere(degreBiere);
 			}
 			catch(Exception e){
-				Toast.makeText(ModifierBiere.this, "Le degre doit être un nombre !", Toast.LENGTH_SHORT ).show();
 				exc = true;
 				ex = e;
 			}

@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -206,12 +207,11 @@ public class AjoutBiere extends Activity {
 				biere.setDegreBiere(degreBiere);
 			}
 			catch(Exception e){
-				Toast.makeText(AjoutBiere.this, "Le degre doit être un nombre !", Toast.LENGTH_SHORT ).show();
 				exc = true;
 				ex = e;
 			}
 			
-			if(path != null){
+			if(path != null && exc!=null){
 				FTPClient mFtp = new FTPClient();
 			        try {
 			        	mFtp.connect("ftp.alokar.site90.net",21); // Using port no=21
