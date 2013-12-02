@@ -629,8 +629,8 @@ public class AffichageBiere extends Activity {
 			}
 			else{
 				Toast.makeText(AffichageBiere.this, "Vote enregistré !", Toast.LENGTH_SHORT ).show();
-				ratingBeer.setRating(biere.getCoteBiere()/2);
-				NbVotes.setText(String.valueOf(biere.getNbreVotes()));
+				Lecture lec= new Lecture();
+				lec.execute();
 			}
 			
 		}
