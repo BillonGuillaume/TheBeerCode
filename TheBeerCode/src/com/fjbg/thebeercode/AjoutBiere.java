@@ -50,6 +50,7 @@ public class AjoutBiere extends Activity {
 	Button retour = null;
 	
 	String path = null;
+	File file = null;
 	ImageView photoBiere = null;
 	
 	AlertDialog dialog = null;
@@ -93,7 +94,7 @@ public class AjoutBiere extends Activity {
 			public void onClick( DialogInterface dialog, int item ) {
 				if (item == 0) {
 					Intent intent 	 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					File file		 = new File(Environment.getExternalStorageDirectory(),
+					file		 = new File(Environment.getExternalStorageDirectory(),
 							   			"tmp_beerpicture_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 					mImageCaptureUri = Uri.fromFile(file);
 
@@ -167,7 +168,7 @@ public class AjoutBiere extends Activity {
             if (path != null)
                 bitmap  = BitmapFactory.decodeFile(path);
         } else {
-            path    = mImageCaptureUri.getPath();
+            path    = file.getAbsolutePath();
             bitmap  = BitmapFactory.decodeFile(path);
         }
  

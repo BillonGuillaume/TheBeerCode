@@ -57,7 +57,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
        }
        catch(Exception e ){
           
-                throw new Exception("Erreur de création "+e.getMessage());
+                throw new Exception("Erreur de création "+this.idBiere +e.getMessage());
              }
        finally{
             try{
