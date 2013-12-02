@@ -83,7 +83,7 @@ public class AjoutBiere extends Activity {
 		retour.setOnClickListener(retourListener);
 		
 		Intent i= getIntent();
-		user= (PersonneDB)i.getParcelableExtra(MainActivity.USER);
+		user= (PersonneDB)i.getParcelableExtra(MainActivity.PERSONNE);
 		
 		final String [] items			= new String [] {"From Camera", "From SD Card"};
 		ArrayAdapter<String> adapter	= new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);

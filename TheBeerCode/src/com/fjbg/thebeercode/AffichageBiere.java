@@ -680,11 +680,8 @@ public class AffichageBiere extends Activity {
 		if (requestCode == EDIT_REQUEST){
 			if  (resultCode == RESULT_OK) {
 				biere = (BiereDB)data.getParcelableExtra(SELECTEDBEER);
-				bitmap = (Bitmap)data.getParcelableExtra(IMAGE);
-				BeerName.setText(biere.getNomBiere());
-				BeerCountry.setText(biere.getPaysBiere());
-				ABV.setText(String.valueOf(biere.getDegreBiere()));
-				if(bitmap != null)BeerPicture.setImageBitmap(bitmap);
+				Lecture lec= new Lecture();
+				lec.execute();
 			}
 		}
 	}

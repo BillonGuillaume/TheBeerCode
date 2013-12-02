@@ -58,8 +58,8 @@ public class ModifierBiere extends Activity {
 	private static final int PICK_FROM_FILE = 2;
 	
 	BiereDB biere;
-	Bitmap bitmap;
 	Bitmap bitmapModif;
+	Bitmap bitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +149,6 @@ public class ModifierBiere extends Activity {
 		public void onClick(View v) {
 			Intent i= new Intent();
 			i.putExtra(AffichageBiere.SELECTEDBEER, biere);
-			i.putExtra(AffichageBiere.IMAGE, bitmap);
 			setResult(RESULT_OK, i);
 			finish();
 		}
@@ -244,7 +243,6 @@ public class ModifierBiere extends Activity {
 				try {
 					biereModif.update();
 					biere=biereModif;
-					bitmap=bitmapModif;
 					
 				} catch(Exception e) {
 					ex = e;
