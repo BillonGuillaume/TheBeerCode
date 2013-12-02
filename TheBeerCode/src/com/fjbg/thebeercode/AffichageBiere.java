@@ -315,26 +315,28 @@ public class AffichageBiere extends Activity {
 				}
 				
 				
-				try {
-					FTPClient mFTPClient = new FTPClient();
-					mFTPClient.connect("ftp.alokar.site90.net",21);      
-					mFTPClient.login("a7115779", "projet2013");
-					mFTPClient.enterLocalPassiveMode();
-					InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
-					String cheminBiere = biere.getNomBiere().replace(' ', '_');
-					file = new File(Environment.getExternalStorageDirectory() + File.separator + cheminBiere +".jpg"); // TODO mettre toutes les images dans me même dossier
-					OutputStream outputStream = new FileOutputStream(file);
-					int read = 0;
-					byte[] bytes = new byte[1024*1024];
-					while ((read = inputStream.read(bytes)) != -1) {
-						outputStream.write(bytes, 0, read);
+				if(biereRech.getCheminImage()!=null){
+					try {
+							FTPClient mFTPClient = new FTPClient();
+							mFTPClient.connect("ftp.alokar.site90.net",21);      
+							mFTPClient.login("a7115779", "projet2013");
+							mFTPClient.enterLocalPassiveMode();
+							InputStream inputStream = mFTPClient.retrieveFileStream(biereRech.getCheminImage());
+							String cheminBiere = biereRech.getNomBiere().replace(' ', '_');
+							file = new File(Environment.getExternalStorageDirectory() + File.separator + cheminBiere +".jpg"); // TODO mettre toutes les images dans me même dossier
+							OutputStream outputStream = new FileOutputStream(file);
+							int read = 0;
+							byte[] bytes = new byte[1024*1024];
+							while ((read = inputStream.read(bytes)) != -1) {
+								outputStream.write(bytes, 0, read);
+							}
+							outputStream.close();
+							inputStream.close();
+							
+					}catch(Exception e) {
+						Log.d("exception", "exception : " + e.getMessage());
 					}
-					outputStream.close();
-					inputStream.close();
-				}catch(Exception e) {
-					Log.d("exception", "exception : " + e.getMessage());
 				}
-
 
 			}
 			return true;
@@ -350,7 +352,7 @@ public class AffichageBiere extends Activity {
 			}catch (Exception e) {
 				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
 			}				
-			if(bitmap!=null) BeerPicture.setImageBitmap(bitmap);
+			
 			if(progress.isShowing())
 				progress.dismiss();
 			if(exc) {
@@ -396,6 +398,7 @@ public class AffichageBiere extends Activity {
 						delete.setOnClickListener(deleteListener);
 					}
 					biere=biereRech;
+					if(biere.getCheminImage()!=null) BeerPicture.setImageBitmap(bitmap);
 					BeerName.setText(biere.getNomBiere());
 					BeerCountry.setText(biere.getPaysBiere());
 					ABV.setText(String.valueOf(biere.getDegreBiere()));
