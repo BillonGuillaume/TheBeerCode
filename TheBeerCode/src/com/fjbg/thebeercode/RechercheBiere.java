@@ -132,16 +132,15 @@ public class RechercheBiere extends Activity {
 						try {							
 							if(degSup != "") degreSup = Float.parseFloat(degSup);
 						} catch (Exception e){
-							degreSup = (float) 99.9;
+							degreSup = (float) 0.0;
 						}
 						String degInf = eTDegreInf.getText().toString();
 						try {							
 							if(degInf != "") degreInf = Float.parseFloat(degInf);
 						} catch (Exception e){
-							degreInf = (float) 0.0;
+							degreInf = (float) 99.0;
 						}
 						custom.dismiss();
-						Log.d("OnClickListener bRech", "avant getter");
 						GetBeers getter = new GetBeers();
 						getter.execute();
 					}

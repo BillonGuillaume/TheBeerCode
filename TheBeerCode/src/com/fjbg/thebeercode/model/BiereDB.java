@@ -230,7 +230,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
      }
      
      public static ArrayList<BiereDB> readBieres(int min, int max) throws Exception{
-     	String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=?";
+     	String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? ORDER BY idBiere DESC";
       	ArrayList <BiereDB> list = new ArrayList<BiereDB>();
       	BiereDB obj;
       	PreparedStatement pstmt = null;
