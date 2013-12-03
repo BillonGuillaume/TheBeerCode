@@ -122,6 +122,14 @@ public class AffichageBiere extends Activity {
 		Lecture lec= new Lecture();
 		lec.execute();
 	}
+	
+	private void changeItems(ArrayList<VueVoteDB> list) {
+		this.vbA.clear();
+		items = 0;
+		for(VueVoteDB item : list) {
+			addItems(item);
+		}
+	}
 
 	private OnClickListener retourListener = new OnClickListener() {
 		@Override
@@ -452,9 +460,7 @@ public class AffichageBiere extends Activity {
 
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
-			for(VueVoteDB vote : liste) {
-				addItems(vote);
-			}
+			changeItems(liste);
 			if(exc) {
 				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}			

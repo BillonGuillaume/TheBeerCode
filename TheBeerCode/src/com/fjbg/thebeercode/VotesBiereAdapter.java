@@ -57,4 +57,8 @@ public class VotesBiereAdapter extends BaseAdapter {
     public void add(VueVoteDB item) {
     	data.add(item);
     }
+    
+    public void clear() {
+    	data.clear();
+    }
 }

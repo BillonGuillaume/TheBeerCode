@@ -182,7 +182,7 @@ public class RechercheBiere extends Activity {
 				loadMore(totalItemsCount);
 			}
 		});
-		Log.d("Main", "avant initList");
+
 		InitList init = new InitList();
 		init.execute();
 	}		
@@ -247,16 +247,13 @@ public class RechercheBiere extends Activity {
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 						try {
 						Intent showBeer = new Intent(RechercheBiere.this, AffichageBiere.class);
-						Log.d("Selectedbeer", "selected : " + (listResult.get(arg2)).getNomBiere());
 						String selectedBeer = (listResult.get(arg2)).getNomBiere();
 						showBeer.putExtra(RechercheBiere.SELECTEDBEER, selectedBeer);
 						showBeer.putExtra(RechercheBiere.USER, user);
-						Log.d("InitList", "user : " + user.getLogin());
 						startActivity(showBeer);
-						Log.d("InitList", "click et intent envoyé");
-						finish();						
-						} catch(Exception e) {
-							Log.d("InitList", "exception : " + e.getMessage());
+						finish();
+						}catch(Exception e) {
+							Log.d("RechercheBiere", "Exception " + e.getMessage());
 						}
 					}
 				});
