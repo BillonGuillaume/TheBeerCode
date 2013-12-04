@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -310,7 +309,8 @@ public class RechercheBiere extends Activity {
 				addItems(item);
 			}
 			if(exc) {
-				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				if(ee.getCode() != R.string.e206)	Toast.makeText(RechercheBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}
@@ -365,7 +365,8 @@ public class RechercheBiere extends Activity {
 			super.onPostExecute(result);
 			changeItems(liste);
 			if(exc) {
-				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(RechercheBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
@@ -401,7 +402,8 @@ public class RechercheBiere extends Activity {
 				addItems(item);
 			}
 			if(exc) {
-				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				if(ee.getCode() != R.string.e205) Toast.makeText(RechercheBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}

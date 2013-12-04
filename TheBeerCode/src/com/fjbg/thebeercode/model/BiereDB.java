@@ -151,7 +151,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 		String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? AND nomBiere LIKE '%'||?||'%' AND (degreBiere BETWEEN ? AND ?) AND paysBiere LIKE '%'||?||'%' AND (coteBiere BETWEEN ? AND ?)";
 		ArrayList <BiereDB> list = new ArrayList<BiereDB>();
 		BiereDB obj;
-		Boolean ex = true;
+		Boolean ex = false;
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = dbConnect.prepareStatement(req);
@@ -195,7 +195,6 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 		ArrayList <BiereDB> list = new ArrayList<BiereDB>();
 		BiereDB obj;
 		Boolean ex1 = false;
-		Boolean ex2 = false;
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = dbConnect.prepareStatement(req);
@@ -213,8 +212,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 				obj.degreBiere=rs.getFloat("DEGREBIERE");
 				list.add(obj);
 			}
-			if (list.size() == 0) ex1 = true;//throw new Exception("Aucune bière existante.");
-			else if (list.size() == 0) ex2 = true; //throw new Exception("Plus de bière.");
+			if (list.size() == 0 && min ==1) ex1 = true;//throw new Exception("Aucune bière existante.");
 			return list;
 		} catch(SQLException e) {
         	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
@@ -223,9 +221,6 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 		} finally {
 			if(ex1) {
 				throw new Exception("Erreur Personnalisée/" + R.string.e206 + "/" + "Aucune bière à afficher");
-			}
-			if(ex2) {
-				throw new Exception("Erreur Personnalisée/" + R.string.e203 + "/" + "Plus de bière à afficher");
 			}
 			try {
 				pstmt.close();
