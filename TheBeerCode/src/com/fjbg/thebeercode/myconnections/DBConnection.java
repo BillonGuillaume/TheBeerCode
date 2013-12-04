@@ -3,6 +3,7 @@ package com.fjbg.thebeercode.myconnections;
 import java.sql.*;
 import java.util.*;
 
+import com.fjbg.thebeercode.R;
 import com.fjbg.thebeercode.model.AjoutDB;
 import com.fjbg.thebeercode.model.BiereDB;
 import com.fjbg.thebeercode.model.CoordonneesDB;
@@ -46,7 +47,7 @@ public class DBConnection {
 	}
 
 	public void init(Connection connect)throws Exception{
-		if(connect==null)throw new Exception("Connexion impossible");
+		if(connect==null) throw new Exception("Erreur personnalisée/" + R.string.e215 + "/" + "Echec de connexion");
 		PersonneDB.setDbConnect(connect);
 		FavoriDB.setDbConnect(connect);
 		HistoriqueDB.setDbConnect(connect);
@@ -69,7 +70,7 @@ public class DBConnection {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			throw new Exception(e);     
+			throw new Exception("Erreur personnalisée/" + R.string.unknown + "/" + e.getMessage());     
 		}
 	}
 

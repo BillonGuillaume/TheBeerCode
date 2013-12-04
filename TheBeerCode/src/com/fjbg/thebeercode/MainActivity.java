@@ -1,8 +1,5 @@
 package com.fjbg.thebeercode;
 
-import java.sql.Connection;
-
-import com.fjbg.thebeercode.model.ConnexionDB;
 import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.myconnections.DBConnection;
@@ -26,7 +23,6 @@ public class MainActivity extends Activity {
 	public final static int PROFILE_REQUEST = 5;
 	public final static String USER = "USER";
 	public final static String PERSONNE = "PERSONNE";
-	//static Connection connect;
 	static ConnectDB connec;
 	ProgressDialog progress;
 	
@@ -61,13 +57,9 @@ public class MainActivity extends Activity {
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
 		bSearchBeer.setOnClickListener(bSearchBeerListener);
-		
-		try {
-			connec = new ConnectDB();
-			connec.execute();
-		} catch (Exception e) {
-			Toast.makeText(MainActivity.this, "Exception  : " + e.getMessage(), Toast.LENGTH_SHORT).show();
-		}	
+
+		connec = new ConnectDB();
+		connec.execute();
 	}
 	
 	private OnClickListener bLeaveListener = new OnClickListener() {
@@ -93,7 +85,7 @@ public class MainActivity extends Activity {
 		}
 	};
 	
-	private OnClickListener bSearchBeerListener = new OnClickListener() { // TODO gérer quand on se connecte pas
+	private OnClickListener bSearchBeerListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			Intent searchBeerActivity = new  Intent(MainActivity.this,RechercheBiere.class);
@@ -110,7 +102,7 @@ public class MainActivity extends Activity {
 				addBeerActivity.putExtra(PERSONNE, user);
 				startActivity(addBeerActivity);
 			}
-			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show();
+			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 		}
 	};
 	
@@ -148,7 +140,7 @@ public class MainActivity extends Activity {
 			bLeave.setOnClickListener(bLeaveListener);
 			
 			user = null;
-			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show();
+			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 		}
 	};
 	
@@ -174,7 +166,7 @@ public class MainActivity extends Activity {
 	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if  (requestCode == LOGIN_REQUEST) {
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 				setContentView(R.layout.menu_principal_co);
 				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
@@ -199,16 +191,16 @@ public class MainActivity extends Activity {
 						
 			}
 			if(resultCode == RESULT_CANCELED) {
-				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 			}
 			if(resultCode == CONNECTION_FAILED) {
-				Toast.makeText(this, "Connexion echouée", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Connexion echouée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 			}
 		}
 		
 		if (requestCode == INSCRIPTION_REQUEST){
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 				setContentView(R.layout.menu_principal_co);
 				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
@@ -232,13 +224,13 @@ public class MainActivity extends Activity {
 				tVNameMenu.setText(" " + user.getLogin());
 			}
 			if(resultCode == RESULT_CANCELED) {
-				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 			}
 		}
 		
 		if (requestCode == PROFILE_REQUEST){
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Profil modifié", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Profil modifié", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 			}
 		}
@@ -286,8 +278,9 @@ public class MainActivity extends Activity {
 			if(progress.isShowing())
 			progress.dismiss();
 			if(exc) {
-				Toast.makeText(MainActivity.this, "Exeption : " + ex.getMessage(), Toast.LENGTH_SHORT).show();				
-			} else Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();	
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(MainActivity.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT).show();				
+			} else Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();	// TODO a ajouter dans string.xml
 		}
 		
 		
