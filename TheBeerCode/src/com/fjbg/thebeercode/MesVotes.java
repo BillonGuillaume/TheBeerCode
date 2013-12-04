@@ -2,6 +2,7 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.VueVoteDB;
 
@@ -129,7 +130,8 @@ public class MesVotes extends Activity {
 				addItems(vote);
 			}
 			if(exc) {
-				Toast.makeText(MesVotes.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(MesVotes.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
@@ -166,7 +168,8 @@ public class MesVotes extends Activity {
 				addItems(vote);
 			}
 			if(exc) {
-				Toast.makeText(MesVotes.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				if(ee.getCode() != R.string.e212) Toast.makeText(MesVotes.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}
