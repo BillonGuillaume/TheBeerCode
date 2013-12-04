@@ -32,8 +32,10 @@ public static Connection dbConnect = null;
             cstmt.setInt(3, favorite);
             cstmt.executeUpdate();
             this.idFavori = cstmt.getInt(1);
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de création " + e.getMessage());
+            throw new Exception("Erreur de création/" + R.string.e000 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -45,6 +47,7 @@ public static Connection dbConnect = null;
     @Override
     public void read() throws Exception {
         String req = "{?=call readFavori(?)}";
+        Boolean ex = false;
 
         CallableStatement cstmt = null;
         try {
@@ -58,11 +61,16 @@ public static Connection dbConnect = null;
                 this.aimant = rs.getInt("AIMANT");
                 this.favorite = rs.getInt("FAVORITE");
             } else {
-                throw new Exception("identifiant du favori inconnu");
+                ex = true;
             }
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de lecture " + e.getMessage());
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
         } finally {
+        	if(ex) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e207 + "/" + "identifiant du favori inconnu");
+        	}
             try {
                 cstmt.close();
             } catch (Exception e) {
@@ -83,8 +91,10 @@ public static Connection dbConnect = null;
             cstmt = dbConnect.prepareCall(req);
             cstmt.setInt(1, idFavori);
             cstmt.executeUpdate();
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur d'effacement " + e.getMessage());
+            throw new Exception("Erreur d'effacement/" + R.string.e003 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -95,7 +105,7 @@ public static Connection dbConnect = null;
     
     public void readFavorite() throws Exception {  // verifier si la biere est dans les favoris de l'utilisateur
     	String req = "SELECT idfavori, aimant, favorite FROM Favori WHERE aimant = ? AND favorite = ?";
-    	
+    	Boolean ex = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
@@ -103,14 +113,18 @@ public static Connection dbConnect = null;
     		pstmt.setInt(2,  favorite);
     		ResultSet rs = pstmt.executeQuery();
     		if (rs.next()) {
-    			this.idFavori = rs.getInt("IDFAVORI");
-    			
+    			this.idFavori = rs.getInt("IDFAVORI");    			
     		} else {
-    			throw new Exception("Pas en favorite");
+    			ex = true; //throw new Exception("Pas en favorite");
     		}
-    	} catch (Exception e) { // Exception internationalisée
-    		throw new Exception("Erreur de lecture/" + R.string.unknown + "/" + e.getMessage());
+    	} catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
     	} finally {
+    		if(ex) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e210 + "/" + "biere non favorite");
+        	}
     		try {
     			pstmt.close();
     		} catch (Exception e) {

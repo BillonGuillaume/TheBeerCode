@@ -34,8 +34,10 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
             cstmt.setString(5, pays);
             cstmt.executeUpdate();
             this.idPersonne = cstmt.getInt(1);
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de création " + e.getMessage());
+            throw new Exception("Erreur de création/" + R.string.e000 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -47,6 +49,7 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     @Override
     public void read() throws Exception {
         String req = "{?=call readPersonne(?)}";
+        Boolean ex = false;
 
         CallableStatement cstmt = null;
         try {
@@ -62,11 +65,17 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
                 this.mail = rs.getString("MAIL");
                 this.pays = rs.getString("PAYS");
             } else {
-                throw new Exception("identifiant de la personne inconnu");
+            	ex = true;
+                //throw new Exception("identifiant de la personne inconnu");
             }
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de lecture " + e.getMessage());
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
         } finally {
+        	if(ex) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e200 + "/" + "identifiant de la personne inconnu");
+        	}
             try {
                 cstmt.close();
             } catch (Exception e) {
@@ -86,8 +95,10 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
             cstmt.setString(4, mail);
             cstmt.setString(5, pays);
             cstmt.executeUpdate();
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de mise à jour " + e.getMessage());
+            throw new Exception("Erreur de mise à jour/" + R.string.e002 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -104,8 +115,10 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
             cstmt = dbConnect.prepareCall(req);
             cstmt.setInt(1, idPersonne);
             cstmt.executeUpdate();
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur d'effacement " + e.getMessage());
+            throw new Exception("Erreur d'effacement/" + R.string.e003 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -114,7 +127,8 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
         }
     }
     
-    public void connection() throws Exception {  // TODO créer fonction SQL
+    public void connection() throws Exception {
+    	Boolean ex = false;
     	String req = "SELECT idPersonne, login, mdp, mail, pays FROM Personne WHERE login = ? AND mdp = ?";
     	
     	PreparedStatement pstmt = null;
@@ -130,11 +144,16 @@ public class PersonneDB extends Personne implements CRUD, Parcelable{
     			this.mail = rs.getString("MAIL");
     			this.pays = rs.getString("PAYS");
     		} else {
-    			throw new Exception("Login et/ou mot de passe incorrect(s)");
+    			ex = true;
     		}
-    	} catch (Exception e) { // Exception internationalisée
+    	} catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
+    	} catch (Exception e) {
     		throw new Exception("Erreur de lecture/" + R.string.unknown + "/" + e.getMessage());
     	} finally {
+    		if(ex) {
+    			throw new Exception("Erreur Personnalisée/" + R.string.e201 + "/" + "Login et/ou mot de passe incorrect(s)");
+    		}
     		try {
     			pstmt.close();
     		} catch (Exception e) {

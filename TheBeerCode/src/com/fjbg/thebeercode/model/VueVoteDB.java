@@ -3,11 +3,13 @@ package com.fjbg.thebeercode.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.fjbg.thebeercode.R;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class VueVoteDB extends Vote implements Parcelable{
 	public static Connection dbConnect = null;
@@ -35,6 +37,8 @@ public class VueVoteDB extends Vote implements Parcelable{
     	String req = "SELECT * FROM vueVotes WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idBiere";
     	ArrayList <VueVoteDB> listVotes = new ArrayList<VueVoteDB>();
     	VueVoteDB obj;
+    	Boolean ex1 = false;
+    	Boolean ex2 = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
@@ -55,12 +59,20 @@ public class VueVoteDB extends Vote implements Parcelable{
     			obj.login = rs.getString("LOGIN");
     			listVotes.add(obj);
     		}
-    		if (listVotes.size() == 0 && min==1) throw new Exception("Vous n'avez laissé aucun commentaire.");
-    		else if (listVotes.size() == 0) throw new Exception("Plus de commentaires à afficher.");
+    		if (listVotes.size() == 0 && min==1) ex1 = true; //throw new Exception("Vous n'avez laissé aucun commentaire.");
+    		else if (listVotes.size() == 0) ex2 = true; //throw new Exception("Plus de commentaires à afficher.");
     		return listVotes;
-    	} catch (Exception e) {
-    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
     	} finally {
+    		if(ex1) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e212 + "/" + "aucun commentaire");
+        	}
+    		if(ex2) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e203 + "/" + "plus de commentaire");
+        	}
     		try {
     			pstmt.close();
     		} catch (Exception e) {
@@ -72,6 +84,8 @@ public class VueVoteDB extends Vote implements Parcelable{
     	String req = "SELECT * FROM vueVotes WHERE rownum>=? AND rownum<=? AND idBiere=? ORDER BY idVote";
     	ArrayList <VueVoteDB> listVotes = new ArrayList<VueVoteDB>();
     	VueVoteDB obj;
+    	Boolean ex1 = false;
+    	Boolean ex2 = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
@@ -92,12 +106,20 @@ public class VueVoteDB extends Vote implements Parcelable{
     			obj.login = rs.getString("LOGIN");
     			listVotes.add(obj);
     		}
-    		if (listVotes.size() == 0 && min==1) throw new Exception("Aucun commentaire.");
-    		else if (listVotes.size() == 0) throw new Exception("Plus de commentaire à afficher.");
+    		if (listVotes.size() == 0 && min==1) ex1 = true; //throw new Exception("Aucun commentaire.");
+    		else if (listVotes.size() == 0) ex2 = true; //throw new Exception("Plus de commentaire à afficher.");
     		return listVotes;
-    	} catch (Exception e) {
-    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
     	} finally {
+    		if(ex1) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e212 + "/" + "aucun commentaire");
+        	}
+    		if(ex2) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e203 + "/" + "plus de commentaire");
+        	}
     		try {
     			pstmt.close();
     		} catch (Exception e) {

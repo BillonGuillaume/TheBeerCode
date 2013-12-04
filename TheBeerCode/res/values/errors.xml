@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="unknown">Unknown Error</string>
-    <string name="e1">Login and/or password empty</string>
+    <!-- Exceptions CRUD -->
+    <string name="e000">Error while creating</string>
+    <string name="e001">Error while reading</string>
+    <string name="e002">Error while updating</string>
+    <string name="e003">Error while deleting</string>
+    <string name="e004"></string>
+    <string name="e005"></string>
+    <string name="e006"></string>
+    <string name="e007"></string>
+    <string name="e008"></string>
+    <string name="e009"></string>
+    <string name="e010"></string>
+    <!-- Exceptions SQL -->
+    <string name="e100">SQL Error</string>
+    <!-- Exceptions personalisées -->
+    <string name="e200">Unknown account</string>
+    <string name="e201">Login and/or password incorrect</string>
+    <string name="e202">You haven\'t add a beer</string>
+    <string name="e203">Nothing more to display</string>
+    <string name="e204">Unknown beer</string>
+    <string name="e205">No beer matching the filter</string>
+    <string name="e206">No beer to display</string>
+    <string name="e207">Unknown code</string>
+    <string name="e208">No location matching</string>
+    <string name="e209">Login or password empty</string>
+    <string name="e210">Beer not favorite</string>
+    <string name="e211">Not creator</string>
+    <string name="e212">You've left no commentary</string>
+    <string name="e213">You have no favorite</string>
+    <string name="e214"></string>
+    <!-- Exceptions libres -->
+    <string name="e300"></string>
+    <string name="e400"></string>
     
 </resources>

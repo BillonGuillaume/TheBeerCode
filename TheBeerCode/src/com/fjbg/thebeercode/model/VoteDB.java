@@ -4,7 +4,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.fjbg.thebeercode.R;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -37,8 +40,10 @@ public static Connection dbConnect = null;
             cstmt.setString(5, commentaire);
             cstmt.executeUpdate();
             this.idVote = cstmt.getInt(1);
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de création " + e.getMessage());
+            throw new Exception("Erreur de création/" + R.string.e000 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -63,8 +68,10 @@ public static Connection dbConnect = null;
             cstmt.setFloat(2, vote);
             cstmt.setString(3, commentaire);
             cstmt.executeUpdate();
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de mise à jour " + e.getMessage());
+            throw new Exception("Erreur de mise à jour/" + R.string.e002 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -80,7 +87,7 @@ public static Connection dbConnect = null;
     
     public void readVote() throws Exception {
     	String req = "{?=call readVote(?,?)}";
-
+    	Boolean ex = false;
         CallableStatement cstmt = null;
         try {
             cstmt = dbConnect.prepareCall(req);
@@ -96,11 +103,16 @@ public static Connection dbConnect = null;
                 this.vote = rs.getFloat("VOTE");
                 this.commentaire = rs.getString("COMMENTAIRE");
             } else {
-                throw new Exception("vote inconnu");
+                ex = true; //throw new Exception("vote inconnu");
             }
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de lecture " + e.getMessage());
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
         } finally {
+        	if(ex) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e207 + "/" + "vote inconnu");
+        	}
             try {
                 cstmt.close();
             } catch (Exception e) {
@@ -128,8 +140,10 @@ public static Connection dbConnect = null;
                 listCom.add(obj);
             }
             return listCom;
+        } catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
         } catch (Exception e) {
-            throw new Exception("Erreur de lecture " + e.getMessage());
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
         } finally {
             try {
                 cstmt.close();
@@ -142,6 +156,7 @@ public static Connection dbConnect = null;
     	String req = "SELECT idVote, votant, notee, vote, commentaire FROM Vote WHERE votant = ?";
     	ArrayList <VoteDB> listVotes = new ArrayList<VoteDB>();
     	VoteDB obj;
+    	Boolean ex = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
@@ -157,11 +172,16 @@ public static Connection dbConnect = null;
     			obj.commentaire = rs.getString("COMMENTAIRE");
     			listVotes.add(obj);
     		}
-    		if (listVotes.size() == 0) throw new Exception("Vous n'avez laissé aucun commentaire.");
+    		if (listVotes.size() == 0) ex = true; //throw new Exception("Vous n'avez laissé aucun commentaire.");
     		return listVotes;
-    	} catch (Exception e) {
-    		throw new Exception("Erreur de lecture " + e.getMessage());
+    	} catch(SQLException e) {
+        	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Erreur de lecture/" + R.string.e001 + "/" + e.getMessage());
     	} finally {
+    		if(ex) {
+        		throw new Exception("Erreur personnalisée/" + R.string.e212 + "/" + "aucun commentaire trouvé");
+        	}
     		try {
     			pstmt.close();
     		} catch (Exception e) {
