@@ -7,6 +7,8 @@ import java.io.File;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.net.ftp.FTPClient;
@@ -50,6 +52,7 @@ public class ModifierBiere extends Activity {
 	
 	String path = null;
 	ImageView photoBiere = null;
+	File file = null;
 	
 	AlertDialog dialog = null;
 	private Uri mImageCaptureUri;
@@ -100,8 +103,8 @@ public class ModifierBiere extends Activity {
 			public void onClick( DialogInterface dialog, int item ) {
 				if (item == 0) {
 					Intent intent 	 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					File file		 = new File(Environment.getExternalStorageDirectory(),
-							   			"tmp_beerpicture_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+					file		 = new File(Environment.getExternalStorageDirectory(),
+				   			"tmp_beerpicture_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 					mImageCaptureUri = Uri.fromFile(file);
 
 					try {
@@ -170,18 +173,23 @@ public class ModifierBiere extends Activity {
         if (requestCode == PICK_FROM_FILE) {
             mImageCaptureUri = imageReturnedIntent.getData();
             path = getRealPathFromURI(mImageCaptureUri); //from Gallery
- 
-            if (path == null)
-                path = mImageCaptureUri.getPath(); //from File Manager
- 
-            if (path != null)
-                bitmapModif  = BitmapFactory.decodeFile(path);
-        } else {
-            path    = mImageCaptureUri.getPath();
-            bitmapModif  = BitmapFactory.decodeFile(path);
-        }
- 
-        photoBiere.setImageBitmap(bitmapModif);
+  
+            if (path == null) path = mImageCaptureUri.getPath(); //from File Manager
+         } 	
+         else {
+         		path    = file.getAbsolutePath();
+         }
+         
+         try{
+         	bitmapModif = decodeFile(new File(path));
+         }
+         catch(Exception e){
+         	path = null;
+         	bitmapModif = null;
+         	file=null;
+         }
+         
+         if(path!=null) photoBiere.setImageBitmap(bitmapModif);
 	}
 	
 	public class Modifier extends AsyncTask<String, Integer, Boolean>{	
@@ -277,6 +285,42 @@ public class ModifierBiere extends Activity {
         cursor.moveToFirst();
  
         return cursor.getString(column_index);
+    }
+	
+	private Bitmap decodeFile(File f){
+        try {
+            //decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            FileInputStream stream1=new FileInputStream(f);
+            BitmapFactory.decodeStream(stream1,null,o);
+            stream1.close();
+            
+            //Find the correct scale value. It should be the power of 2.
+            final int REQUIRED_SIZE=120;
+            int width_tmp=o.outWidth, height_tmp=o.outHeight;
+            int scale=1;
+            while(true){
+                if(width_tmp/2<REQUIRED_SIZE || height_tmp/2<REQUIRED_SIZE)
+                    break;
+                width_tmp/=2;
+                height_tmp/=2;
+                scale*=2;
+            }
+             
+            //decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize=scale;
+            FileInputStream stream2=new FileInputStream(f);
+            Bitmap bitmap=BitmapFactory.decodeStream(stream2, null, o2);
+            stream2.close();
+            return bitmap;
+        } catch (FileNotFoundException e) {
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
