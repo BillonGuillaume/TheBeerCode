@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unknown">Erreur inconnue</string>
+    <!-- Exceptions CRUD -->
+    <string name="e000">Erreur durant la création</string>
+    <string name="e001">Erreur durant la lecture</string>
+    <string name="e002">Erreur durant la mise à jour</string>
+    <string name="e003">Erreur durant la suppression</string>
+    <!-- Exceptions SQL -->
+    <string name="e100">Erreur SQL</string>
+    <!-- Exceptions personalisées -->
+    <string name="e200">Compte inconnu</string>
+    <string name="e201">Login et/ou mot-de-passe incorrect</string>
+    <string name="e202">Vous n`\'avez pas ajouté de bière</string>
+    <string name="e203">Plus rien à afficher</string>
+    <string name="e204">Bière inconnue</string>
+    <string name="e205">Aucune bière ne correspond au filtre</string>
+    <string name="e206">Pas de bière à afficher</string>
+    <string name="e207">Code inconnu</string>
+    <string name="e208">Pas de localisation correspondante</string>
+    <string name="e209">Login ou mot de passe vide</string>
+    <string name="e210">Bière non favorite</string>
+    <string name="e211">Pas créateur</string>
+    <string name="e212">Vous n\'avez pas laissé de commentaire</string>
+    <string name="e213">Vous n\'avez pas de favori</string>
+    <string name="e214">Les mots de passe ne correspondent pas</string>
+    <string name="e215">Echec de connexion</string>
+    <string name="e216">Bière ajoutée, mais il y a eu un problème avec la photo</string>
+</resources>

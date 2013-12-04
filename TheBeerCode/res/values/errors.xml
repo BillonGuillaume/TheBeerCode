@@ -6,13 +6,6 @@
     <string name="e001">Error while reading</string>
     <string name="e002">Error while updating</string>
     <string name="e003">Error while deleting</string>
-    <string name="e004"></string>
-    <string name="e005"></string>
-    <string name="e006"></string>
-    <string name="e007"></string>
-    <string name="e008"></string>
-    <string name="e009"></string>
-    <string name="e010"></string>
     <!-- Exceptions SQL -->
     <string name="e100">SQL Error</string>
     <!-- Exceptions personalisées -->
@@ -32,9 +25,5 @@
     <string name="e213">You have no favorite</string>
     <string name="e214">Passwords do not match</string>
     <string name="e215">Connection failed</string>
-    <string name="e216">Beer added, but there was a problem with the photo</string>
-    <!-- Exceptions libres -->
-    <string name="e300"></string>
-    <string name="e400"></string>
-    
+    <string name="e216">Beer added, but there was a problem with the photo</string>    
 </resources>
