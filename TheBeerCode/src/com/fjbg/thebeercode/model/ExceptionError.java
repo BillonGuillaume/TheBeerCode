@@ -1,5 +1,7 @@
 package com.fjbg.thebeercode.model;
 
+import com.fjbg.thebeercode.R;
+
 import android.util.Log;
 
 public class ExceptionError {
@@ -9,10 +11,16 @@ public class ExceptionError {
 	
 	public ExceptionError(String exception) {
 		String[] result;
+		try {
 		result = exception.split("/");
 		text = result[0];
 		code = Integer.parseInt(result[1]);
 		exceptionMessage = result[2];
+		}catch(Exception e) {
+			text = "Erreur inconnue";
+			code = R.string.unknown;
+			exceptionMessage = "Exception inconnue";
+		}
 	}
 	
 	public String getText() {

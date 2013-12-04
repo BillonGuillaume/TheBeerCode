@@ -1,11 +1,6 @@
 package com.fjbg.thebeercode;
 
 import java.io.File;
-
-
-
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,7 +9,7 @@ import java.io.InputStream;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.fjbg.thebeercode.model.BiereDB;
-import com.fjbg.thebeercode.model.HistoriqueDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -94,42 +89,35 @@ public class ModifierBiere extends Activity {
 		eTdegre.setText(String.valueOf(biere.getDegreBiere()));
 		if(bitmap!=null) photoBiere.setImageBitmap(bitmap);
 		
-		final String [] items			= new String [] {"From Camera", "From SD Card"};
+		final String [] items			= new String [] {"From Camera", "From SD Card"};  // TODO a ajouter dans string.xml
 		ArrayAdapter<String> adapter	= new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);
 		AlertDialog.Builder builder		= new AlertDialog.Builder(this);
 
-		builder.setTitle("Select Image");
+		builder.setTitle("Select Image"); // TODO a ajouter dans string.xml
 		builder.setAdapter( adapter, new DialogInterface.OnClickListener() {
 			public void onClick( DialogInterface dialog, int item ) {
 				if (item == 0) {
-					Intent intent 	 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					file		 = new File(Environment.getExternalStorageDirectory(),
-				   			"tmp_beerpicture_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					file = new File(Environment.getExternalStorageDirectory(), "tmp_beerpicture_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 					mImageCaptureUri = Uri.fromFile(file);
-
 					try {
 						intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
 						intent.putExtra("return-data", true);
-
 						startActivityForResult(intent, PICK_FROM_CAMERA);
 					} catch (Exception e) {
-						e.printStackTrace();
+						e.printStackTrace(); // TODO besoin d'un try ici ?
 					}
-
 					dialog.cancel();
 				} else {
 					Intent intent = new Intent();
-
 	                intent.setType("image/*");
 	                intent.setAction(Intent.ACTION_GET_CONTENT);
-
-	                startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
+	                startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);  // TODO a ajouter dans string.xml
 				}
 			}
 		} );
 
-		dialog = builder.create();
-		
+		dialog = builder.create();		
 	}
 	
 	private OnClickListener choisirImgListener = new OnClickListener() {
@@ -168,7 +156,7 @@ public class ModifierBiere extends Activity {
 
 	    if (resultCode != RESULT_OK) return;
 	    
-        bitmapModif   = null;
+        bitmapModif = null;
  
         if (requestCode == PICK_FROM_FILE) {
             mImageCaptureUri = imageReturnedIntent.getData();
@@ -177,7 +165,7 @@ public class ModifierBiere extends Activity {
             if (path == null) path = mImageCaptureUri.getPath(); //from File Manager
          } 	
          else {
-         		path    = file.getAbsolutePath();
+         		path = file.getAbsolutePath();
          }
          
          try{
@@ -187,8 +175,7 @@ public class ModifierBiere extends Activity {
          	path = null;
          	bitmapModif = null;
          	file=null;
-         }
-         
+         }         
          if(path!=null) photoBiere.setImageBitmap(bitmapModif);
 	}
 	
@@ -203,7 +190,7 @@ public class ModifierBiere extends Activity {
 		@Override
         protected void onPreExecute(){
                 progress = new ProgressDialog(ModifierBiere.this);
-                progress.setMessage("Modification de la biere en cours...");
+                progress.setMessage("Modification de la biere en cours..."); // TODO a ajouter dans string.xml
                 progress.setCancelable(false);
                 progress.show();
         }
@@ -265,25 +252,24 @@ public class ModifierBiere extends Activity {
 			if(progress.isShowing())
                 progress.dismiss();
 			if(exc) {
-				Toast.makeText(ModifierBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(ModifierBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 			else {
-				Toast.makeText(ModifierBiere.this, "Bière modifiée !", Toast.LENGTH_SHORT ).show();
-			}
-			
+				Toast.makeText(ModifierBiere.this, "Bière modifiée !", Toast.LENGTH_SHORT ).show(); // TODO a ajouter dans string.xml
+			}			
 		}
 	}
 	
 	public String getRealPathFromURI(Uri contentUri) {
-        String [] proj      = {MediaStore.Images.Media.DATA};
-        Cursor cursor       = managedQuery( contentUri, proj, null, null,null);
+        String [] proj = {MediaStore.Images.Media.DATA};
+        @SuppressWarnings("deprecation")
+		Cursor cursor = managedQuery( contentUri, proj, null, null,null);
  
         if (cursor == null) return null;
  
-        int column_index    = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
- 
-        cursor.moveToFirst();
- 
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA); 
+        cursor.moveToFirst(); 
         return cursor.getString(column_index);
     }
 	
@@ -315,10 +301,10 @@ public class ModifierBiere extends Activity {
             Bitmap bitmap=BitmapFactory.decodeStream(stream2, null, o2);
             stream2.close();
             return bitmap;
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {  // TODO exception non gerée ? rien à afficher ?
         } 
         catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();  // Idem ?
         }
         return null;
     }
