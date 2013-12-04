@@ -2,6 +2,7 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.model.VueFavoriDB;
 
@@ -88,7 +89,6 @@ public class MesFavoris extends Activity {
 		ArrayList<String> list = new ArrayList<String>();
 		
 		public GetFavs() {
-			Log.d("GetFav", "constructeur");
 		}
 
 		@Override
@@ -129,8 +129,8 @@ public class MesFavoris extends Activity {
 				addItems(item);
 			}
 			if(exc) {
-				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
-				Log.d("onPost", "exception : " + ex.getMessage());
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(MesFavoris.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
@@ -167,7 +167,8 @@ public class MesFavoris extends Activity {
 				addItems(item);
 			}
 			if(exc) {
-				Toast.makeText(MesFavoris.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				if(ee.getCode() != R.string.e212) Toast.makeText(MesFavoris.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}

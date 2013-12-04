@@ -34,7 +34,6 @@ public class VueFavoriDB extends Favori implements Parcelable{
     	ArrayList <String> listFav = new ArrayList<String>();
     	VueFavoriDB obj;
     	Boolean ex1 = false;
-    	Boolean ex2 = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
@@ -52,7 +51,6 @@ public class VueFavoriDB extends Favori implements Parcelable{
     			listFav.add(obj.getNomBiere());
     		}
     		if (listFav.size() == 0 && min==1) ex1 = true; //throw new Exception("Vous n'avez aucun favori.");
-    		else if (listFav.size() == 0) ex2 = true; //throw new Exception("Plus de favori à afficher.");
     		return listFav;
     	} catch(SQLException e) {
         	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
@@ -61,9 +59,6 @@ public class VueFavoriDB extends Favori implements Parcelable{
     	} finally {
     		if(ex1) {
         		throw new Exception("Erreur personnalisée/" + R.string.e212 + "/" + "Aucun favori");
-        	}
-    		if(ex2) {
-        		throw new Exception("Erreur personnalisée/" + R.string.e203 + "/" + "Plus de favori à afficher");
         	}
     		try {
     			pstmt.close();
