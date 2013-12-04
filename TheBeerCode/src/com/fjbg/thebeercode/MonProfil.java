@@ -1,5 +1,6 @@
 package com.fjbg.thebeercode;
 
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
@@ -95,7 +96,7 @@ public class MonProfil extends Activity {
 			String confPassword= edconfPassword.getText().toString();
 			try {
 				if(password.compareTo(confPassword)!=0) {
-					throw new Exception("Les mots de passe ne correspondent pas !");
+					throw new Exception("Erreur mdp/" + R.string.e214 + "/" + "Mots de passe ne correspondent pas");
 				}else {
 					String mail= edmail.getText().toString();
 					personne.setMail(mail);
@@ -123,7 +124,8 @@ public class MonProfil extends Activity {
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			if(exc) {
-				Toast.makeText(MonProfil.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(MonProfil.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}

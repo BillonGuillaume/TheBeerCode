@@ -30,7 +30,7 @@
     <string name="e211">Not creator</string>
     <string name="e212">You\'ve left no commentary</string>
     <string name="e213">You have no favorite</string>
-    <string name="e214"></string>
+    <string name="e214">Passwords do not match</string>
     <!-- Exceptions libres -->
     <string name="e300"></string>
     <string name="e400"></string>
