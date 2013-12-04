@@ -60,6 +60,7 @@ public class AffichageBiere extends Activity {
 	private ImageButton noter = null;
 	private ImageButton edit = null;
 	private ImageButton delete = null;
+	private ImageButton localiser = null;
 	ProgressDialog progress;
 	Boolean scroll = true;
 	
@@ -70,6 +71,14 @@ public class AffichageBiere extends Activity {
 	private EditText etCommentary;
 	private Button bConfirm;
 	private Button bCancel;
+	
+	Dialog customLocalisation;
+	private TextView tvPlaceName;
+	private TextView tvPrice;
+	private EditText etPlaceName;
+	private EditText etPrice;
+	private Button btLocalize;
+	private Button btCancel;
 	
 	ArrayList<VueVoteDB> listVotes;
 	int items;
@@ -110,6 +119,9 @@ public class AffichageBiere extends Activity {
 		
 		noter = (ImageButton) findViewById(R.id.imageNote);
 		noter.setOnClickListener(noterListener);
+		
+		localiser = (ImageButton) findViewById(R.id.imageLocalisation);
+		localiser.setOnClickListener(localiserListener);
 		
 		Intent i=getIntent();
 		nomBiere=(String)i.getStringExtra(SELECTEDBEER);
@@ -197,7 +209,80 @@ public class AffichageBiere extends Activity {
 			}
 		}
 	};
+	
+	private OnClickListener localiserListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			customLocalisation = new Dialog(AffichageBiere.this);
+			customLocalisation.setContentView(R.layout.localiser_layout);
+			
+			tvPlaceName = (TextView)customLocalisation.findViewById(R.id.tvPlaceName);
+			tvPrice = (TextView)customLocalisation.findViewById(R.id.tvPrice);
+			
+			etPlaceName = (EditText)customLocalisation.findViewById(R.id.etPlaceName);
+			etPrice = (EditText)customLocalisation.findViewById(R.id.etPrice);
+			
+			btLocalize = (Button)customLocalisation.findViewById(R.id.btLocalize);
+			btCancel = (Button)customLocalisation.findViewById(R.id.btCancel);
 
+			customLocalisation.setTitle(R.string.Localization);
+
+			btLocalize.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					custom.dismiss();
+				}
+
+			});
+			btCancel.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					custom.dismiss();
+				}
+			});
+			
+			
+			final AlertDialog.Builder boiteLocalisation;
+			boiteLocalisation = new AlertDialog.Builder(context);
+			boiteLocalisation.setTitle("Localiser");
+			boiteLocalisation.setIcon(R.drawable.ic_launcher);
+			boiteLocalisation.setMessage("Que voulez vous faire ?");
+			
+			boiteLocalisation.setPositiveButton("Annuler", new DialogInterface.OnClickListener() {
+               
+                public void onClick(DialogInterface dialog, int which) {
+                	dialog.cancel();
+                }
+                }
+			);
+			
+			boiteLocalisation.setNeutralButton("Localiser ici ", new DialogInterface.OnClickListener() {
+                
+                public void onClick(DialogInterface dialog, int which) {
+        			dialog.cancel();
+        			custom.show();
+                }
+                }
+            );
+			
+			boiteLocalisation.setNegativeButton("Afficher localisations ", new DialogInterface.OnClickListener() {
+                
+                public void onClick(DialogInterface dialog, int which) {
+                	dialog.cancel();
+                	int idBiere = 80;
+                    Intent i = new Intent(AffichageBiere.this, MapActivity.class);
+                    i.putExtra(SELECTEDBEER, biere.getIdBiere());
+                    startActivity(i);
+                }
+                }
+            );
+			
+			boiteLocalisation.show();
+		}
+	};
+	
 	private OnClickListener editListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -261,6 +346,65 @@ public class AffichageBiere extends Activity {
 		return true;
 	}
 
+	public class customLocalisation extends AsyncTask<String, Integer, Boolean>{
+		Boolean exc = false;
+		Exception ex;
+
+		public customLocalisation() {
+			
+		}
+
+		@Override
+		protected void onPreExecute(){
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... arg0) {
+			
+			customLocalisation = new Dialog(AffichageBiere.this);
+			customLocalisation.setContentView(R.layout.localiser_layout);
+			
+			tvPlaceName = (TextView)customLocalisation.findViewById(R.id.tvPlaceName);
+			tvPrice = (TextView)customLocalisation.findViewById(R.id.tvPrice);
+			
+			etPlaceName = (EditText)customLocalisation.findViewById(R.id.etPlaceName);
+			etPrice = (EditText)customLocalisation.findViewById(R.id.etPrice);
+			
+			btLocalize = (Button)customLocalisation.findViewById(R.id.btLocalize);
+			btCancel = (Button)customLocalisation.findViewById(R.id.btCancel);
+
+			customLocalisation.setTitle(R.string.Localization);
+
+			btLocalize.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					custom.dismiss();
+				}
+
+			});
+			btCancel.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					custom.dismiss();
+				}
+			});
+			custom.show();
+			
+			return true;
+		}
+
+		protected void onPostExecute(Boolean result){
+			super.onPostExecute(result);
+
+			
+		}
+		
+		
+	}
+	
 	public class Lecture extends AsyncTask<String, Integer, Boolean>{	
 		Boolean exc = false;
 		Exception ex;
@@ -390,6 +534,9 @@ public class AffichageBiere extends Activity {
 						
 						noter = (ImageButton) findViewById(R.id.imageNote);
 						noter.setOnClickListener(noterListener);
+						
+						localiser = (ImageButton) findViewById(R.id.imageLocalisation);
+						localiser.setOnClickListener(localiserListener);
 						
 						Intent i=getIntent();
 						nomBiere=(String)i.getStringExtra(SELECTEDBEER);
