@@ -3,6 +3,7 @@ package com.fjbg.thebeercode;
 import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
@@ -253,7 +254,8 @@ public class RechercheBiere extends Activity {
 						startActivity(showBeer);
 						finish();
 						}catch(Exception e) {
-							Log.d("RechercheBiere", "Exception " + e.getMessage());
+							ex = e;
+							exc = true;
 						}
 					}
 				});
@@ -271,7 +273,8 @@ public class RechercheBiere extends Activity {
 				addItems(vote);
 			}
 			if(exc) {
-				Toast.makeText(RechercheBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(RechercheBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}

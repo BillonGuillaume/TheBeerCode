@@ -28,7 +28,7 @@
     <string name="e209">Login or password empty</string>
     <string name="e210">Beer not favorite</string>
     <string name="e211">Not creator</string>
-    <string name="e212">You've left no commentary</string>
+    <string name="e212">You\'ve left no commentary</string>
     <string name="e213">You have no favorite</string>
     <string name="e214"></string>
     <!-- Exceptions libres -->

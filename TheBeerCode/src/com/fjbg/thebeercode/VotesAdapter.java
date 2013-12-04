@@ -37,7 +37,6 @@ public class VotesAdapter extends BaseAdapter {
  
     public View getView(int position, View convertView, ViewGroup parent) {
     	
-    	//Log.d("VotesAdapter", "getView");
         View vi=convertView;
         
         if(convertView==null)
