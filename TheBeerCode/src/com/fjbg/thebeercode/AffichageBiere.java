@@ -72,14 +72,6 @@ public class AffichageBiere extends Activity {
 	private Button bConfirm;
 	private Button bCancel;
 	
-	Dialog customLocalisation;
-	private TextView tvPlaceName;
-	private TextView tvPrice;
-	private EditText etPlaceName;
-	private EditText etPrice;
-	private Button btLocalize;
-	private Button btCancel;
-	
 	ArrayList<VueVoteDB> listVotes;
 	int items;
 	VotesBiereAdapter vbA;
@@ -213,36 +205,6 @@ public class AffichageBiere extends Activity {
 	private OnClickListener localiserListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			customLocalisation = new Dialog(AffichageBiere.this);
-			customLocalisation.setContentView(R.layout.localiser_layout);
-			
-			tvPlaceName = (TextView)customLocalisation.findViewById(R.id.tvPlaceName);
-			tvPrice = (TextView)customLocalisation.findViewById(R.id.tvPrice);
-			
-			etPlaceName = (EditText)customLocalisation.findViewById(R.id.etPlaceName);
-			etPrice = (EditText)customLocalisation.findViewById(R.id.etPrice);
-			
-			btLocalize = (Button)customLocalisation.findViewById(R.id.btLocalize);
-			btCancel = (Button)customLocalisation.findViewById(R.id.btCancel);
-
-			customLocalisation.setTitle(R.string.Localization);
-
-			btLocalize.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					custom.dismiss();
-				}
-
-			});
-			btCancel.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					custom.dismiss();
-				}
-			});
-			
 			
 			final AlertDialog.Builder boiteLocalisation;
 			boiteLocalisation = new AlertDialog.Builder(context);
@@ -262,7 +224,9 @@ public class AffichageBiere extends Activity {
                 
                 public void onClick(DialogInterface dialog, int which) {
         			dialog.cancel();
-        			custom.show();
+        			Intent i = new Intent(AffichageBiere.this, LocalizationActivity.class);
+        			i.putExtra(SELECTEDBEER, biere.getIdBiere());
+                    startActivity(i);
                 }
                 }
             );
@@ -271,7 +235,6 @@ public class AffichageBiere extends Activity {
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
-                	int idBiere = 80;
                     Intent i = new Intent(AffichageBiere.this, MapActivity.class);
                     i.putExtra(SELECTEDBEER, biere.getIdBiere());
                     startActivity(i);
@@ -344,65 +307,6 @@ public class AffichageBiere extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.affichage_biere, menu);
 		return true;
-	}
-
-	public class customLocalisation extends AsyncTask<String, Integer, Boolean>{
-		Boolean exc = false;
-		Exception ex;
-
-		public customLocalisation() {
-			
-		}
-
-		@Override
-		protected void onPreExecute(){
-
-		}
-
-		@Override
-		protected Boolean doInBackground(String... arg0) {
-			
-			customLocalisation = new Dialog(AffichageBiere.this);
-			customLocalisation.setContentView(R.layout.localiser_layout);
-			
-			tvPlaceName = (TextView)customLocalisation.findViewById(R.id.tvPlaceName);
-			tvPrice = (TextView)customLocalisation.findViewById(R.id.tvPrice);
-			
-			etPlaceName = (EditText)customLocalisation.findViewById(R.id.etPlaceName);
-			etPrice = (EditText)customLocalisation.findViewById(R.id.etPrice);
-			
-			btLocalize = (Button)customLocalisation.findViewById(R.id.btLocalize);
-			btCancel = (Button)customLocalisation.findViewById(R.id.btCancel);
-
-			customLocalisation.setTitle(R.string.Localization);
-
-			btLocalize.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					custom.dismiss();
-				}
-
-			});
-			btCancel.setOnClickListener(new View.OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					custom.dismiss();
-				}
-			});
-			custom.show();
-			
-			return true;
-		}
-
-		protected void onPostExecute(Boolean result){
-			super.onPostExecute(result);
-
-			
-		}
-		
-		
 	}
 	
 	public class Lecture extends AsyncTask<String, Integer, Boolean>{	

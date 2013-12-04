@@ -65,5 +65,6 @@
     <string name="btLocalize">Localize here</string>
     <string name="PlaceName">Place name :</string>
     <string name="Price">Beer Price :</string>
+    <string name="title_activity_localization">LocalizationActivity</string>
 
 </resources>
