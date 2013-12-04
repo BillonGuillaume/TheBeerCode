@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -73,7 +74,7 @@ public class LocalizationActivity extends Activity {
 		});
 		
 		Intent i = getIntent();
-		i.getIntExtra(AffichageBiere.SELECTEDBEER, idBiere);
+		idBiere = i.getIntExtra(AffichageBiere.SELECTEDBEER, 0);
 		
 		mlocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		
@@ -121,7 +122,7 @@ public class LocalizationActivity extends Activity {
 	
 	private void initUpdate() {
 		LocationListener mlocListener = new MyLocationListener();
-		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,1000, 0, mlocListener);
+		mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,0, 0, mlocListener);
 	}
 	
 	private void customAlert() {
@@ -175,6 +176,7 @@ public class LocalizationActivity extends Activity {
 
 			try{
 				coordonnees.create();
+				Log.d("test", "" +coordonnees.getIdCoordonnee() + idBiere);
 				localisation.setLocalisation(coordonnees.getIdCoordonnee());
 				localisation.create();
 			}

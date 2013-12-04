@@ -29,7 +29,7 @@ public class PrixDB extends Prix implements CRUD{
 	public void create() throws Exception{
 		CallableStatement   cstmt=null;
 		try{
-			String req = "call createcoordonnee(?,?,?,?)";
+			String req = "call createprix(?,?,?,?)";
 			cstmt = dbConnect.prepareCall(req);
 			cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
 			cstmt.setFloat(2,prix);
