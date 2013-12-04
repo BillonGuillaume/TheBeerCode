@@ -96,7 +96,7 @@ public class MonProfil extends Activity {
 			String confPassword= edconfPassword.getText().toString();
 			try {
 				if(password.compareTo(confPassword)!=0) {
-					throw new Exception("Erreur mdp/" + R.string.e214 + "/" + "Mots de passe ne correspondent pas");
+					throw new Exception("Exception personnalisée/" + R.string.e214 + "/" + "Mots de passe ne correspondent pas");
 				}else {
 					String mail= edmail.getText().toString();
 					personne.setMail(mail);

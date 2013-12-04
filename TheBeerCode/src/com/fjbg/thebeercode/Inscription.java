@@ -1,5 +1,6 @@
 package com.fjbg.thebeercode;
 
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
@@ -41,12 +42,10 @@ public class Inscription extends Activity {
 		annuler = (Button) findViewById(R.id.annulerInscription);
 		annuler.setOnClickListener(new  View.OnClickListener() {
 		@Override
-		public void onClick(View v){
-			
+		public void onClick(View v){			
 			Intent i = new Intent();
 			setResult(RESULT_CANCELED, i);
-			finish();
-			
+			finish();			
 		}
 		});
 	}
@@ -85,8 +84,8 @@ public class Inscription extends Activity {
 			String confPassword= edconfPassword.getText().toString();
 			try {
 				if(password.compareTo(confPassword)!=0) {
-					throw new Exception("Les mots de passe ne correspondent pas !");
-				}else {
+					throw new Exception("Exception personnalisée/" + R.string.e214 + "/" + "Mots de passe ne correspondent pas");
+				} else {
 					String mail= edmail.getText().toString();
 					personne.setMail(mail);
 					String pays= edpays.getText().toString();
@@ -112,7 +111,8 @@ public class Inscription extends Activity {
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			if(exc) {
-				Toast.makeText(Inscription.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(Inscription.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}

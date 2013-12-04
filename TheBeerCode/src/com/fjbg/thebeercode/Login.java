@@ -110,7 +110,7 @@ public class Login extends Activity {
 			p.setLogin(login);
 			p.setMdp(mdp);
 			try {
-				if(login.matches("") || mdp.matches("")) throw new Exception("Login ou mdp vide/" + R.string.e209 + "/" + "Login ou mdp vide");
+				if(login.matches("") || mdp.matches("")) throw new Exception("Exception personnalisée/" + R.string.e209 + "/" + "Login ou mdp vide");
 				p.connection();
 				Intent result = new Intent();
 				result.putExtra(MainActivity.PERSONNE, p);
