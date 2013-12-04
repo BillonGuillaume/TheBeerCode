@@ -3,13 +3,13 @@ package com.fjbg.thebeercode;
 import java.util.ArrayList;
 
 import com.fjbg.thebeercode.model.AjoutDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -125,7 +125,8 @@ public class MesAjouts extends Activity {
 				addItems(item);
 			}
 			if(exc) {
-				Toast.makeText(MesAjouts.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(MesAjouts.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
@@ -162,7 +163,8 @@ public class MesAjouts extends Activity {
 				addItems(item);
 			}
 			if(exc) {
-				Toast.makeText(MesAjouts.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				if(ee.getCode() != R.string.e202) Toast.makeText(MesAjouts.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}

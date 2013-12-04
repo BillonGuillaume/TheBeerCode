@@ -33,7 +33,6 @@ public class AjoutDB{
     
     public static ArrayList<String> readHistoriquePersonne(int id, int min, int max) throws Exception {
     	Boolean ex1 = false;
-    	Boolean ex2 = false;
     	String req = "SELECT * FROM vueAjout WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idBiere";
     	ArrayList <String> list = new ArrayList<String>();
     	AjoutDB obj;
@@ -54,7 +53,6 @@ public class AjoutDB{
     			list.add(obj.nomBiere);
     		}
     		if (list.size() == 0 && min==1) ex1 = true;//throw new Exception("Vous n'avez ajouté aucune bière.");
-    		else if (list.size() == 0) ex2 = true; //throw new Exception("Plus d'ajout à afficher.");
     		return list;
     	} catch(SQLException e) {
         	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
@@ -63,9 +61,6 @@ public class AjoutDB{
     	} finally {
     		if(ex1) {
     			throw new Exception("Erreur Personnalisée/" + R.string.e202 + "/" + "Aucune biere à afficher");
-    		}
-    		if(ex2) {
-    			throw new Exception("Erreur Personnalisée/" + R.string.e203 + "/" + "Rien à ajouter");
     		}
     		try {
     			pstmt.close();
