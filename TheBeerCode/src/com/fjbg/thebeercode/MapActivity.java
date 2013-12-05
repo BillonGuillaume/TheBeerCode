@@ -2,19 +2,17 @@ package com.fjbg.thebeercode;
 
 import java.util.ArrayList;
 
-import com.example.testgooglemaps.GoogleMap;
-import com.example.testgooglemaps.GoogleMapOptions;
-import com.example.testgooglemaps.LatLng;
-import com.example.testgooglemaps.MainActivity;
-import com.example.testgooglemaps.MapActivity;
-import com.example.testgooglemaps.MapFragment;
-import com.example.testgooglemaps.Marker;
-import com.example.testgooglemaps.MarkerOptions;
-import com.example.testgooglemaps.UiSettings;
-import com.example.testgooglemaps.VueLocation;
-import com.example.testgooglemaps.MapActivity.ActionDB;
-
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.VueLocation;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.UiSettings;
 
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,8 +23,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
-import android.view.Menu;
 import android.widget.Toast;
 
 public class MapActivity extends Activity{
@@ -131,9 +127,10 @@ public class MapActivity extends Activity{
 			super.onPostExecute(result);
 			
 			if(exc) {
-				Toast.makeText(MapActivity.this, "Exception : " + ex.getMessage(), Toast.LENGTH_SHORT).show();				
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(MapActivity.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT).show();				
 			} else {
-				Toast.makeText(MapActivity.this, "Récupération des positions...", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MapActivity.this, getResources().getString(R.string.GetPositions), Toast.LENGTH_SHORT).show();
 				for(VueLocation item : listLoc) {
 					mMap.addMarker(new MarkerOptions()
 					.position(new LatLng(item.getLon(),item.getLat()))
@@ -148,7 +145,7 @@ public class MapActivity extends Activity{
 	private void customAlert() {
 		try {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
-		builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+		builder.setMessage(getResources().getString(R.string.GPSdisabled))
 		.setCancelable(false)
 		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
@@ -159,13 +156,12 @@ public class MapActivity extends Activity{
 		.setNegativeButton("No", new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.cancel();
-				Toast.makeText(MapActivity.this, "Module GPS désactivé, localisation impossible. Utilisation de la dernière position connue.", Toast.LENGTH_LONG).show();
+				Toast.makeText(MapActivity.this, getResources().getString(R.string.GPSdisabled2), Toast.LENGTH_LONG).show();
 			}
 		});
 		final AlertDialog alert = builder.create();
 		alert.show();
 		}catch(Exception e) {
-			Log.d("GoogleMap", "exception : " + e.getMessage());
 		}
 
 	}

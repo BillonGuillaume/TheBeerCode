@@ -230,9 +230,9 @@ public class AffichageBiere extends Activity {
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
-//                    Intent i = new Intent(AffichageBiere.this, MapActivity.class);
-//                    i.putExtra(SELECTEDBEER, biere.getIdBiere());
-//                    startActivity(i);
+                    Intent i = new Intent(AffichageBiere.this, MapActivity.class);
+                    i.putExtra(SELECTEDBEER, biere.getIdBiere());
+                    startActivity(i);
                 }
                 }
             );

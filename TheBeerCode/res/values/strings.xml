@@ -66,5 +66,8 @@
     <string name="PlaceName">Place name :</string>
     <string name="Price">Beer Price :</string>
     <string name="title_activity_localization">LocalizationActivity</string>
+    <string name="GetPositions">Getting localizations...</string>
+    <string name="GPSdisabled">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="GPSdisabled2">GPS disabled, unable to localize. Last known position used.</string>
 
 </resources>
