@@ -160,31 +160,40 @@ public class LocalizationActivity extends Activity {
 		@Override
 		protected void onPreExecute(){
 			nomLieu = etPlaceName.getText().toString();
-			prix =Float.parseFloat(etPrice.getText().toString());
+			try{
+				prix =Float.parseFloat(etPrice.getText().toString());
+			}
+			catch(Exception e){
+				exc = true;
+				ex = e;
+			}
 			
-			localisation= new PrixDB();
-			localisation.setLocalisee(idBiere);
-			localisation.setPrix(prix);
-			coordonnees = new CoordonneesDB();
-			coordonnees.setNomLieu(nomLieu);
-			coordonnees.setLatitude(latitude);
-			coordonnees.setLongitude(longitude);
+			if(!exc){
+				localisation= new PrixDB();
+				localisation.setLocalisee(idBiere);
+				localisation.setPrix(prix);
+				coordonnees = new CoordonneesDB();
+				coordonnees.setNomLieu(nomLieu);
+				coordonnees.setLatitude(latitude);
+				coordonnees.setLongitude(longitude);
+			}
 		}
 
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 
-			try{
-				coordonnees.create();
-				Log.d("test", "" +coordonnees.getIdCoordonnee() + idBiere);
-				localisation.setLocalisation(coordonnees.getIdCoordonnee());
-				localisation.create();
+			if(!exc){
+				try{
+					coordonnees.create();
+					Log.d("test", "" +coordonnees.getIdCoordonnee() + idBiere);
+					localisation.setLocalisation(coordonnees.getIdCoordonnee());
+					localisation.create();
+				}
+				catch(Exception e){
+					ex = e;
+					exc = true;
+				}
 			}
-			catch(Exception e){
-				ex = e;
-				exc = true;
-			}
-
 			return true;
 		}
 
