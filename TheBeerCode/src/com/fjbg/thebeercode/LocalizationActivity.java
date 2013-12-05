@@ -1,7 +1,7 @@
 package com.fjbg.thebeercode;
 
-import com.fjbg.thebeercode.AjoutBiere.Ajout;
 import com.fjbg.thebeercode.model.CoordonneesDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PrixDB;
 
 import android.location.LocationListener;
@@ -18,13 +18,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LocalizationActivity extends Activity {
 	
-	private TextView tvPlaceName;
-	private TextView tvPrice;
 	private EditText etPlaceName;
 	private EditText etPrice;
 	private Button btLocalize;
@@ -41,9 +38,6 @@ public class LocalizationActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_localization);
-		
-		tvPlaceName = (TextView)findViewById(R.id.tvPlaceName);
-		tvPrice = (TextView)findViewById(R.id.tvPrice);
 		
 		etPlaceName = (EditText)findViewById(R.id.etPlaceName);
 		etPrice = (EditText)findViewById(R.id.etPrice);
@@ -98,13 +92,13 @@ public class LocalizationActivity extends Activity {
 	
 		@Override
 		public void onProviderDisabled(String provider){
-			Toast.makeText( getApplicationContext(),"Gps Disabled",Toast.LENGTH_SHORT ).show();
+			Toast.makeText( getApplicationContext(),"Gps Disabled",Toast.LENGTH_SHORT ).show();  // TODO a ajouer dans string.xml
 		}
 	
 	
 		@Override
 		public void onProviderEnabled(String provider){
-			Toast.makeText( getApplicationContext(),"Gps Enabled",Toast.LENGTH_SHORT).show();
+			Toast.makeText( getApplicationContext(),"Gps Enabled",Toast.LENGTH_SHORT).show();  // TODO a ajouer dans string.xml
 		}
 	
 	
@@ -127,17 +121,17 @@ public class LocalizationActivity extends Activity {
 	
 	private void customAlert() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(LocalizationActivity.this);
-		builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+		builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")  // TODO a ajouer dans string.xml
 		.setCancelable(false)
-		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {  // TODO a ajouer dans string.xml
 			public void onClick(final DialogInterface dialog, final int id) {
 				startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 			}
 		})
-		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {  // TODO a ajouer dans string.xml
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.cancel();
-				Toast.makeText(LocalizationActivity.this, "Module GPS désactivé, localisation impossible.", Toast.LENGTH_LONG).show();
+				Toast.makeText(LocalizationActivity.this, "Module GPS désactivé, localisation impossible.", Toast.LENGTH_LONG).show();  // TODO a ajouer dans string.xml
 			}
 		});
 		final AlertDialog alert = builder.create();
@@ -200,10 +194,11 @@ public class LocalizationActivity extends Activity {
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			if(exc) {
-				Toast.makeText(LocalizationActivity.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(LocalizationActivity.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 			else{
-				Toast.makeText(LocalizationActivity.this, "Localisation ajoutée !", Toast.LENGTH_SHORT ).show();
+				Toast.makeText(LocalizationActivity.this, "Localisation ajoutée !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
 				finish();
 			}
 			

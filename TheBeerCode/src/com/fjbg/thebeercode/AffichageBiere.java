@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import com.fjbg.thebeercode.RechercheBiere.GetBeers;
 import com.fjbg.thebeercode.model.BiereDB;
+import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.FavoriDB;
 import com.fjbg.thebeercode.model.HistoriqueDB;
 import com.fjbg.thebeercode.model.PersonneDB;
@@ -65,8 +65,6 @@ public class AffichageBiere extends Activity {
 	Boolean scroll = true;
 	
 	Dialog custom;
-	private TextView tvNoter;
-	private TextView tvCommenter;
 	private RatingBar rbBeer;
 	private EditText etCommentary;
 	private Button bConfirm;
@@ -150,7 +148,7 @@ public class AffichageBiere extends Activity {
 				MF.execute();
 			}
 			else{
-				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour ajouter cette bière aux favoris !", Toast.LENGTH_SHORT ).show();
+				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour ajouter cette bière aux favoris !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
 			}
 		}
 	};
@@ -161,9 +159,6 @@ public class AffichageBiere extends Activity {
 			if(user!=null){
 				custom = new Dialog(AffichageBiere.this);
 				custom.setContentView(R.layout.noter_layout);
-				
-				tvNoter = (TextView)custom.findViewById(R.id.tvNoter);
-				tvCommenter = (TextView)custom.findViewById(R.id.tvCommenter);
 				
 				rbBeer = (RatingBar)custom.findViewById(R.id.rbBeer);
 				etCommentary = (EditText)custom.findViewById(R.id.etCommentary);
@@ -197,7 +192,7 @@ public class AffichageBiere extends Activity {
 				custom.show();
 			}
 			else{
-				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour noter cette bière !", Toast.LENGTH_SHORT ).show();
+				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour noter cette bière !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
 			}
 		}
 	};
@@ -210,9 +205,9 @@ public class AffichageBiere extends Activity {
 			boiteLocalisation = new AlertDialog.Builder(context);
 			boiteLocalisation.setTitle("Localiser");
 			boiteLocalisation.setIcon(R.drawable.ic_launcher);
-			boiteLocalisation.setMessage("Que voulez vous faire ?");
+			boiteLocalisation.setMessage("Que voulez vous faire ?");  // TODO a ajouter dans string.xml
 			
-			boiteLocalisation.setPositiveButton("Annuler", new DialogInterface.OnClickListener() {
+			boiteLocalisation.setPositiveButton("Annuler", new DialogInterface.OnClickListener() { // TODO a ajouter dans string.xml
                
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
@@ -220,7 +215,7 @@ public class AffichageBiere extends Activity {
                 }
 			);
 			
-			boiteLocalisation.setNeutralButton("Localiser ici ", new DialogInterface.OnClickListener() {
+			boiteLocalisation.setNeutralButton("Localiser ici ", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml
                 
                 public void onClick(DialogInterface dialog, int which) {
         			dialog.cancel();
@@ -231,7 +226,7 @@ public class AffichageBiere extends Activity {
                 }
             );
 			
-			boiteLocalisation.setNegativeButton("Afficher localisations ", new DialogInterface.OnClickListener() {
+			boiteLocalisation.setNegativeButton("Afficher localisations ", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
@@ -261,11 +256,11 @@ public class AffichageBiere extends Activity {
 		public void onClick(View v) {
 			final AlertDialog.Builder boiteVerif;
 			boiteVerif = new AlertDialog.Builder(context);
-			boiteVerif.setTitle("Supprimer");
+			boiteVerif.setTitle("Supprimer");  // TODO a ajouter dans string.xml
 			boiteVerif.setIcon(R.drawable.ic_launcher);
-			boiteVerif.setMessage("Voulez vous supprimer cette bière ? Les commentaires, favoris etc... y faisant référence seront égalemment supprimé.");
+			boiteVerif.setMessage("Voulez vous supprimer cette bière ? Les commentaires, favoris etc... y faisant référence seront égalemment supprimé.");  // TODO a ajouter dans string.xml
 			
-			boiteVerif.setPositiveButton("Non", new DialogInterface.OnClickListener() {
+			boiteVerif.setPositiveButton("Non", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml  WTF positivebutton = non ?
                
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
@@ -273,7 +268,7 @@ public class AffichageBiere extends Activity {
                 }
 			);
 			
-			boiteVerif.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
+			boiteVerif.setNegativeButton("Oui", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	Supprimer supp= new Supprimer();
@@ -323,7 +318,7 @@ public class AffichageBiere extends Activity {
 		@Override
 		protected void onPreExecute(){
 			progress = new ProgressDialog(AffichageBiere.this);
-			progress.setMessage("Téléchargement des données en cours...");
+			progress.setMessage("Téléchargement des données en cours...");  // TODO a ajouter dans string.xml
 			progress.setCancelable(false);
 			progress.show();
 		}
@@ -406,13 +401,15 @@ public class AffichageBiere extends Activity {
 			try {
 				bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 			}catch (Exception e) {
-				Log.d("exception post", "exception 2 : " + e.getMessage());  // TODO reception d'exception quand affichage via MesFavoris
+				Log.d("exception post", "exception 2 : " + e.getMessage());
 			}				
 			
 			if(progress.isShowing())
 				progress.dismiss();
 			if(exc) {
-				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
+				exc = false;
 			}
 			else {
 				try{
@@ -466,8 +463,13 @@ public class AffichageBiere extends Activity {
 					if(favorite)favoris.setImageResource(R.drawable.ic_stat_favoritetrue);
 				}
 				catch(Exception e){
-					Toast.makeText(AffichageBiere.this, e.getMessage(), Toast.LENGTH_SHORT ).show();
+					exc = true;
+					ex = e;
 				}
+			}
+			if(exc) {
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 			GetVotes getter = new GetVotes();
 			getter.execute();
@@ -513,7 +515,8 @@ public class AffichageBiere extends Activity {
 			super.onPostExecute(result);
 			changeItems(liste);
 			if(exc) {
-				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}
@@ -550,7 +553,8 @@ public class AffichageBiere extends Activity {
 				addItems(vote);
 			}
 			if(exc) {
-				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}
@@ -598,16 +602,17 @@ public class AffichageBiere extends Activity {
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			if(exc) {
-				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
+				ExceptionError ee = new ExceptionError(ex.getMessage());
+				Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 			else{
 				if(favorite){
 					favoris.setImageResource(R.drawable.ic_stat_favoritetrue);
-					Toast.makeText(AffichageBiere.this, "Ajoutée aux favoris !", Toast.LENGTH_SHORT ).show();
+					Toast.makeText(AffichageBiere.this, "Ajoutée aux favoris !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter a string.xml
 				}
 				else {
 					favoris.setImageResource(R.drawable.ic_stat_favoritefalse);
-					Toast.makeText(AffichageBiere.this, "Supprimée des favoris !", Toast.LENGTH_SHORT ).show();
+					Toast.makeText(AffichageBiere.this, "Supprimée des favoris !", Toast.LENGTH_SHORT ).show(); // TODO idem
 				}
 			}
 			
