@@ -80,7 +80,6 @@ public class VueVoteDB extends Vote implements Parcelable{
     	ArrayList <VueVoteDB> listVotes = new ArrayList<VueVoteDB>();
     	VueVoteDB obj;
     	Boolean ex1 = false;
-    	Boolean ex2 = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
@@ -102,7 +101,6 @@ public class VueVoteDB extends Vote implements Parcelable{
     			listVotes.add(obj);
     		}
     		if (listVotes.size() == 0 && min==1) ex1 = true; //throw new Exception("Aucun commentaire.");
-    		else if (listVotes.size() == 0) ex2 = true; //throw new Exception("Plus de commentaire à afficher.");
     		return listVotes;
     	} catch(SQLException e) {
         	throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
@@ -111,9 +109,6 @@ public class VueVoteDB extends Vote implements Parcelable{
     	} finally {
     		if(ex1) {
         		throw new Exception("Erreur personnalisée/" + R.string.e212 + "/" + "aucun commentaire");
-        	}
-    		if(ex2) {
-        		throw new Exception("Erreur personnalisée/" + R.string.e203 + "/" + "plus de commentaire");
         	}
     		try {
     			pstmt.close();

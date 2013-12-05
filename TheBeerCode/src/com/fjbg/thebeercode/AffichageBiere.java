@@ -230,9 +230,9 @@ public class AffichageBiere extends Activity {
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
-                    Intent i = new Intent(AffichageBiere.this, MapActivity.class);
-                    i.putExtra(SELECTEDBEER, biere.getIdBiere());
-                    startActivity(i);
+//                    Intent i = new Intent(AffichageBiere.this, MapActivity.class);
+//                    i.putExtra(SELECTEDBEER, biere.getIdBiere());
+//                    startActivity(i);
                 }
                 }
             );
@@ -554,7 +554,7 @@ public class AffichageBiere extends Activity {
 			}
 			if(exc) {
 				ExceptionError ee = new ExceptionError(ex.getMessage());
-				Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
+				if(ee.getCode() != R.string.e212) Toast.makeText(AffichageBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	}
