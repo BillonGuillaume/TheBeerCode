@@ -1,5 +1,6 @@
 package com.fjbg.thebeercode;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -83,6 +84,7 @@ public class AffichageBiere extends Activity {
 	String commentaire;
 	Float note;
 	Bitmap bitmap   = null;
+	File file = null;
 	
 	final Context context = this;
 	@Override
@@ -246,7 +248,12 @@ public class AffichageBiere extends Activity {
 		public void onClick(View v) {
 			Intent EditActivity = new  Intent(AffichageBiere.this,ModifierBiere.class);
 			EditActivity.putExtra(SELECTEDBEER, biere);
-			EditActivity.putExtra(IMAGE, bitmap);
+			if(biere.getCheminImage()!=null){
+				ByteArrayOutputStream bs = new ByteArrayOutputStream();
+				Bitmap b= bitmap;
+				b.compress(Bitmap.CompressFormat.JPEG, 50, bs);
+				EditActivity.putExtra(IMAGE, bs.toByteArray());
+			}
 			startActivityForResult(EditActivity,EDIT_REQUEST);
 		}
 	};
@@ -308,8 +315,6 @@ public class AffichageBiere extends Activity {
 		Boolean exc = false;
 		Exception ex;
 		BiereDB biereRech;
-		File downloadFile;
-		File file;
 
 		public Lecture() {
 
