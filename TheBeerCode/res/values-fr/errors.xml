@@ -26,4 +26,6 @@
     <string name="e214">Les mots de passe ne correspondent pas</string>
     <string name="e215">Echec de connexion</string>
     <string name="e216">Bière ajoutée, mais il y a eu un problème avec la photo</string>
+    <string name="e218">Tous les champs doivent être completés !</string>
+    <string name="e217">Pas de position connue</string>
 </resources>

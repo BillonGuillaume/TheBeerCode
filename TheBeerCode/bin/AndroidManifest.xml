@@ -51,10 +51,6 @@
             android:label="@string/title_activity_inscription" >
         </activity>
         <activity
-            android:name="com.fjbg.thebeercode.ActivityTest"
-            android:label="@string/title_activity_activity_test" >
-        </activity>
-        <activity
             android:name="com.fjbg.thebeercode.Login"
             android:label="@string/title_activity_login" >
         </activity>

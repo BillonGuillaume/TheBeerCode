@@ -195,13 +195,21 @@ public class AjoutBiere extends Activity {
 
 			String paysBiere= eTpays.getText().toString();
 			biere.setPaysBiere(paysBiere);
+			
+			String degre= eTdegre.getText().toString();
+			
 			try{
-				float degreBiere= Float.parseFloat(eTdegre.getText().toString());
-				biere.setDegreBiere(degreBiere);
+				if(nomBiere.matches("") || paysBiere.matches("") || degre.matches("")){
+					throw new Exception("Exception personnalisée/" + R.string.e218 + "/" + "Tous les champs doivent être remplis !");
+				}
+				else{
+					float degreBiere = Float.parseFloat(degre);
+					biere.setDegreBiere(degreBiere);
+				}
 			}
 			catch(Exception e){
-				exc = true;
 				ex = e;
+				exc = true;
 			}
 
 			if(path != null && exc!=null){
