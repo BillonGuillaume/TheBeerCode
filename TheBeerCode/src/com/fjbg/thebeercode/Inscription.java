@@ -76,35 +76,51 @@ public class Inscription extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			PersonneDB personne =new PersonneDB();
-			String login=edlogin.getText().toString();
+			
+			String login = null;
+			login=edlogin.getText().toString();
 			personne.setLogin(login);
 
-			String password= edpassword.getText().toString();
+			String password= null;
+			password = edpassword.getText().toString();
 			personne.setMdp(password);
-			String confPassword= edconfPassword.getText().toString();
+			
+			String confPassword= null;
+			confPassword = edconfPassword.getText().toString();
+			
+			String mail= null;
+			mail= edmail.getText().toString();
+			personne.setMail(mail);
+			
+			String pays= null;
+			pays= edpays.getText().toString();
+			personne.setPays(pays);
 			try {
+				if(login.matches("") || password.matches("") || confPassword.matches("") || mail.matches("") || pays.matches("")){
+					throw new Exception("Exception personnalisée/" + R.string.e218 + "/" + "Tous les champs doivent être remplis !");
+				}
 				if(password.compareTo(confPassword)!=0) {
 					throw new Exception("Exception personnalisée/" + R.string.e214 + "/" + "Mots de passe ne correspondent pas");
-				} else {
-					String mail= edmail.getText().toString();
-					personne.setMail(mail);
-					String pays= edpays.getText().toString();
-					personne.setPays(pays);
-					try {
-						personne.create();
-						Intent i= new Intent();
-						i.putExtra(MainActivity.PERSONNE, personne);
-						setResult(RESULT_OK, i);
-						finish();
-					} catch(Exception e) {
-						ex = e;
-						exc = true;
-					}
 				}
-			}catch(Exception e) {
+			}
+			catch(Exception e){
 				ex = e;
 				exc = true;
 			}
+	
+			if(!exc){	
+				try {
+					personne.create();
+					Intent i= new Intent();
+					i.putExtra(MainActivity.PERSONNE, personne);
+					setResult(RESULT_OK, i);
+					finish();
+				 } catch(Exception e){
+					ex = e;
+					exc = true;
+				 }
+			}
+			
 			return true;
 		}
 		

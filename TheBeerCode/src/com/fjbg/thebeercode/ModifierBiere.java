@@ -57,7 +57,7 @@ public class ModifierBiere extends Activity {
 	
 	BiereDB biere;
 	Bitmap bitmapModif;
-	Bitmap bitmap;
+	Bitmap bitmap = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +82,15 @@ public class ModifierBiere extends Activity {
 		
 		Intent i= getIntent();
 		biere= (BiereDB)i.getParcelableExtra(AffichageBiere.SELECTEDBEER);
-		bitmap= (Bitmap)i.getParcelableExtra(AffichageBiere.IMAGE);
+		
+		if(getIntent().hasExtra(AffichageBiere.IMAGE)) {
+		    bitmap = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra(AffichageBiere.IMAGE),0,getIntent().getByteArrayExtra(AffichageBiere.IMAGE).length);        
+		    photoBiere.setImageBitmap(bitmap);
+		}
 		
 		eTnom.setText(biere.getNomBiere());
 		eTpays.setText(biere.getPaysBiere());
 		eTdegre.setText(String.valueOf(biere.getDegreBiere()));
-		if(bitmap!=null) photoBiere.setImageBitmap(bitmap);
 		
 		final String [] items			= new String [] {getResources().getString(R.string.FromCam), getResources().getString(R.string.FromCard)};
 		ArrayAdapter<String> adapter	= new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);
