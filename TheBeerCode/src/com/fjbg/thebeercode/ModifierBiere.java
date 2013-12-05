@@ -89,11 +89,11 @@ public class ModifierBiere extends Activity {
 		eTdegre.setText(String.valueOf(biere.getDegreBiere()));
 		if(bitmap!=null) photoBiere.setImageBitmap(bitmap);
 		
-		final String [] items			= new String [] {"From Camera", "From SD Card"};  // TODO a ajouter dans string.xml
+		final String [] items			= new String [] {getResources().getString(R.string.FromCam), getResources().getString(R.string.FromCard)};
 		ArrayAdapter<String> adapter	= new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);
 		AlertDialog.Builder builder		= new AlertDialog.Builder(this);
 
-		builder.setTitle("Select Image"); // TODO a ajouter dans string.xml
+		builder.setTitle(getResources().getString(R.string.SelectImage));
 		builder.setAdapter( adapter, new DialogInterface.OnClickListener() {
 			public void onClick( DialogInterface dialog, int item ) {
 				if (item == 0) {
@@ -112,7 +112,7 @@ public class ModifierBiere extends Activity {
 					Intent intent = new Intent();
 	                intent.setType("image/*");
 	                intent.setAction(Intent.ACTION_GET_CONTENT);
-	                startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);  // TODO a ajouter dans string.xml
+	                startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.CompleteUsing)), PICK_FROM_FILE);
 				}
 			}
 		} );
@@ -190,7 +190,7 @@ public class ModifierBiere extends Activity {
 		@Override
         protected void onPreExecute(){
                 progress = new ProgressDialog(ModifierBiere.this);
-                progress.setMessage("Modification de la biere en cours..."); // TODO a ajouter dans string.xml
+                progress.setMessage(getResources().getString(R.string.UpdatingBeer));
                 progress.setCancelable(false);
                 progress.show();
         }
@@ -256,7 +256,7 @@ public class ModifierBiere extends Activity {
 				Toast.makeText(ModifierBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 			else {
-				Toast.makeText(ModifierBiere.this, "Bière modifiée !", Toast.LENGTH_SHORT ).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(ModifierBiere.this, getResources().getString(R.string.BeerUpdated), Toast.LENGTH_SHORT ).show();
 			}			
 		}
 	}

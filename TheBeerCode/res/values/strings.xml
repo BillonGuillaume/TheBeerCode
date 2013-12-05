@@ -103,5 +103,7 @@
     <string name="ProfileMod">Profile Modified</string>
     <string name="connection">Connecting to the server...</string>
     <string name="ConnecSuccess">Connection successful</string>
+    <string name="UpdatingBeer">Updating beer...</string>
+    <string name="BeerUpdated">Beer updated</string>
 
 </resources>
