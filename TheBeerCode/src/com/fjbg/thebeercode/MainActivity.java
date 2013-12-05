@@ -4,10 +4,14 @@ import com.fjbg.thebeercode.model.ExceptionError;
 import com.fjbg.thebeercode.model.PersonneDB;
 import com.fjbg.thebeercode.myconnections.DBConnection;
 
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -57,9 +61,10 @@ public class MainActivity extends Activity {
 		bConnection.setOnClickListener(bConnectionListener);
 		bInscription.setOnClickListener(bInscriptionListener);
 		bSearchBeer.setOnClickListener(bSearchBeerListener);
+		
+		initConnec();
 
-		connec = new ConnectDB();
-		connec.execute();
+		
 	}
 	
 	private OnClickListener bLeaveListener = new OnClickListener() {
@@ -281,9 +286,54 @@ public class MainActivity extends Activity {
 				ExceptionError ee = new ExceptionError(ex.getMessage());
 				Toast.makeText(MainActivity.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT).show();				
 			} else Toast.makeText(MainActivity.this, getResources().getString(R.string.ConnecSuccess), Toast.LENGTH_SHORT).show();
+		}		
+	}
+	
+	private void customAlert() {
+		try {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setMessage(getResources().getString(R.string.NetworkDisabled))
+		.setCancelable(false)
+		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			public void onClick(final DialogInterface dialog, final int id) {
+				startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+				Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
+					public void run() {
+						initConnec();
+
+					}
+				}, 10000);
+
+			}
+		})
+		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			public void onClick(final DialogInterface dialog, final int id) {
+				dialog.cancel();
+				Toast.makeText(MainActivity.this, getResources().getString(R.string.NetworkDisabled2), Toast.LENGTH_LONG).show();
+			}
+		});
+		final AlertDialog alert = builder.create();
+		alert.show();
+		}catch(Exception e) {
 		}
-		
-		
+
+	}
+	
+	private void initConnec() {
+		ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+
+		//For 3G check
+		boolean is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
+		//For WiFi Check
+		boolean isWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+
+		if (!is3g && !isWifi){ 
+			customAlert();
+		} else {
+			connec = new ConnectDB();
+			connec.execute();
+		} 
 	}
 
 }

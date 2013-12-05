@@ -105,5 +105,7 @@
     <string name="ConnecSuccess">Connection successful</string>
     <string name="UpdatingBeer">Updating beer...</string>
     <string name="BeerUpdated">Beer updated</string>
+    <string name="NetworkDisabled">Your network connection seems to be disabled, would you like you enable it?</string>
+    <string name="NetworkDisabled2">The application cannot run without internet connection</string>
 
 </resources>
