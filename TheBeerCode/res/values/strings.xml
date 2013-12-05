@@ -3,11 +3,9 @@
 
     <string name="app_name">TheBeerCode</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_inscription">Inscription</string>
-    <string name="title_activity_activity_test">ActivityTest</string>
-    <string name="Connection">Connection</string>
-    <string name="Inscription">Inscription</string>
+    <string name="title_activity_inscription">Sign up</string>
+    <string name="Connection">Sign in</string>
+    <string name="Inscription">Sign up</string>
     <string name="Beers">Beers</string>
     <string name="Additions">My Additions</string>
     <string name="MyVotes">My Votes</string>
@@ -27,14 +25,14 @@
     <string name="ConfSignUp">Join now !</string>
     <string name="title_activity_mes_ajouts">My Additions</string>
     <string name="Back">Back</string>
-    <string name="title_activity_ajout_biere">AjoutBiere</string>
+    <string name="title_activity_ajout_biere">Add Beer</string>
     <string name="BeerName">Beer name :</string>
     <string name="BeerPicture">Beer picture :</string>
     <string name="ABV">Alcohol by volume :</string>
     <string name="Add">Add</string>
-    <string name="title_activity_mon_profil">MonProfil</string>
-    <string name="title_activity_mes_votes">MesVotes</string>
-    <string name="title_activity_recherche_biere">RechercheBiere</string>
+    <string name="title_activity_mon_profil">My Profile</string>
+    <string name="title_activity_mes_votes">My Votes</string>
+    <string name="title_activity_recherche_biere">Look For Beers</string>
     <string name="Picture">Choose image</string>
     <string name="DegreSup">Alcohol By Volume &gt; to</string>
     <string name="DegreInf">Alcohol By Volume &lt; to</string>
@@ -43,11 +41,11 @@
     <string name="NoteInf">Note &lt; to</string>
     <string name="Research">Research</string>
     <string name="Reset">Reset</string>
-    <string name="Filtre">Filtre</string>
+    <string name="Filtre">Filter</string>
     <string name="Commentary">Commentary</string>
-    <string name="title_activity_mes_favoris">MesFavoris</string>
+    <string name="title_activity_mes_favoris">My Favorites</string>
     <string name="MyFavorites">My Favorites</string>
-    <string name="title_activity_affichage_biere">AffichageBiere</string>
+    <string name="title_activity_affichage_biere">Beer Preview</string>
     <string name="Rating">Rating :</string>
     <string name="NbVotes">Number of votes :</string>
     <string name="btRating">Rate</string>
@@ -57,11 +55,11 @@
     <string name="AddBeer">Add Beer</string>
     <string name="User">User</string>
     <string name="Comment">Comment :</string>
-    <string name="Note">Evaluation :</string>
+    <string name="Note">Rating :</string>
     <string name="Confirm">Confirm</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="Edit">Edit</string>
-    <string name="title_activity_modifier_biere">ModifierBiere</string>
+    <string name="title_activity_modifier_biere">Edit Beer</string>
     <string name="btLocalize">Localize here</string>
     <string name="PlaceName">Place name :</string>
     <string name="Price">Beer Price :</string>
@@ -107,5 +105,6 @@
     <string name="BeerUpdated">Beer updated</string>
     <string name="NetworkDisabled">Your network connection seems to be disabled, would you like you enable it?</string>
     <string name="NetworkDisabled2">The application cannot run without internet connection</string>
+    <string name="Leave">Close App</string>
 
 </resources>

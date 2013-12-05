@@ -27,6 +27,6 @@
         android:id="@+id/bLeave"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Leave" />
+        android:text="@string/Leave" />
     
 </LinearLayout>
