@@ -148,7 +148,7 @@ public class AffichageBiere extends Activity {
 				MF.execute();
 			}
 			else{
-				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour ajouter cette bière aux favoris !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
+				Toast.makeText(AffichageBiere.this, getResources().getString(R.string.addFav), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	};
@@ -166,7 +166,7 @@ public class AffichageBiere extends Activity {
 				bConfirm = (Button)custom.findViewById(R.id.bConfirm);
 				bCancel = (Button)custom.findViewById(R.id.bCancel);
 	
-				custom.setTitle("Evaluation");
+				custom.setTitle(getResources().getString(R.string.rating));
 	
 				bConfirm.setOnClickListener(new View.OnClickListener() {
 	
@@ -192,7 +192,7 @@ public class AffichageBiere extends Activity {
 				custom.show();
 			}
 			else{
-				Toast.makeText(AffichageBiere.this, "Vous devez être connecté pour noter cette bière !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
+				Toast.makeText(AffichageBiere.this, getResources().getString(R.string.noteBeer), Toast.LENGTH_SHORT ).show();
 			}
 		}
 	};
@@ -203,11 +203,11 @@ public class AffichageBiere extends Activity {
 			
 			final AlertDialog.Builder boiteLocalisation;
 			boiteLocalisation = new AlertDialog.Builder(context);
-			boiteLocalisation.setTitle("Localiser");
+			boiteLocalisation.setTitle(getResources().getString(R.string.localize));
 			boiteLocalisation.setIcon(R.drawable.ic_launcher);
-			boiteLocalisation.setMessage("Que voulez vous faire ?");  // TODO a ajouter dans string.xml
+			boiteLocalisation.setMessage(getResources().getString(R.string.whatDo));
 			
-			boiteLocalisation.setPositiveButton("Annuler", new DialogInterface.OnClickListener() { // TODO a ajouter dans string.xml
+			boiteLocalisation.setPositiveButton(getResources().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
                
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
@@ -215,7 +215,7 @@ public class AffichageBiere extends Activity {
                 }
 			);
 			
-			boiteLocalisation.setNeutralButton("Localiser ici ", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml
+			boiteLocalisation.setNeutralButton(getResources().getString(R.string.localizeHere), new DialogInterface.OnClickListener() {
                 
                 public void onClick(DialogInterface dialog, int which) {
         			dialog.cancel();
@@ -226,7 +226,7 @@ public class AffichageBiere extends Activity {
                 }
             );
 			
-			boiteLocalisation.setNegativeButton("Afficher localisations ", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml
+			boiteLocalisation.setNegativeButton(getResources().getString(R.string.displayLoc), new DialogInterface.OnClickListener() {
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
@@ -256,11 +256,11 @@ public class AffichageBiere extends Activity {
 		public void onClick(View v) {
 			final AlertDialog.Builder boiteVerif;
 			boiteVerif = new AlertDialog.Builder(context);
-			boiteVerif.setTitle("Supprimer");  // TODO a ajouter dans string.xml
+			boiteVerif.setTitle(getResources().getString(R.string.Delete));
 			boiteVerif.setIcon(R.drawable.ic_launcher);
-			boiteVerif.setMessage("Voulez vous supprimer cette bière ? Les commentaires, favoris etc... y faisant référence seront égalemment supprimé.");  // TODO a ajouter dans string.xml
+			boiteVerif.setMessage(getResources().getString(R.string.DeleteBeer));
 			
-			boiteVerif.setPositiveButton("Non", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml  WTF positivebutton = non ?
+			boiteVerif.setPositiveButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
                
                 public void onClick(DialogInterface dialog, int which) {
                 	dialog.cancel();
@@ -268,7 +268,7 @@ public class AffichageBiere extends Activity {
                 }
 			);
 			
-			boiteVerif.setNegativeButton("Oui", new DialogInterface.OnClickListener() {  // TODO a ajouter dans string.xml
+			boiteVerif.setNegativeButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
                 
                 public void onClick(DialogInterface dialog, int which) {
                 	Supprimer supp= new Supprimer();
@@ -318,7 +318,7 @@ public class AffichageBiere extends Activity {
 		@Override
 		protected void onPreExecute(){
 			progress = new ProgressDialog(AffichageBiere.this);
-			progress.setMessage("Téléchargement des données en cours...");  // TODO a ajouter dans string.xml
+			progress.setMessage(getResources().getString(R.string.DownData));
 			progress.setCancelable(false);
 			progress.show();
 		}
@@ -578,8 +578,7 @@ public class AffichageBiere extends Activity {
 				try{
 					favori.delete();
 					favorite=false;
-				}
-				catch(Exception e){
+				} catch(Exception e){
 					ex = e;
 					exc = true;
 				}
@@ -590,8 +589,7 @@ public class AffichageBiere extends Activity {
 				try{
 					favori.create();
 					favorite=true;
-				}
-				catch(Exception e){
+				} catch(Exception e){
 					ex = e;
 					exc = true;
 				}
@@ -608,17 +606,14 @@ public class AffichageBiere extends Activity {
 			else{
 				if(favorite){
 					favoris.setImageResource(R.drawable.ic_stat_favoritetrue);
-					Toast.makeText(AffichageBiere.this, "Ajoutée aux favoris !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter a string.xml
+					Toast.makeText(AffichageBiere.this, getResources().getString(R.string.AddedToFav), Toast.LENGTH_SHORT ).show();
 				}
 				else {
 					favoris.setImageResource(R.drawable.ic_stat_favoritefalse);
-					Toast.makeText(AffichageBiere.this, "Supprimée des favoris !", Toast.LENGTH_SHORT ).show(); // TODO idem
+					Toast.makeText(AffichageBiere.this, getResources().getString(R.string.DelFromFav), Toast.LENGTH_SHORT ).show();
 				}
-			}
-			
-		}
-		
-		
+			}			
+		}		
 	}
 	
 	public class ModifNote extends AsyncTask<String, Integer, Boolean>{
@@ -690,7 +685,7 @@ public class AffichageBiere extends Activity {
 				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
 			else{
-				Toast.makeText(AffichageBiere.this, "Vote enregistré !", Toast.LENGTH_SHORT ).show();
+				Toast.makeText(AffichageBiere.this, getResources().getString(R.string.VoteSaved), Toast.LENGTH_SHORT ).show();
 				Lecture lec= new Lecture();
 				lec.execute();
 			}
@@ -731,7 +726,7 @@ public class AffichageBiere extends Activity {
 				Toast.makeText(AffichageBiere.this, ex.getMessage(), Toast.LENGTH_SHORT ).show();
 			}
 			else{
-				Toast.makeText(AffichageBiere.this, "Bière supprimée !", Toast.LENGTH_SHORT ).show();
+				Toast.makeText(AffichageBiere.this, getResources().getString(R.string.BeerDeleted), Toast.LENGTH_SHORT ).show();
 				finish();
 			}
 			

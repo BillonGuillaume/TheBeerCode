@@ -69,5 +69,21 @@
     <string name="GetPositions">Getting localizations...</string>
     <string name="GPSdisabled">Your GPS seems to be disabled, do you want to enable it?</string>
     <string name="GPSdisabled2">GPS disabled, unable to localize. Last known position used.</string>
+    <string name="addFav">You need to be authenticated to add a beer to your favorites!</string>
+    <string name="noteBeer">You need to be authenticated to note a beer!</string>
+    <string name="localize">Localize</string>
+    <string name="whatDo">What do you want to do?</string>
+    <string name="localizeHere">Localize Here</string>
+    <string name="displayLoc">Display locations</string>
+    <string name="Delete">Delete</string>
+    <string name="DeleteBeer">Do you really want to delete this beer ? Everything will be lost.</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="DownData">Donwloading data...</string>
+    <string name="AddedToFav">Added to favorites!</string>
+    <string name="DelFromFav">Deleted from favorites</string>
+    <string name="BeerDeleted">Beer deleted!</string>
+    <string name="VoteSaved">Vote  saved!</string>
+    <string name="rating">Rating</string>
 
 </resources>
