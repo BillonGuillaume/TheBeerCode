@@ -92,13 +92,11 @@ public class LocalizationActivity extends Activity {
 	
 		@Override
 		public void onProviderDisabled(String provider){
-			Toast.makeText( getApplicationContext(),"Gps Disabled",Toast.LENGTH_SHORT ).show();  // TODO a ajouer dans string.xml
 		}
 	
 	
 		@Override
 		public void onProviderEnabled(String provider){
-			Toast.makeText( getApplicationContext(),"Gps Enabled",Toast.LENGTH_SHORT).show();  // TODO a ajouer dans string.xml
 		}
 	
 	
@@ -121,17 +119,17 @@ public class LocalizationActivity extends Activity {
 	
 	private void customAlert() {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(LocalizationActivity.this);
-		builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")  // TODO a ajouer dans string.xml
+		builder.setMessage(getResources().getString(R.string.GPSdisabled))
 		.setCancelable(false)
-		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {  // TODO a ajouer dans string.xml
+		.setPositiveButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 			}
 		})
-		.setNegativeButton("No", new DialogInterface.OnClickListener() {  // TODO a ajouer dans string.xml
+		.setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.cancel();
-				Toast.makeText(LocalizationActivity.this, "Module GPS désactivé, localisation impossible.", Toast.LENGTH_LONG).show();  // TODO a ajouer dans string.xml
+				Toast.makeText(LocalizationActivity.this, getResources().getString(R.string.GPSdisabled3), Toast.LENGTH_LONG).show();
 			}
 		});
 		final AlertDialog alert = builder.create();
@@ -198,7 +196,7 @@ public class LocalizationActivity extends Activity {
 				Toast.makeText(LocalizationActivity.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();
 			}
 			else{
-				Toast.makeText(LocalizationActivity.this, "Localisation ajoutée !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
+				Toast.makeText(LocalizationActivity.this, getResources().getString(R.string.LocAdded), Toast.LENGTH_SHORT ).show();
 				finish();
 			}
 			

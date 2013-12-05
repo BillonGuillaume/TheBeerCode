@@ -91,5 +91,7 @@
     <string name="CompleteUsing">Complete action using</string>
     <string name="SavingBeer">Saving beer...</string>
     <string name="BeerAdded">Beer added!</string>
+    <string name="GPSdisabled3">GPS disabled, unable to use your location</string>
+    <string name="LocAdded">Localization added!</string>
 
 </resources>
