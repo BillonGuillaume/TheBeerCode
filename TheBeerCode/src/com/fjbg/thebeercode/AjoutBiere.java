@@ -1,7 +1,6 @@
 package com.fjbg.thebeercode;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -84,11 +83,11 @@ public class AjoutBiere extends Activity {
 		Intent i= getIntent();
 		user= (PersonneDB)i.getParcelableExtra(MainActivity.PERSONNE);
 
-		final String [] items = new String [] {"From Camera", "From SD Card"}; // TODO a ajouter dans string.xml
+		final String [] items = new String [] {getResources().getString(R.string.FromCam), getResources().getString(R.string.FromCard)};
 		ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.select_dialog_item,items);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		builder.setTitle("Select Image"); // TODO a ajouter dans string.xml
+		builder.setTitle(getResources().getString(R.string.SelectImage));
 		builder.setAdapter( adapter, new DialogInterface.OnClickListener() {
 			public void onClick( DialogInterface dialog, int item ) {
 				if (item == 0) {
@@ -108,7 +107,7 @@ public class AjoutBiere extends Activity {
 					Intent intent = new Intent();
 					intent.setType("image/*");
 					intent.setAction(Intent.ACTION_GET_CONTENT);
-					startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);  // TODO a ajouter dans string.xml
+					startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.CompleteUsing)), PICK_FROM_FILE); 
 				}
 			}
 		} );
@@ -182,7 +181,7 @@ public class AjoutBiere extends Activity {
 		@Override
 		protected void onPreExecute(){
 			progress = new ProgressDialog(AjoutBiere.this);
-			progress.setMessage("Enregistrement de la biere en cours..."); // TODO a ajouter dans string.xml
+			progress.setMessage(getResources().getString(R.string.SavingBeer));
 			progress.setCancelable(false);
 			progress.show();
 		}
@@ -256,7 +255,7 @@ public class AjoutBiere extends Activity {
 					Toast.makeText(AjoutBiere.this, R.string.e216, Toast.LENGTH_SHORT ).show();
 				}
 				else{
-					Toast.makeText(AjoutBiere.this, "Bière ajoutée !", Toast.LENGTH_SHORT ).show();  // TODO a ajouter dans string.xml
+					Toast.makeText(AjoutBiere.this, getResources().getString(R.string.BeerAdded), Toast.LENGTH_SHORT ).show();
 				}
 			}
 

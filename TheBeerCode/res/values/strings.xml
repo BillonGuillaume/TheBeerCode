@@ -85,5 +85,11 @@
     <string name="BeerDeleted">Beer deleted!</string>
     <string name="VoteSaved">Vote  saved!</string>
     <string name="rating">Rating</string>
+    <string name="FromCam">From camera</string>
+    <string name="FromCard">From SD card</string>
+    <string name="SelectImage">Select image</string>
+    <string name="CompleteUsing">Complete action using</string>
+    <string name="SavingBeer">Saving beer...</string>
+    <string name="BeerAdded">Beer added!</string>
 
 </resources>
