@@ -25,5 +25,6 @@
     <string name="e213">You have no favorite</string>
     <string name="e214">Passwords do not match</string>
     <string name="e215">Connection failed</string>
-    <string name="e216">Beer added, but there was a problem with the photo</string>    
+    <string name="e216">Beer added, but there was a problem with the photo</string>
+    <string name="e217">No known location</string>   
 </resources>
