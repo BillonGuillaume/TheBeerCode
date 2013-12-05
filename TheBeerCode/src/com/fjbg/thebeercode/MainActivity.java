@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 				addBeerActivity.putExtra(PERSONNE, user);
 				startActivity(addBeerActivity);
 			}
-			else Toast.makeText(MainActivity.this, "Vous devez être connecté !", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+			else Toast.makeText(MainActivity.this, getResources().getString(R.string.NeedCo), Toast.LENGTH_SHORT).show();
 		}
 	};
 	
@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
 			bLeave.setOnClickListener(bLeaveListener);
 			
 			user = null;
-			Toast.makeText(MainActivity.this, "Déconnexion effectuée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+			Toast.makeText(MainActivity.this, getResources().getString(R.string.DiscSuccess), Toast.LENGTH_SHORT).show();
 		}
 	};
 	
@@ -166,7 +166,7 @@ public class MainActivity extends Activity {
 	protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if  (requestCode == LOGIN_REQUEST) {
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(MainActivity.this, getResources().getString(R.string.Connected), Toast.LENGTH_SHORT).show();
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 				setContentView(R.layout.menu_principal_co);
 				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
@@ -191,16 +191,16 @@ public class MainActivity extends Activity {
 						
 			}
 			if(resultCode == RESULT_CANCELED) {
-				Toast.makeText(this, "Connexion annulée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(this, getResources().getString(R.string.ConnCanceled), Toast.LENGTH_SHORT).show();
 			}
 			if(resultCode == CONNECTION_FAILED) {
-				Toast.makeText(this, "Connexion echouée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(this, getResources().getString(R.string.ConnFailed), Toast.LENGTH_SHORT).show();
 			}
 		}
 		
 		if (requestCode == INSCRIPTION_REQUEST){
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Inscription réussie", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(this, getResources().getString(R.string.SignUpSuccess), Toast.LENGTH_SHORT).show();
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 				setContentView(R.layout.menu_principal_co);
 				tVWelcome = (TextView)findViewById(R.id.tVWelcome);
@@ -224,13 +224,13 @@ public class MainActivity extends Activity {
 				tVNameMenu.setText(" " + user.getLogin());
 			}
 			if(resultCode == RESULT_CANCELED) {
-				Toast.makeText(this, "Inscription annulée", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(this, getResources().getString(R.string.SignUpCanceled), Toast.LENGTH_SHORT).show();
 			}
 		}
 		
 		if (requestCode == PROFILE_REQUEST){
 			if  (resultCode == RESULT_OK) {
-				Toast.makeText(this, "Profil modifié", Toast.LENGTH_SHORT).show(); // TODO a ajouter dans string.xml
+				Toast.makeText(this, getResources().getString(R.string.ProfileMod), Toast.LENGTH_SHORT).show();
 				user = (PersonneDB)data.getParcelableExtra(PERSONNE);
 			}
 		}
@@ -255,7 +255,7 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPreExecute(){
 			progress = new ProgressDialog(MainActivity.this);
-			progress.setMessage("Connexion à la DB en cours...");
+			progress.setMessage(getResources().getString(R.string.connection));
 			progress.setCancelable(false);
 			progress.show();
 		}
@@ -280,7 +280,7 @@ public class MainActivity extends Activity {
 			if(exc) {
 				ExceptionError ee = new ExceptionError(ex.getMessage());
 				Toast.makeText(MainActivity.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT).show();				
-			} else Toast.makeText(MainActivity.this, "Connexion réussie", Toast.LENGTH_SHORT).show();	// TODO a ajouter dans string.xml
+			} else Toast.makeText(MainActivity.this, getResources().getString(R.string.ConnecSuccess), Toast.LENGTH_SHORT).show();
 		}
 		
 		

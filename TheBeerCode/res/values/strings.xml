@@ -93,5 +93,15 @@
     <string name="BeerAdded">Beer added!</string>
     <string name="GPSdisabled3">GPS disabled, unable to use your location</string>
     <string name="LocAdded">Localization added!</string>
+    <string name="NeedCo">You have to be connected!</string>
+    <string name="DiscSuccess">Disconnected with success</string>
+    <string name="Connected">Connected</string>
+    <string name="ConnFailed">Connection failed</string>
+    <string name="ConnCanceled">Connection canceled</string>
+    <string name="SignUpSuccess">Sign up successful</string>
+    <string name="SignUpCanceled">Sign up canceled</string>
+    <string name="ProfileMod">Profile Modified</string>
+    <string name="connection">Connecting to the server...</string>
+    <string name="ConnecSuccess">Connection successful</string>
 
 </resources>
