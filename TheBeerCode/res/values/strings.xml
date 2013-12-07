@@ -106,5 +106,6 @@
     <string name="NetworkDisabled">Your network connection seems to be disabled, would you like you enable it?</string>
     <string name="NetworkDisabled2">The application cannot run without internet connection</string>
     <string name="Leave">Close App</string>
+    <string name="attenteLoc">Wait a few seconds... The gps is loading your position !</string>
 
 </resources>

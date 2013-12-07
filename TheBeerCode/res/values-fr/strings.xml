@@ -102,5 +102,6 @@
     <string name="NetworkDisabled">Votre connexion internet semble desactivée, voulez vous l\' activer?</string>
     <string name="NetworkDisabled2">L\'application ne peut fonctionner sans internet...</string>
     <string name="Leave">Quitter</string>
+    <string name="attenteLoc">Patientez un moment... Le gps récupère votre position actuelle !</string>
     
 </resources>

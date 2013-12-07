@@ -49,9 +49,14 @@ public class LocalizationActivity extends Activity {
 
 			@Override
 			public void onClick(View view) {
-				if ( (mlocManager.isProviderEnabled( LocationManager.GPS_PROVIDER)) && longitude != 0 && latitude != 0){
-					Ajout aj = new Ajout();
-					aj.execute();
+				if ( (mlocManager.isProviderEnabled( LocationManager.GPS_PROVIDER))){
+					if( longitude != 0 && latitude != 0){
+						Ajout aj = new Ajout();
+						aj.execute();
+					}
+					else{
+						Toast.makeText(LocalizationActivity.this, R.string.attenteLoc, Toast.LENGTH_SHORT ).show();
+					}
 				}
 				else{
 					customAlert();
