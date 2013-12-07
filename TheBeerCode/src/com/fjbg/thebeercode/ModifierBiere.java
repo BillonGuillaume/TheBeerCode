@@ -1,5 +1,7 @@
 package com.fjbg.thebeercode;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +26,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,7 +50,7 @@ public class ModifierBiere extends Activity {
 	
 	String path = null;
 	ImageView photoBiere = null;
-	File file = null;
+	Bitmap bitmap;
 	
 	AlertDialog dialog = null;
 	private Uri mImageCaptureUri;
@@ -57,7 +60,6 @@ public class ModifierBiere extends Activity {
 	
 	BiereDB biere;
 	Bitmap bitmapModif;
-	Bitmap bitmap = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,15 +103,8 @@ public class ModifierBiere extends Activity {
 			public void onClick( DialogInterface dialog, int item ) {
 				if (item == 0) {
 					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					file = new File(Environment.getExternalStorageDirectory(), "tmp_beerpicture_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-					mImageCaptureUri = Uri.fromFile(file);
-					try {
-						intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-						intent.putExtra("return-data", true);
-						startActivityForResult(intent, PICK_FROM_CAMERA);
-					} catch (Exception e) {
-						e.printStackTrace(); // TODO besoin d'un try ici ?
-					}
+					intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+					startActivityForResult(intent, PICK_FROM_CAMERA);
 					dialog.cancel();
 				} else {
 					Intent intent = new Intent();
@@ -162,24 +157,26 @@ public class ModifierBiere extends Activity {
         bitmapModif = null;
  
         if (requestCode == PICK_FROM_FILE) {
-            mImageCaptureUri = imageReturnedIntent.getData();
-            path = getRealPathFromURI(mImageCaptureUri); //from Gallery
-  
-            if (path == null) path = mImageCaptureUri.getPath(); //from File Manager
-         } 	
-         else {
-         		path = file.getAbsolutePath();
-         }
-         
-         try{
-         	bitmapModif = decodeFile(new File(path));
-         }
-         catch(Exception e){
-         	path = null;
-         	bitmapModif = null;
-         	file=null;
-         }         
-         if(path!=null) photoBiere.setImageBitmap(bitmapModif);
+			mImageCaptureUri = imageReturnedIntent.getData();
+			path = getRealPathFromURI(mImageCaptureUri); //from Gallery
+
+			if (path == null) path = mImageCaptureUri.getPath(); //from File Manager
+			else{
+				try{
+					bitmap = decodeFile(new File(path));
+				} catch(Exception e){
+					path = null;
+					bitmap = null;
+				}
+			}
+			
+			if(path!=null) photoBiere.setImageBitmap(bitmap);
+		} 	
+		else {
+			Bundle extras = imageReturnedIntent.getExtras();
+		    bitmap = (Bitmap) extras.get("data");
+		    photoBiere.setImageBitmap(bitmap);
+		}
 	}
 	
 	public class Modifier extends AsyncTask<String, Integer, Boolean>{	
@@ -217,23 +214,25 @@ public class ModifierBiere extends Activity {
 				ex = e;
 			}
 			
-			if(path != null){
+			if(path != null && exc!=null){
 				FTPClient mFtp = new FTPClient();
-			        try {
-			        	mFtp.connect("ftp.alokar.site90.net",21); // Using port no=21
-			        	mFtp.login("a7115779", "projet2013");
-			        	mFtp.enterLocalPassiveMode();
-				        mFtp.setFileType(FTPClient.BINARY_FILE_TYPE);
-				        InputStream is = new FileInputStream(path);
-				        String cheminBiere = biere.getNomBiere().replace(' ', '_');
-			        	mFtp.storeFile("/public_html/BeerPictures/image_" + cheminBiere + ".jpg", is);
-			        	biereModif.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
-			        	is.close();
-			        	mFtp.disconnect();
-					} catch(Exception e) {
-						ex = e;
-						exc = true;
-					}
+				try {
+					mFtp.connect("ftp.alokar.site90.net",21); // Using port no=21
+					mFtp.login("a7115779", "projet2013");
+					mFtp.enterLocalPassiveMode();
+					mFtp.setFileType(FTPClient.BINARY_FILE_TYPE);
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					bitmap.compress(CompressFormat.JPEG, 120, stream);
+					InputStream is = new ByteArrayInputStream(stream.toByteArray());
+					String cheminBiere = biere.getNomBiere().replace(' ', '_');
+					mFtp.storeFile("/public_html/BeerPictures/image_" + cheminBiere + ".jpg", is);
+					biere.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
+					is.close();
+					mFtp.disconnect();
+				} catch(Exception e) {
+					ex = e;
+					exc = true;
+				}
 			}
 			
 			if(!exc) {

@@ -39,6 +39,7 @@
 
         <activity
             android:name="com.fjbg.thebeercode.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,6 +73,7 @@
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.RechercheBiere"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_recherche_biere" >
         </activity>
         <activity
@@ -89,6 +91,7 @@
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.ModifierBiere"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_modifier_biere" >
         </activity>
         <activity
