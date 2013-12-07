@@ -210,7 +210,7 @@ public class AjoutBiere extends Activity {
 				exc = true;
 			}
 
-			if(path != null && exc!=null){
+			if(bitmap != null && exc!=null){
 				FTPClient mFtp = new FTPClient();
 				try {
 					mFtp.connect("ftp.alokar.site90.net",21); // Using port no=21
@@ -218,7 +218,7 @@ public class AjoutBiere extends Activity {
 					mFtp.enterLocalPassiveMode();
 					mFtp.setFileType(FTPClient.BINARY_FILE_TYPE);
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					bitmap.compress(CompressFormat.JPEG, 120, stream);
+					bitmap.compress(CompressFormat.JPEG, 100, stream);
 					InputStream is = new ByteArrayInputStream(stream.toByteArray());
 					String cheminBiere = biere.getNomBiere().replace(' ', '_');
 					mFtp.storeFile("/public_html/BeerPictures/image_" + cheminBiere + ".jpg", is);
@@ -258,6 +258,7 @@ public class AjoutBiere extends Activity {
 				eTpays.setText("");
 				eTdegre.setText("");
 				photoBiere = (ImageView) findViewById(R.id.BeerPicture);
+				bitmap = null;
 				path = null;
 				if(FTPpbm){
 					Toast.makeText(AjoutBiere.this, R.string.e216, Toast.LENGTH_SHORT ).show();

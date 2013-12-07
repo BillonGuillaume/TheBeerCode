@@ -49,26 +49,32 @@
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.Inscription"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_inscription" >
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.Login"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.MesAjouts"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_mes_ajouts" >
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.AjoutBiere"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_ajout_biere" >
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.MonProfil"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_mon_profil" >
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.MesVotes"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_mes_votes" >
         </activity>
         <activity
@@ -78,15 +84,18 @@
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.MesFavoris"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_mes_favoris" >
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.AffichageBiere"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_affichage_biere" >
         </activity>
 
         <activity
             android:name="com.fjbg.thebeercode.MapActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
@@ -96,6 +105,7 @@
         </activity>
         <activity
             android:name="com.fjbg.thebeercode.LocalizationActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_localization" >
         </activity>
         <uses-library android:name="com.google.android.maps" />

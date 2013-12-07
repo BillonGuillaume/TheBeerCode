@@ -163,19 +163,19 @@ public class ModifierBiere extends Activity {
 			if (path == null) path = mImageCaptureUri.getPath(); //from File Manager
 			else{
 				try{
-					bitmap = decodeFile(new File(path));
+					bitmapModif = decodeFile(new File(path));
 				} catch(Exception e){
 					path = null;
-					bitmap = null;
+					bitmapModif = null;
 				}
 			}
 			
-			if(path!=null) photoBiere.setImageBitmap(bitmap);
+			if(path!=null) photoBiere.setImageBitmap(bitmapModif);
 		} 	
 		else {
 			Bundle extras = imageReturnedIntent.getExtras();
-		    bitmap = (Bitmap) extras.get("data");
-		    photoBiere.setImageBitmap(bitmap);
+		    bitmapModif = (Bitmap) extras.get("data");
+		    photoBiere.setImageBitmap(bitmapModif);
 		}
 	}
 	
@@ -205,16 +205,23 @@ public class ModifierBiere extends Activity {
 
 			String paysBiere= eTpays.getText().toString();
 			biereModif.setPaysBiere(paysBiere);
+			
+			String degre= eTdegre.getText().toString();
 			try{
-				float degreBiere= Float.parseFloat(eTdegre.getText().toString());
-				biere.setDegreBiere(degreBiere);
+				if(nomBiere.matches("") || paysBiere.matches("") || degre.matches("")){
+					throw new Exception("Exception personnalisée/" + R.string.e218 + "/" + "Tous les champs doivent être remplis !");
+				}
+				else{
+					float degreBiere = Float.parseFloat(degre);
+					biereModif.setDegreBiere(degreBiere);
+				}
 			}
 			catch(Exception e){
-				exc = true;
 				ex = e;
+				exc = true;
 			}
 			
-			if(path != null && exc!=null){
+			if(bitmapModif != null && exc!=null){
 				FTPClient mFtp = new FTPClient();
 				try {
 					mFtp.connect("ftp.alokar.site90.net",21); // Using port no=21
@@ -222,11 +229,11 @@ public class ModifierBiere extends Activity {
 					mFtp.enterLocalPassiveMode();
 					mFtp.setFileType(FTPClient.BINARY_FILE_TYPE);
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
-					bitmap.compress(CompressFormat.JPEG, 120, stream);
+					bitmapModif.compress(CompressFormat.JPEG, 100, stream);
 					InputStream is = new ByteArrayInputStream(stream.toByteArray());
-					String cheminBiere = biere.getNomBiere().replace(' ', '_');
+					String cheminBiere = biereModif.getNomBiere().replace(' ', '_');
 					mFtp.storeFile("/public_html/BeerPictures/image_" + cheminBiere + ".jpg", is);
-					biere.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
+					biereModif.setCheminImage("/public_html/BeerPictures/image_" + cheminBiere + ".jpg");
 					is.close();
 					mFtp.disconnect();
 				} catch(Exception e) {
@@ -277,7 +284,7 @@ public class ModifierBiere extends Activity {
 	
 	private Bitmap decodeFile(File f){
         try {
-            //decode image size
+            //decode image sizea
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
             FileInputStream stream1=new FileInputStream(f);
