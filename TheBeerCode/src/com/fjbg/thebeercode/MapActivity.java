@@ -50,7 +50,7 @@ public class MapActivity extends Activity{
 	    	initUpdate();
 	    }	
         
-        ActionDB action = new ActionDB();
+        ActionDB action = new ActionDB();//a
         action.execute();		
 	}
 	
