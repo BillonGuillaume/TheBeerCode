@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unknown">不明なエラー</string>
+    <!-- Exceptions CRUD -->
+    <string name="e000">作成中にエラーが発生</string>
+    <string name="e001">読み取りエラー</string>
+    <string name="e002">アップデート中にエラーが発生しました</string>
+    <string name="e003">エラー削除中</string>
+    <!-- Exceptions SQL -->
+    <string name="e100">不明なエラーが発生しました、入力した情報を確認してください</string>
+    <string name="e101">このビールはすでに存在します</string>
+    <!-- Exceptions personalisées -->
+    <string name="e200">未知のアカウント</string>
+    <string name="e201">ログインおよび/またはワード·オブ·パスワード正しくない</string>
+    <string name="e202">あなたがビールを追加していない</string>
+    <string name="e203">表示するには、何もない</string>
+    <string name="e204">不明なビール</string>
+    <string name="e205">いいえビールはフィルタに一致しません</string>
+    <string name="e206">いいえビール表示しない</string>
+    <string name="e207">コード不明</string>
+    <string name="e208">該当する場所ない</string>
+    <string name="e209">ログインまたは空白のパスワード</string>
+    <string name="e210">お気に入り以外のビールません</string>
+    <string name="e211">いいえデザイナーません</string>
+    <string name="e212">あなたはコメントはありません</string>
+    <string name="e213">あなたは、お気に入りを持っていない</string>
+    <string name="e214">パスワードが一致しません</string>
+    <string name="e215">接続に失敗しました</string>
+    <string name="e216">ビールが追加されましたが、写真に問題があった</string>
+    <string name="e218">すべてのフィールドを完了する必要があります！</string>
+    <string name="e217">既知の位置ません</string>
+</resources>

@@ -15,7 +15,7 @@
     <string name="Connection">Se connecter</string>
     <string name="Back">Retour</string>
     <string name="BeerName">Nom bière :</string>
-    <string name="BeerPicture">Image Bière :</string>
+    <string name="BeerPicture">Image bière :</string>
     <string name="ABV">Degré alcool :</string>
     <string name="Add">Ajouter</string>
     <string name="Picture">Choisir image</string>
@@ -41,7 +41,7 @@
     <string name="Commentary">Commentaire</string>
     <string name="title_activity_mes_favoris">Mes Favoris</string>
     <string name="MyFavorites">Mes Favoris</string>
-    <string name="title_activity_affichage_biere">Affichage Biere</string>
+    <string name="title_activity_affichage_biere">Affichage Bière</string>
     <string name="Rating">Evaluation :</string>
     <string name="NbVotes">Nombre de votes :</string>
     <string name="btRating">Evaluer</string>
@@ -55,7 +55,7 @@
     <string name="Confirm">Confirmer</string>
     <string name="title_activity_map">Map</string>
     <string name="Edit">Modifier</string>
-    <string name="title_activity_modifier_biere">Modifier Biere</string>
+    <string name="title_activity_modifier_biere">Modifier Bière</string>
     <string name="btLocalize">Localiser ici</string>
     <string name="PlaceName">Nom du lieu :</string>
     <string name="Price">Prix Bière :</string>
