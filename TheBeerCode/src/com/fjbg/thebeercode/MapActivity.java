@@ -133,7 +133,7 @@ public class MapActivity extends Activity{
 				Toast.makeText(MapActivity.this, getResources().getString(R.string.GetPositions), Toast.LENGTH_SHORT).show();
 				for(VueLocation item : listLoc) {
 					mMap.addMarker(new MarkerOptions()
-					.position(new LatLng(item.getLon(),item.getLat()))
+					.position(new LatLng(item.getLat(),item.getLon()))
 					.title(item.getNomLieu())
 					.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
 					.snippet(item.getNomBiere() + ", " + String.valueOf(item.getPrix()) + "€"));
