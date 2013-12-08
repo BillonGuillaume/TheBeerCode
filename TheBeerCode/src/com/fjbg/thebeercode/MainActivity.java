@@ -294,7 +294,7 @@ public class MainActivity extends Activity {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 		builder.setMessage(getResources().getString(R.string.NetworkDisabled))
 		.setCancelable(false)
-		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		.setPositiveButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
 				Handler handler = new Handler();
@@ -307,7 +307,7 @@ public class MainActivity extends Activity {
 
 			}
 		})
-		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		.setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.cancel();
 				Toast.makeText(MainActivity.this, getResources().getString(R.string.NetworkDisabled2), Toast.LENGTH_LONG).show();

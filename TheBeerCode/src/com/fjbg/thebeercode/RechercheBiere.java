@@ -175,7 +175,7 @@ public class RechercheBiere extends Activity {
 		listResult = new ArrayList<BiereDB>();
 		rA = new RechercheAdapter(RechercheBiere.this, listResult);
 		lvItems.setAdapter(rA);
-		lvItems.setOnScrollListener(new EndlessScrollListener() {
+		lvItems.setOnScrollListener(new EndlessScrollListener(1) {
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
 				loadMore(totalItemsCount);
@@ -293,7 +293,7 @@ public class RechercheBiere extends Activity {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				liste = BiereDB.readBieres(items+1, items+6);
+				liste = BiereDB.readBieres(items+1, items+3);
 			}catch(Exception e) {
 				ex = e;
 				exc = true;

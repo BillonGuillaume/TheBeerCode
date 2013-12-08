@@ -147,13 +147,13 @@ public class MapActivity extends Activity{
 		final AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
 		builder.setMessage(getResources().getString(R.string.GPSdisabled))
 		.setCancelable(false)
-		.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		.setPositiveButton(getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 				initUpdate();
 			}
 		})
-		.setNegativeButton("No", new DialogInterface.OnClickListener() {
+		.setNegativeButton(getResources().getString(R.string.No), new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.cancel();
 				Toast.makeText(MapActivity.this, getResources().getString(R.string.GPSdisabled2), Toast.LENGTH_LONG).show();
