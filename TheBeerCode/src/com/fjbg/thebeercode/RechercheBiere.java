@@ -151,7 +151,6 @@ public class RechercheBiere extends Activity {
 					@Override
 					public void onClick(View view) {
 						custom.dismiss();
-
 					}
 				});
 				bReset.setOnClickListener(new View.OnClickListener() {

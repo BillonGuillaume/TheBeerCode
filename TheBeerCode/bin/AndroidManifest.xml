@@ -9,7 +9,7 @@
         android:targetSdkVersion="18" />
     
     <permission
-        android:name="com.example.testgooglemaps.android.locationapi.maps.permission.MAPS_RECEIVE"
+        android:name="com.fjbg.thebeercode.android.locationapi.maps.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
     
     <uses-permission android:name="android.permission.INTERNET" />
@@ -111,7 +111,7 @@
         <uses-library android:name="com.google.android.maps" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBasN9id4Nisvs5YCSB2uX2LVCIEPeNMfs" />
+            android:value="AIzaSyBW9Nf7S7mU26uQWt7gYbFVNGkWwE_9jMY" />
     </application>
 
 </manifest>
