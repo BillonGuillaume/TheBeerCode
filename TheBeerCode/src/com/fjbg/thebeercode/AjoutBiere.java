@@ -155,10 +155,15 @@ public class AjoutBiere extends Activity {
 				} catch(Exception e){
 					path = null;
 					bitmap = null;
+					
 				}
 			}
 			
-			if(path!=null) photoBiere.setImageBitmap(bitmap);
+			if(path!=null){
+				photoBiere.setImageBitmap(bitmap);
+				path = null;
+				mImageCaptureUri  = null;
+			}
 		} 	
 		else {
 			Bundle extras = imageReturnedIntent.getExtras();
@@ -257,7 +262,7 @@ public class AjoutBiere extends Activity {
 				eTnom.setText(""); 
 				eTpays.setText("");
 				eTdegre.setText("");
-				photoBiere = (ImageView) findViewById(R.id.BeerPicture);
+				photoBiere.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
 				bitmap = null;
 				path = null;
 				if(FTPpbm){

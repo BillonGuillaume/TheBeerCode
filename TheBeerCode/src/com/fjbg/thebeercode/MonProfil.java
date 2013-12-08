@@ -46,11 +46,11 @@ public class MonProfil extends Activity {
 		edpays.setText(p.getPays());
 		
 		modifier = (Button) findViewById(R.id.validerInscription);
-		modifier.setText("Modifier");
+		modifier.setText(R.string.Edit);
 		modifier.setOnClickListener(modifierListener);
 		
 		retour = (Button) findViewById(R.id.annulerInscription);
-		retour.setText("Retour");
+		retour.setText(R.string.Cancel);
 		retour.setOnClickListener(new  View.OnClickListener() {
 		@Override
 		public void onClick(View v){

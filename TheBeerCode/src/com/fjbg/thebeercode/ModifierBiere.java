@@ -170,7 +170,11 @@ public class ModifierBiere extends Activity {
 				}
 			}
 			
-			if(path!=null) photoBiere.setImageBitmap(bitmapModif);
+			if(path!=null){
+				photoBiere.setImageBitmap(bitmapModif);
+				path = null;
+				mImageCaptureUri  = null;
+			}
 		} 	
 		else {
 			Bundle extras = imageReturnedIntent.getExtras();
