@@ -34,16 +34,16 @@ public class VueVoteDB extends Vote implements Parcelable{
     }
     
     public static ArrayList<VueVoteDB> readVotesPersonne(int id, int min, int max) throws Exception {
-    	String req = "SELECT * FROM vueVotes WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idBiere";
+    	String req = "select * from ( select a.*, rownum rnum from (SELECT * FROM vueVotes WHERE idPersonne=? ORDER BY idBiere) a where rownum <= ? ) where rnum >= ?";
     	ArrayList <VueVoteDB> listVotes = new ArrayList<VueVoteDB>();
     	VueVoteDB obj;
     	Boolean ex1 = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
-    		pstmt.setInt(1, min);
+    		pstmt.setInt(1, id);
     		pstmt.setInt(2, max);
-    		pstmt.setInt(3, id);
+    		pstmt.setInt(3, min);
     		ResultSet rs = pstmt.executeQuery();
     		while (rs.next()) {
     			obj = new VueVoteDB();

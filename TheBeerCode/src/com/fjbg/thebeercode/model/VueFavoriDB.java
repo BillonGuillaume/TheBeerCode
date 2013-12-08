@@ -30,16 +30,16 @@ public class VueFavoriDB extends Favori implements Parcelable{
     }
     
     public static ArrayList<String> readFavPersonne(int id, int min, int max) throws Exception {
-    	String req = "SELECT * FROM vueFavori WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idFavori";
+    	String req = "select * from ( select a.*, rownum rnum from (SELECT * FROM vueFavori WHERE idPersonne=? ORDER BY idFavori) a where rownum <= ? ) where rnum >= ?";
     	ArrayList <String> listFav = new ArrayList<String>();
     	VueFavoriDB obj;
     	Boolean ex1 = false;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
-    		pstmt.setInt(1, min);
+    		pstmt.setInt(1, id);
     		pstmt.setInt(2, max);
-    		pstmt.setInt(3, id);
+    		pstmt.setInt(3, min);
     		ResultSet rs = pstmt.executeQuery();
     		while (rs.next()) {
     			obj = new VueFavoriDB();

@@ -25,7 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class RechercheBiere extends Activity {
 	
 	ListView lvItems;
-	int items;
+	int items = 0;
 	RechercheAdapter rA;
 	Button bBack;
 	ArrayList<String> aL;
@@ -334,12 +334,12 @@ public class RechercheBiere extends Activity {
 			try {
 				liste = BiereDB.rechBieres(nom, degreInf, degreSup, country, noteSup, noteInf, 1, 5);
 				
-				lvItems.setOnScrollListener(new EndlessScrollListener() {
-					@Override
-					public void onLoadMore(int page, int totalItemsCount) {
-						loadMoreFiltered(totalItemsCount);
-					}
-				});
+//				lvItems.setOnScrollListener(new EndlessScrollListener() {
+//					@Override
+//					public void onLoadMore(int page, int totalItemsCount) {
+//						loadMoreFiltered(totalItemsCount);
+//					}
+//				});
 				
 				lvItems.setOnItemClickListener(new OnItemClickListener()
 				{
@@ -364,6 +364,12 @@ public class RechercheBiere extends Activity {
 		protected void onPostExecute(Boolean result){
 			super.onPostExecute(result);
 			changeItems(liste);
+			lvItems.setOnScrollListener(new EndlessScrollListener() {
+				@Override
+				public void onLoadMore(int page, int totalItemsCount) {
+					loadMoreFiltered(totalItemsCount);
+				}
+			});
 			if(exc) {
 				ExceptionError ee = new ExceptionError(ex.getMessage());
 				Toast.makeText(RechercheBiere.this, getResources().getString(ee.getCode()), Toast.LENGTH_SHORT ).show();

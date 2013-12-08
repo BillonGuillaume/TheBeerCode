@@ -7,7 +7,8 @@
     <string name="e002">Erreur durant la mise à jour</string>
     <string name="e003">Erreur durant la suppression</string>
     <!-- Exceptions SQL -->
-    <string name="e100">Erreur SQL</string>
+    <string name="e100">Une erreur inconnue est survenue, veuillez vérifier les informations entrées</string>
+    <string name="e101">Cette bière existe déjà</string>
     <!-- Exceptions personalisées -->
     <string name="e200">Compte inconnu</string>
     <string name="e201">Login et/ou mot-de-passe incorrect</string>

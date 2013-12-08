@@ -33,15 +33,15 @@ public class AjoutDB{
     
     public static ArrayList<String> readHistoriquePersonne(int id, int min, int max) throws Exception {
     	Boolean ex1 = false;
-    	String req = "SELECT * FROM vueAjout WHERE rownum>=? AND rownum<=? AND idPersonne=? ORDER BY idBiere";
+    	String req = "select * from ( select a.*, rownum rnum from (SELECT * FROM vueAjout WHERE idPersonne=? ORDER BY idBiere) a where rownum <= ? ) where rnum >= ?";
     	ArrayList <String> list = new ArrayList<String>();
     	AjoutDB obj;
     	PreparedStatement pstmt = null;
     	try {
     		pstmt = dbConnect.prepareStatement(req);
-    		pstmt.setInt(1, min);
+    		pstmt.setInt(1, id);
     		pstmt.setInt(2, max);
-    		pstmt.setInt(3, id);
+    		pstmt.setInt(3, min);
     		ResultSet rs = pstmt.executeQuery();
     		while (rs.next()) {
     			obj = new AjoutDB();

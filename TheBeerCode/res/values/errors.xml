@@ -7,7 +7,8 @@
     <string name="e002">Error while updating</string>
     <string name="e003">Error while deleting</string>
     <!-- Exceptions SQL -->
-    <string name="e100">SQL Error</string>
+    <string name="e100">An unknown error occurred, please check back the informations</string>
+    <string name="e101">This beer already exists</string>
     <!-- Exceptions personalisées -->
     <string name="e200">Unknown account</string>
     <string name="e201">Login and/or password incorrect</string>

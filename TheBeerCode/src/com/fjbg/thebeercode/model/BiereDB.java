@@ -7,6 +7,7 @@ import com.fjbg.thebeercode.R;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class BiereDB extends Biere implements CRUD, Parcelable{
 	protected static Connection dbConnect=null;
@@ -41,28 +42,33 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 
 
 	public void create() throws Exception{
-		CallableStatement   cstmt=null;
-		try{
-			String req = "call createbiere(?,?,?,?,?)";
-			cstmt = dbConnect.prepareCall(req);
-			cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
-			cstmt.setString(2,nomBiere);
-			cstmt.setString(3,cheminImage);
-			cstmt.setString(4,paysBiere);
-			cstmt.setFloat(5,degreBiere);
-			cstmt.executeUpdate();
-			this.idBiere=cstmt.getInt(1);
-		} catch(SQLException e) {
-			throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
-		}
-		catch(Exception e ){          
-			throw new Exception("Erreur de création/" + R.string.e000 + "/" + e.getMessage());
-		}
-		finally{
+		CallableStatement cstmt=null;
+		Boolean exc = false;
+		try {
+			readBiere();
+			exc = true;
+		} catch(Exception ex) {
 			try{
-				cstmt.close();
+				String req = "call createbiere(?,?,?,?,?)";
+				cstmt = dbConnect.prepareCall(req);
+				cstmt.registerOutParameter(1, java.sql.Types.INTEGER);
+				cstmt.setString(2,nomBiere);
+				cstmt.setString(3,cheminImage);
+				cstmt.setString(4,paysBiere);
+				cstmt.setFloat(5,degreBiere);
+				cstmt.executeUpdate();
+				this.idBiere=cstmt.getInt(1);
+			} catch(SQLException e) {
+				throw new Exception("Erreur SQL/" + R.string.e100 + "/" + e.getMessage());
+			} catch(Exception e ){          
+				throw new Exception("Erreur de création/" + R.string.e000 + "/" + e.getMessage());
+			} finally{
+				try{
+					cstmt.close();
+				} catch (Exception e){}
 			}
-			catch (Exception e){}
+		}if(exc) {
+			throw new Exception("Erreur de création/" + R.string.e101 + "/Bière déjà existante");
 		}
 	}
 
@@ -148,22 +154,24 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 
 
 	public static ArrayList<BiereDB> rechBieres(String nomBiere, float degInf, float degSup, String pays, float noteMin, float noteMax, int min, int max) throws Exception{
-		String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? AND upper(nomBiere) LIKE '%'||?||'%' AND (degreBiere BETWEEN ? AND ?) AND paysBiere LIKE '%'||?||'%' AND (coteBiere BETWEEN ? AND ?)";
+		//String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? AND upper(nomBiere) LIKE '%'||?||'%' AND (degreBiere BETWEEN ? AND ?) AND paysBiere LIKE '%'||?||'%' AND (coteBiere BETWEEN ? AND ?)";
+		String req = "select * from ( select a.*, rownum rnum from (SELECT * FROM Biere WHERE upper(nomBiere) LIKE '%'||?||'%' AND (degreBiere BETWEEN ? AND ?) AND paysBiere LIKE '%'||?||'%' AND (coteBiere BETWEEN ? AND ?)) a where rownum <= ? ) where rnum >= ?";
 		ArrayList <BiereDB> list = new ArrayList<BiereDB>();
 		BiereDB obj;
 		Boolean ex = false;
 		PreparedStatement pstmt = null;
+		Log.d("BiereDB", "Recherche de " + min + " à " + max);
 		try {
 			pstmt = dbConnect.prepareStatement(req);
-			pstmt.setInt(1, min);
-			pstmt.setInt(2, max);
 			nomBiere = nomBiere.toUpperCase();
-			pstmt.setString(3, nomBiere);
-			pstmt.setFloat(4, degSup);
-			pstmt.setFloat(5, degInf);
-			pstmt.setString(6, pays);
-			pstmt.setFloat(7, noteMin*2);
-			pstmt.setFloat(8, noteMax*2);
+			pstmt.setString(1, nomBiere);
+			pstmt.setFloat(2, degSup);
+			pstmt.setFloat(3, degInf);
+			pstmt.setString(4, pays);
+			pstmt.setFloat(5, noteMin*2);
+			pstmt.setFloat(6, noteMax*2);
+			pstmt.setInt(7, max);
+			pstmt.setInt(8, min);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				obj = new BiereDB();
@@ -192,15 +200,15 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 	}
 
 	public static ArrayList<BiereDB> readBieres(int min, int max) throws Exception{
-		String req = "SELECT * FROM Biere WHERE rownum>=? AND rownum<=? ORDER BY idBiere DESC";
+		String req = "select * from ( select a.*, rownum rnum from (SELECT * FROM Biere ORDER BY idBiere DESC) a where rownum <= ? ) where rnum >= ?";
 		ArrayList <BiereDB> list = new ArrayList<BiereDB>();
 		BiereDB obj;
 		Boolean ex1 = false;
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = dbConnect.prepareStatement(req);
-			pstmt.setInt(1, min);
-			pstmt.setInt(2, max);
+			pstmt.setInt(1, max);
+			pstmt.setInt(2, min);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				obj = new BiereDB();
@@ -230,7 +238,7 @@ public class BiereDB extends Biere implements CRUD, Parcelable{
 		}
 	}
 
-	public void readBiere ()throws Exception{
+	public void readBiere()throws Exception{
 
 		String req = "{?=call readbiere2(?)}";
 		Boolean ex = false;
