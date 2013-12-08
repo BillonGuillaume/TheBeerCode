@@ -58,8 +58,8 @@ public class CoordonneesDB extends Coordonnees implements CRUD{
 		   ResultSet rs=(ResultSet)cstmt.getObject(1);
 		   if(rs.next()){
 			   this.nomLieu=rs.getString("NOMLIEU");
-			   this.longitude=rs.getFloat("LONGITUDE");
-			   this.latitude=rs.getInt("LATITUDE");
+			   this.longitude=rs.getDouble("LONGITUDE");
+			   this.latitude=rs.getDouble("LATITUDE");
 		   } else { 
 			   ex = true; //throw new Exception("Code inconnu");
 		   }
